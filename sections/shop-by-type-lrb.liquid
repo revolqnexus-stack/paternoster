@@ -1,0 +1,335 @@
+{% comment %}
+  LRB Store - Shop By Product Type Section
+  Carousel of collection tiles, matches homepage reference
+  "1 of 9" pagination style
+{% endcomment %}
+
+{%- liquid
+  assign collections_list = section.blocks | where: 'type', 'collection'
+-%}
+
+<section class="lrb-section lrb-shop-by-type">
+  <div class="lrb-container">
+    
+    {%- if section.settings.heading != blank -%}
+      <h2 class="lrb-section-heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    
+    <div class="lrb-shop-by-type__carousel" data-carousel>
+      <div class="lrb-shop-by-type__track" data-carousel-track>
+        {%- for block in collections_list -%}
+          {%- liquid
+            assign collection = collections.all
+            if block.settings.collection != blank
+              assign collection = block.settings.collection
+            endif
+          -%}
+          
+          <div class="lrb-shop-by-type__slide" data-carousel-slide {{ block.shopify_attributes }}>
+            <a href="{{ collection.url }}" class="lrb-collection-tile">
+              <div class="lrb-collection-tile__image-wrapper">
+                {%- if collection.featured_image -%}
+                  <img
+                    srcset="{%- if collection.featured_image.width >= 300 -%}{{ collection.featured_image | image_url: width: 300 }} 300w,{%- endif -%}
+                      {%- if collection.featured_image.width >= 600 -%}{{ collection.featured_image | image_url: width: 600 }} 600w,{%- endif -%}
+                      {{ collection.featured_image | image_url }} {{ collection.featured_image.width }}w"
+                    src="{{ collection.featured_image | image_url: width: 300 }}"
+                    sizes="(min-width: 1440px) 20vw, (min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+                    alt="{{ collection.featured_image.alt | escape }}"
+                    class="lrb-collection-tile__image"
+                    loading="lazy"
+                    width="{{ collection.featured_image.width }}"
+                    height="{{ collection.featured_image.height }}"
+                  >
+                {%- elsif collection.products.first and collection.products.first.featured_media -%}
+                  <img
+                    src="{{ collection.products.first.featured_media | image_url: width: 300 }}"
+                    alt="{{ collection.products.first.title | escape }}"
+                    class="lrb-collection-tile__image"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  <div class="lrb-collection-tile__placeholder">
+                    {{ 'collection-1' | placeholder_svg_tag: 'lrb-collection-tile__placeholder-svg' }}
+                  </div>
+                {%- endif -%}
+              </div>
+              <div class="lrb-collection-tile__content">
+                <h3 class="lrb-collection-tile__title">{{ collection.title | escape }}</h3>
+              </div>
+            </a>
+          </div>
+        {%- endfor -%}
+      </div>
+      
+      {%- if collections_list.size > 3 -%}
+        <div class="lrb-shop-by-type__controls">
+          <button type="button" class="lrb-carousel-button lrb-carousel-button--prev" data-carousel-prev aria-label="Previous">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          
+          <div class="lrb-carousel-pagination" data-carousel-pagination>
+            <span data-current>1</span> of <span data-total>{{ collections_list.size }}</span>
+          </div>
+          
+          <button type="button" class="lrb-carousel-button lrb-carousel-button--next" data-carousel-next aria-label="Next">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.lrb-shop-by-type {
+  background: var(--lrb-color-background);
+}
+
+.lrb-shop-by-type__carousel {
+  position: relative;
+}
+
+.lrb-shop-by-type__track {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--lrb-space-md);
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .lrb-shop-by-type__track {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .lrb-shop-by-type__track {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1440px) {
+  .lrb-shop-by-type__track {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.lrb-collection-tile {
+  display: block;
+  text-decoration: none;
+  transition: transform var(--lrb-transition-normal);
+}
+
+.lrb-collection-tile:hover {
+  transform: translateY(-4px);
+}
+
+.lrb-collection-tile__image-wrapper {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--lrb-color-background-alt);
+  border-radius: var(--lrb-radius-sm);
+}
+
+.lrb-collection-tile__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--lrb-transition-slow);
+}
+
+.lrb-collection-tile:hover .lrb-collection-tile__image {
+  transform: scale(1.05);
+}
+
+.lrb-collection-tile__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lrb-collection-tile__placeholder-svg {
+  width: 50%;
+  height: 50%;
+  opacity: 0.3;
+}
+
+.lrb-collection-tile__content {
+  padding: var(--lrb-space-sm) 0 0 0;
+  text-align: center;
+}
+
+.lrb-collection-tile__title {
+  font-family: var(--lrb-font-heading);
+  font-size: var(--lrb-font-size-md);
+  font-weight: var(--lrb-font-weight-semibold);
+  line-height: var(--lrb-line-height-tight);
+  color: var(--lrb-color-text);
+  margin: 0;
+}
+
+.lrb-shop-by-type__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--lrb-space-md);
+  margin-top: var(--lrb-space-lg);
+}
+
+.lrb-carousel-button {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--lrb-color-background);
+  border: 1px solid var(--lrb-color-border-dark);
+  border-radius: 50%;
+  color: var(--lrb-color-text);
+  cursor: pointer;
+  transition: all var(--lrb-transition-fast);
+}
+
+.lrb-carousel-button:hover {
+  background: var(--lrb-color-text);
+  color: var(--lrb-color-background);
+  border-color: var(--lrb-color-text);
+}
+
+.lrb-carousel-button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.lrb-carousel-pagination {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-sm);
+  color: var(--lrb-color-text);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const carousels = document.querySelectorAll('[data-carousel]');
+  
+  carousels.forEach(carousel => {
+    const track = carousel.querySelector('[data-carousel-track]');
+    const slides = carousel.querySelectorAll('[data-carousel-slide]');
+    const prevBtn = carousel.querySelector('[data-carousel-prev]');
+    const nextBtn = carousel.querySelector('[data-carousel-next]');
+    const pagination = carousel.querySelector('[data-carousel-pagination]');
+    
+    if (!track || slides.length === 0) return;
+    
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+    
+    function updatePagination() {
+      if (pagination) {
+        const currentSpan = pagination.querySelector('[data-current]');
+        if (currentSpan) {
+          currentSpan.textContent = currentIndex + 1;
+        }
+      }
+    }
+    
+    function updateButtons() {
+      if (prevBtn) prevBtn.disabled = currentIndex === 0;
+      if (nextBtn) nextBtn.disabled = currentIndex >= totalSlides - 1;
+    }
+    
+    function scrollToSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      currentIndex = index;
+      updatePagination();
+      updateButtons();
+    }
+    
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        scrollToSlide(currentIndex - 1);
+      });
+    }
+    
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        scrollToSlide(currentIndex + 1);
+      });
+    }
+    
+    updatePagination();
+    updateButtons();
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Shop by Product Type",
+  "tag": "section",
+  "class": "section-shop-by-type",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop By Product Type"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop by Product Type",
+      "blocks": [
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

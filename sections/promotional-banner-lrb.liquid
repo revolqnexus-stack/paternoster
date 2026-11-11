@@ -1,0 +1,164 @@
+{% comment %}
+  LRB Store - Promotional Banner Section
+  Matches homepage promotional sections from reference
+  
+  Two styles:
+  1. Subscription promotion (with price callout, disclaimers)
+  2. Product/category promotion (with featured items)
+{% endcomment %}
+
+<section class="lrb-section lrb-promo-banner lrb-promo-banner--{{ section.settings.style }}">
+  <div class="lrb-promo-banner__content">
+    
+    {%- if section.settings.heading != blank -%}
+      <h2 class="lrb-promo-banner__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    
+    {%- if section.settings.text != blank -%}
+      <div class="lrb-promo-banner__text">
+        {{ section.settings.text }}
+      </div>
+    {%- endif -%}
+    
+    {%- if section.settings.cta_text != blank and section.settings.cta_link != blank -%}
+      <div class="lrb-promo-banner__cta">
+        <a href="{{ section.settings.cta_link }}" class="lrb-button lrb-button--primary">
+          {{ section.settings.cta_text | escape }}
+        </a>
+      </div>
+    {%- endif -%}
+    
+    {%- if section.settings.fine_print != blank -%}
+      <p class="lrb-promo-banner__fine-print">{{ section.settings.fine_print }}</p>
+    {%- endif -%}
+    
+  </div>
+</section>
+
+<style>
+.lrb-promo-banner {
+  background: var(--lrb-color-background-alt);
+  padding: var(--lrb-space-lg);
+  text-align: center;
+}
+
+.lrb-promo-banner__content {
+  max-width: var(--lrb-container-narrow);
+  margin: 0 auto;
+}
+
+.lrb-promo-banner__heading {
+  font-family: var(--lrb-font-heading);
+  font-size: var(--lrb-font-size-lg);
+  font-weight: var(--lrb-font-weight-normal);
+  line-height: var(--lrb-line-height-tight);
+  color: var(--lrb-color-text);
+  margin: 0 0 var(--lrb-space-sm) 0;
+}
+
+.lrb-promo-banner__text {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-base);
+  line-height: var(--lrb-line-height-relaxed);
+  color: var(--lrb-color-text-muted);
+  margin: 0 0 var(--lrb-space-md) 0;
+}
+
+.lrb-promo-banner__text p {
+  margin: 0 0 0.5rem 0;
+}
+
+.lrb-promo-banner__text p:last-child {
+  margin-bottom: 0;
+}
+
+.lrb-promo-banner__fine-print {
+  font-size: var(--lrb-font-size-xs);
+  color: var(--lrb-color-text-subtle);
+  margin: var(--lrb-space-sm) 0 0 0;
+  font-style: italic;
+}
+
+.lrb-promo-banner__cta {
+  margin-top: var(--lrb-space-md);
+}
+
+/* Style variants */
+.lrb-promo-banner--subscription {
+  background: var(--lrb-color-background-dark);
+}
+
+.lrb-promo-banner--product {
+  background: var(--lrb-color-background-alt);
+}
+
+@media (max-width: 767px) {
+  .lrb-promo-banner {
+    padding: var(--lrb-space-md) var(--lrb-space-sm);
+  }
+  
+  .lrb-promo-banner__heading {
+    font-size: var(--lrb-font-size-md);
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Promotional Banner",
+  "tag": "section",
+  "class": "section-promo-banner",
+  "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Banner Style",
+      "options": [
+        {
+          "value": "subscription",
+          "label": "Subscription (darker background)"
+        },
+        {
+          "value": "product",
+          "label": "Product/Category"
+        }
+      ],
+      "default": "subscription"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Special Offer"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Promotional message goes here. Add details about the offer or featured products.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button Text",
+      "default": "Order now"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "textarea",
+      "id": "fine_print",
+      "label": "Fine Print / Disclaimer",
+      "info": "Small text displayed below the button"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promotional Banner"
+    }
+  ]
+}
+{% endschema %}

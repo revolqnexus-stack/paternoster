@@ -1,0 +1,195 @@
+{% comment %}
+  LRB Store Hero Featured Product Section
+  Recreates homepage hero from lrbstore.co.uk
+  
+  Displays a single featured product with large image,
+  pricing, quantity selector and view details link
+{% endcomment %}
+
+{{ 'lrb-components.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign featured_product = section.settings.featured_product
+-%}
+
+{%- if featured_product != blank -%}
+  <section class="lrb-section lrb-hero-product">
+    <div class="lrb-container lrb-container--wide">
+      <div class="lrb-hero-product__grid">
+        
+        {%- comment -%} Product Image {%- endcomment -%}
+        <div class="lrb-hero-product__media">
+          {%- if featured_product.featured_media -%}
+            <a href="{{ featured_product.url }}" class="lrb-hero-product__image-link">
+              <img
+                srcset="{%- if featured_product.featured_media.width >= 600 -%}{{ featured_product.featured_media | image_url: width: 600 }} 600w,{%- endif -%}
+                  {%- if featured_product.featured_media.width >= 800 -%}{{ featured_product.featured_media | image_url: width: 800 }} 800w,{%- endif -%}
+                  {%- if featured_product.featured_media.width >= 1200 -%}{{ featured_product.featured_media | image_url: width: 1200 }} 1200w,{%- endif -%}
+                  {{ featured_product.featured_media | image_url }} {{ featured_product.featured_media.width }}w"
+                src="{{ featured_product.featured_media | image_url: width: 800 }}"
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                alt="{{ featured_product.featured_media.alt | escape }}"
+                class="lrb-hero-product__image"
+                loading="eager"
+                width="{{ featured_product.featured_media.width }}"
+                height="{{ featured_product.featured_media.height }}"
+              >
+            </a>
+            
+            {%- comment -%} Badges {%- endcomment -%}
+            {%- if featured_product.available == false or featured_product.compare_at_price_max > featured_product.price -%}
+              <div class="lrb-hero-product__badges">
+                {%- if featured_product.compare_at_price_max > featured_product.price -%}
+                  {% render 'badge-lrb', type: 'sale', text: 'Sale' %}
+                {%- endif -%}
+                {%- if featured_product.available == false -%}
+                  {% render 'badge-lrb', type: 'sold-out', text: 'Sold out' %}
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Product Details {%- endcomment -%}
+        <div class="lrb-hero-product__content">
+          <h2 class="lrb-hero-product__title lrb-heading-lg">
+            <a href="{{ featured_product.url }}" class="lrb-hero-product__title-link">
+              {{ featured_product.title | escape }}
+            </a>
+          </h2>
+          
+          <div class="lrb-hero-product__price">
+            {% render 'price-display-lrb', 
+              product: featured_product, 
+              show_unit_price: true,
+              size: 'large'
+            %}
+          </div>
+          
+          <p class="lrb-tax-notice">Taxes included.</p>
+          
+          {%- comment -%} Quantity Selector {%- endcomment -%}
+          <div class="lrb-hero-product__quantity">
+            <div class="lrb-quantity-selector">
+              <label class="lrb-quantity-selector__label">Quantity</label>
+              <div class="lrb-quantity-selector__controls">
+                <button type="button" class="lrb-quantity-selector__button" aria-label="Decrease quantity">−</button>
+                <input 
+                  type="number" 
+                  class="lrb-quantity-selector__input" 
+                  value="1" 
+                  min="1"
+                  aria-label="Quantity"
+                >
+                <button type="button" class="lrb-quantity-selector__button" aria-label="Increase quantity">+</button>
+              </div>
+              <span class="lrb-quantity-selector__cart-indicator">(0 in cart)</span>
+            </div>
+          </div>
+          
+          <div class="lrb-hero-product__actions">
+            <a href="{{ featured_product.url }}" class="lrb-view-details">
+              View full details
+            </a>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+<style>
+.lrb-hero-product {
+  padding: var(--lrb-space-xl) 0;
+}
+
+.lrb-hero-product__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--lrb-space-lg);
+}
+
+@media (min-width: 1024px) {
+  .lrb-hero-product__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--lrb-space-xl);
+  }
+}
+
+.lrb-hero-product__media {
+  position: relative;
+  background: var(--lrb-color-background-alt);
+}
+
+.lrb-hero-product__image-link {
+  display: block;
+}
+
+.lrb-hero-product__image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.lrb-hero-product__badges {
+  position: absolute;
+  top: var(--lrb-space-sm);
+  right: var(--lrb-space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--lrb-space-xs);
+  align-items: flex-end;
+}
+
+.lrb-hero-product__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lrb-space-sm);
+}
+
+.lrb-hero-product__title {
+  margin: 0;
+}
+
+.lrb-hero-product__title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.lrb-hero-product__title-link:hover {
+  color: var(--lrb-color-text-muted);
+}
+
+.lrb-hero-product__price {
+  margin-top: var(--lrb-space-sm);
+}
+
+.lrb-hero-product__quantity {
+  margin-top: var(--lrb-space-md);
+}
+
+.lrb-hero-product__actions {
+  margin-top: var(--lrb-space-sm);
+}
+</style>
+
+{% schema %}
+{
+  "name": "Hero Featured Product",
+  "tag": "section",
+  "class": "section-hero-product",
+  "settings": [
+    {
+      "type": "product",
+      "id": "featured_product",
+      "label": "Featured Product"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Featured Product"
+    }
+  ]
+}
+{% endschema %}

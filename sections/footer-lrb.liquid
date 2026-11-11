@@ -1,0 +1,423 @@
+{% comment %}
+  LRB Store Footer
+  Includes store information, policies, return addresses
+  Based on lrbstore.co.uk reference
+{% endcomment %}
+
+<footer class="lrb-footer">
+  <div class="lrb-container">
+    <div class="lrb-footer__grid">
+      
+      {%- comment -%} Column 1: Store Information {%- endcomment -%}
+      <div class="lrb-footer__column">
+        {%- if section.settings.info_heading != blank -%}
+          <h3 class="lrb-footer__heading">{{ section.settings.info_heading }}</h3>
+        {%- endif -%}
+        
+        {%- if section.settings.store_info != blank -%}
+          <div class="lrb-footer__content">
+            {{ section.settings.store_info }}
+          </div>
+        {%- endif -%}
+        
+        {%- if section.settings.contact_email != blank -%}
+          <p class="lrb-footer__contact">
+            <a href="mailto:{{ section.settings.contact_email }}">{{ section.settings.contact_email }}</a>
+          </p>
+        {%- endif -%}
+      </div>
+      
+      {%- comment -%} Column 2: Help & Policies {%- endcomment -%}
+      <div class="lrb-footer__column">
+        {%- if section.settings.help_heading != blank -%}
+          <h3 class="lrb-footer__heading">{{ section.settings.help_heading }}</h3>
+        {%- endif -%}
+        
+        <ul class="lrb-footer__links">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'link' -%}
+              <li>
+                <a href="{{ block.settings.link }}">{{ block.settings.label | escape }}</a>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+      
+      {%- comment -%} Column 3: Return Addresses {%- endcomment -%}
+      <div class="lrb-footer__column">
+        {%- if section.settings.returns_heading != blank -%}
+          <h3 class="lrb-footer__heading">{{ section.settings.returns_heading }}</h3>
+        {%- endif -%}
+        
+        {%- if section.settings.uk_address != blank -%}
+          <div class="lrb-footer__address">
+            <strong>UK & Rest of World</strong>
+            {{ section.settings.uk_address }}
+          </div>
+        {%- endif -%}
+        
+        {%- if section.settings.usa_address != blank -%}
+          <div class="lrb-footer__address">
+            <strong>USA & Canada</strong>
+            {{ section.settings.usa_address }}
+          </div>
+        {%- endif -%}
+      </div>
+      
+      {%- comment -%} Column 4: Newsletter {%- endcomment -%}
+      {%- if section.settings.newsletter_enable -%}
+        <div class="lrb-footer__column">
+          {%- if section.settings.newsletter_heading != blank -%}
+            <h3 class="lrb-footer__heading">{{ section.settings.newsletter_heading }}</h3>
+          {%- endif -%}
+          
+          {%- if section.settings.newsletter_text != blank -%}
+            <p class="lrb-footer__newsletter-text">{{ section.settings.newsletter_text }}</p>
+          {%- endif -%}
+          
+          {% form 'customer', class: 'lrb-footer__newsletter-form' %}
+            {%- if form.posted_successfully? -%}
+              <p class="lrb-footer__message lrb-footer__message--success">
+                {{ 'newsletter.success' | t }}
+              </p>
+            {%- endif -%}
+            
+            <div class="lrb-footer__newsletter-input-wrapper">
+              <input
+                type="email"
+                name="contact[email]"
+                class="lrb-footer__newsletter-input"
+                placeholder="{{ 'newsletter.email_placeholder' | t | default: 'Email address' }}"
+                required
+                aria-label="{{ 'newsletter.email_placeholder' | t | default: 'Email address' }}"
+              >
+              <button type="submit" class="lrb-button lrb-button--primary">
+                {{ 'newsletter.button_label' | t | default: 'Subscribe' }}
+              </button>
+            </div>
+          {% endform %}
+        </div>
+      {%- endif -%}
+      
+    </div>
+    
+    {%- comment -%} Copyright & Social {%- endcomment -%}
+    <div class="lrb-footer__bottom">
+      <div class="lrb-footer__copyright">
+        <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+      </div>
+      
+      {%- if section.settings.show_social_links -%}
+        <div class="lrb-footer__social">
+          {%- render 'social-icons' -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+<style>
+.lrb-footer {
+  background: var(--lrb-color-background-dark);
+  padding: var(--lrb-space-xl) 0 var(--lrb-space-md) 0;
+  margin-top: var(--lrb-space-2xl);
+  border-top: 1px solid var(--lrb-color-border);
+}
+
+.lrb-footer__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--lrb-space-lg);
+  margin-bottom: var(--lrb-space-lg);
+}
+
+@media (min-width: 768px) {
+  .lrb-footer__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .lrb-footer__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.lrb-footer__heading {
+  font-family: var(--lrb-font-heading);
+  font-size: var(--lrb-font-size-base);
+  font-weight: var(--lrb-font-weight-semibold);
+  color: var(--lrb-color-text);
+  margin: 0 0 var(--lrb-space-sm) 0;
+  text-transform: uppercase;
+  letter-spacing: var(--lrb-letter-spacing-wide);
+}
+
+.lrb-footer__content {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-sm);
+  line-height: var(--lrb-line-height-normal);
+  color: var(--lrb-color-text-muted);
+}
+
+.lrb-footer__content p {
+  margin: 0 0 0.5rem 0;
+}
+
+.lrb-footer__contact {
+  margin-top: var(--lrb-space-sm);
+}
+
+.lrb-footer__contact a {
+  color: var(--lrb-color-text);
+  text-decoration: underline;
+}
+
+.lrb-footer__links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lrb-footer__links li {
+  margin-bottom: 0.5rem;
+}
+
+.lrb-footer__links a {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-sm);
+  color: var(--lrb-color-text-muted);
+  text-decoration: none;
+  transition: color var(--lrb-transition-fast);
+}
+
+.lrb-footer__links a:hover {
+  color: var(--lrb-color-text);
+  text-decoration: underline;
+}
+
+.lrb-footer__address {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-sm);
+  line-height: var(--lrb-line-height-normal);
+  color: var(--lrb-color-text-muted);
+  margin-bottom: var(--lrb-space-md);
+  white-space: pre-line;
+}
+
+.lrb-footer__address strong {
+  display: block;
+  color: var(--lrb-color-text);
+  margin-bottom: 0.25rem;
+}
+
+.lrb-footer__newsletter-text {
+  font-size: var(--lrb-font-size-sm);
+  color: var(--lrb-color-text-muted);
+  margin-bottom: var(--lrb-space-sm);
+}
+
+.lrb-footer__newsletter-form {
+  margin-top: var(--lrb-space-sm);
+}
+
+.lrb-footer__newsletter-input-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.lrb-footer__newsletter-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--lrb-color-border-dark);
+  border-radius: var(--lrb-radius-sm);
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-sm);
+}
+
+.lrb-footer__message {
+  font-size: var(--lrb-font-size-sm);
+  margin-bottom: var(--lrb-space-sm);
+}
+
+.lrb-footer__message--success {
+  color: var(--lrb-color-success);
+}
+
+.lrb-footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--lrb-space-md);
+  border-top: 1px solid var(--lrb-color-border);
+  flex-wrap: wrap;
+  gap: var(--lrb-space-sm);
+}
+
+.lrb-footer__copyright {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-xs);
+  color: var(--lrb-color-text-subtle);
+}
+
+.lrb-footer__copyright p {
+  margin: 0;
+}
+
+@media (max-width: 767px) {
+  .lrb-footer__newsletter-input-wrapper {
+    flex-direction: column;
+  }
+  
+  .lrb-footer__bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Footer LRB",
+  "tag": "footer",
+  "class": "section-footer-lrb",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Store Information"
+    },
+    {
+      "type": "text",
+      "id": "info_heading",
+      "label": "Heading",
+      "default": "Store Information"
+    },
+    {
+      "type": "richtext",
+      "id": "store_info",
+      "label": "Store Information"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Contact Email",
+      "default": "store@example.com"
+    },
+    {
+      "type": "header",
+      "content": "Help & Policies"
+    },
+    {
+      "type": "text",
+      "id": "help_heading",
+      "label": "Heading",
+      "default": "Help & Policies"
+    },
+    {
+      "type": "header",
+      "content": "Return Addresses"
+    },
+    {
+      "type": "text",
+      "id": "returns_heading",
+      "label": "Heading",
+      "default": "Returns"
+    },
+    {
+      "type": "textarea",
+      "id": "uk_address",
+      "label": "UK & Rest of World Address",
+      "info": "Full return address for UK and international orders"
+    },
+    {
+      "type": "textarea",
+      "id": "usa_address",
+      "label": "USA & Canada Address",
+      "info": "Full return address for USA and Canadian orders"
+    },
+    {
+      "type": "header",
+      "content": "Newsletter"
+    },
+    {
+      "type": "checkbox",
+      "id": "newsletter_enable",
+      "label": "Show Newsletter Signup",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "Newsletter Heading",
+      "default": "Newsletter"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_text",
+      "label": "Newsletter Text",
+      "default": "Subscribe to receive updates and exclusive offers."
+    },
+    {
+      "type": "header",
+      "content": "Social"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_links",
+      "label": "Show Social Links",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "link",
+        "settings": {
+          "label": "Shipping & Delivery",
+          "link": "/pages/shipping"
+        }
+      },
+      {
+        "type": "link",
+        "settings": {
+          "label": "Refund Policy",
+          "link": "/policies/refund-policy"
+        }
+      },
+      {
+        "type": "link",
+        "settings": {
+          "label": "Terms of Service",
+          "link": "/policies/terms-of-service"
+        }
+      },
+      {
+        "type": "link",
+        "settings": {
+          "label": "Privacy Policy",
+          "link": "/policies/privacy-policy"
+        }
+      }
+    ]
+  }
+}
+{% endschema %}

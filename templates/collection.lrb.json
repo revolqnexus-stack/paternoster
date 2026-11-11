@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection-lrb",
+      "settings": {
+        "products_per_page": 24,
+        "show_vendor": false
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
