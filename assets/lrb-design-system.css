@@ -1,0 +1,505 @@
+/* ============================================================================
+   LRB STORE DESIGN SYSTEM
+   Foundation styles inspired by The London Review of Books
+   ========================================================================= */
+
+/* ============================================================================
+   1. TYPOGRAPHY SYSTEM
+   ========================================================================= */
+
+:root {
+  /* Font families - Editorial aesthetic */
+  --lrb-font-heading: 'Crimson Text', 'Georgia', 'Times New Roman', serif;
+  --lrb-font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  --lrb-font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+  
+  /* Font sizes - Restrained scale */
+  --lrb-font-size-xl: 2.5rem;      /* 40px - Page titles, hero */
+  --lrb-font-size-lg: 1.75rem;     /* 28px - Section headings */
+  --lrb-font-size-md: 1.125rem;    /* 18px - Book titles */
+  --lrb-font-size-base: 1rem;      /* 16px - Body text */
+  --lrb-font-size-sm: 0.875rem;    /* 14px - Metadata, captions */
+  --lrb-font-size-xs: 0.75rem;     /* 12px - Labels, tags */
+  
+  /* Line heights */
+  --lrb-line-height-tight: 1.2;
+  --lrb-line-height-normal: 1.5;
+  --lrb-line-height-relaxed: 1.8;
+  
+  /* Font weights */
+  --lrb-font-weight-normal: 400;
+  --lrb-font-weight-medium: 500;
+  --lrb-font-weight-semibold: 600;
+  --lrb-font-weight-bold: 700;
+  
+  /* Letter spacing */
+  --lrb-letter-spacing-tight: -0.02em;
+  --lrb-letter-spacing-normal: 0;
+  --lrb-letter-spacing-wide: 0.05em;
+  --lrb-letter-spacing-wider: 0.1em;
+}
+
+/* ============================================================================
+   2. SPACING SYSTEM
+   ========================================================================= */
+
+:root {
+  /* Spacing scale - Generous white space */
+  --lrb-space-xs: 0.5rem;      /* 8px - Tight elements */
+  --lrb-space-sm: 1rem;        /* 16px - Card padding, small gaps */
+  --lrb-space-md: 2rem;        /* 32px - Section spacing */
+  --lrb-space-lg: 4rem;        /* 64px - Major sections */
+  --lrb-space-xl: 6rem;        /* 96px - Hero spacing */
+  --lrb-space-2xl: 8rem;       /* 128px - Page sections */
+  
+  /* Grid gaps */
+  --lrb-gap-tight: var(--lrb-space-sm);
+  --lrb-gap-normal: var(--lrb-space-md);
+  --lrb-gap-relaxed: var(--lrb-space-lg);
+}
+
+/* ============================================================================
+   3. COLOR SYSTEM
+   ========================================================================= */
+
+:root {
+  /* Neutral palette - Editorial restraint */
+  --lrb-color-text: #1a1a1a;
+  --lrb-color-text-muted: #666666;
+  --lrb-color-text-subtle: #999999;
+  
+  --lrb-color-background: #ffffff;
+  --lrb-color-background-alt: #f8f8f8;
+  --lrb-color-background-dark: #f0f0f0;
+  
+  --lrb-color-border: #e0e0e0;
+  --lrb-color-border-dark: #cccccc;
+  
+  /* Accent colors - Used sparingly */
+  --lrb-color-accent: #c41e3a;        /* LRB red */
+  --lrb-color-accent-hover: #a01729;
+  
+  /* Semantic colors */
+  --lrb-color-success: #2d7a4f;
+  --lrb-color-warning: #c17817;
+  --lrb-color-error: #c41e3a;
+  
+  /* Opacity values */
+  --lrb-opacity-subtle: 0.6;
+  --lrb-opacity-muted: 0.8;
+}
+
+/* ============================================================================
+   4. LAYOUT SYSTEM
+   ========================================================================= */
+
+:root {
+  /* Container widths */
+  --lrb-container-narrow: 800px;
+  --lrb-container-normal: 1200px;
+  --lrb-container-wide: 1400px;
+  
+  /* Grid columns */
+  --lrb-grid-columns-mobile: 2;
+  --lrb-grid-columns-tablet: 3;
+  --lrb-grid-columns-desktop: 4;
+  --lrb-grid-columns-wide: 5;
+}
+
+/* ============================================================================
+   5. BOOK CARD SYSTEM
+   ========================================================================= */
+
+:root {
+  /* Book cover specifications */
+  --lrb-book-cover-aspect: 2 / 3;     /* Portrait orientation */
+  --lrb-book-card-width: 280px;
+  --lrb-book-card-gap: var(--lrb-space-md);
+  
+  /* Book card padding */
+  --lrb-book-card-padding: var(--lrb-space-sm);
+  
+  /* Book cover border radius */
+  --lrb-book-cover-radius: 2px;       /* Subtle, not aggressive */
+}
+
+/* ============================================================================
+   6. COMPONENT TOKENS
+   ========================================================================= */
+
+:root {
+  /* Border radius - Minimal */
+  --lrb-radius-none: 0;
+  --lrb-radius-sm: 2px;
+  --lrb-radius-md: 4px;
+  --lrb-radius-lg: 8px;
+  
+  /* Shadows - Subtle */
+  --lrb-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --lrb-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --lrb-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  
+  /* Transitions */
+  --lrb-transition-fast: 150ms ease;
+  --lrb-transition-normal: 250ms ease;
+  --lrb-transition-slow: 350ms ease;
+  
+  /* Z-index scale */
+  --lrb-z-base: 1;
+  --lrb-z-dropdown: 100;
+  --lrb-z-sticky: 200;
+  --lrb-z-fixed: 300;
+  --lrb-z-modal: 400;
+  --lrb-z-popover: 500;
+  --lrb-z-tooltip: 600;
+}
+
+/* ============================================================================
+   7. BREAKPOINT SYSTEM
+   ========================================================================= */
+
+:root {
+  /* Breakpoints (for documentation - use @media in CSS) */
+  --lrb-breakpoint-sm: 640px;
+  --lrb-breakpoint-md: 768px;
+  --lrb-breakpoint-lg: 1024px;
+  --lrb-breakpoint-xl: 1280px;
+  --lrb-breakpoint-2xl: 1536px;
+}
+
+/* ============================================================================
+   8. TYPOGRAPHY CLASSES
+   ========================================================================= */
+
+.lrb-heading-xl {
+  font-family: var(--lrb-font-heading);
+  font-size: var(--lrb-font-size-xl);
+  font-weight: var(--lrb-font-weight-normal);
+  line-height: var(--lrb-line-height-tight);
+  letter-spacing: var(--lrb-letter-spacing-tight);
+  color: var(--lrb-color-text);
+}
+
+.lrb-heading-lg {
+  font-family: var(--lrb-font-heading);
+  font-size: var(--lrb-font-size-lg);
+  font-weight: var(--lrb-font-weight-normal);
+  line-height: var(--lrb-line-height-tight);
+  letter-spacing: var(--lrb-letter-spacing-tight);
+  color: var(--lrb-color-text);
+}
+
+.lrb-heading-md {
+  font-family: var(--lrb-font-heading);
+  font-size: var(--lrb-font-size-md);
+  font-weight: var(--lrb-font-weight-semibold);
+  line-height: var(--lrb-line-height-normal);
+  letter-spacing: var(--lrb-letter-spacing-normal);
+  color: var(--lrb-color-text);
+}
+
+.lrb-body {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-base);
+  font-weight: var(--lrb-font-weight-normal);
+  line-height: var(--lrb-line-height-normal);
+  color: var(--lrb-color-text);
+}
+
+.lrb-body-sm {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-sm);
+  font-weight: var(--lrb-font-weight-normal);
+  line-height: var(--lrb-line-height-normal);
+  color: var(--lrb-color-text-muted);
+}
+
+.lrb-label {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-xs);
+  font-weight: var(--lrb-font-weight-medium);
+  line-height: var(--lrb-line-height-normal);
+  letter-spacing: var(--lrb-letter-spacing-wider);
+  text-transform: uppercase;
+  color: var(--lrb-color-text-subtle);
+}
+
+/* ============================================================================
+   9. LAYOUT UTILITIES
+   ========================================================================= */
+
+.lrb-container {
+  width: 100%;
+  max-width: var(--lrb-container-normal);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--lrb-space-md);
+  padding-right: var(--lrb-space-md);
+}
+
+.lrb-container--narrow {
+  max-width: var(--lrb-container-narrow);
+}
+
+.lrb-container--wide {
+  max-width: var(--lrb-container-wide);
+}
+
+/* Grid system */
+.lrb-grid {
+  display: grid;
+  gap: var(--lrb-gap-normal);
+}
+
+.lrb-grid--tight {
+  gap: var(--lrb-gap-tight);
+}
+
+.lrb-grid--relaxed {
+  gap: var(--lrb-gap-relaxed);
+}
+
+/* Book grid - responsive */
+.lrb-book-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--lrb-grid-columns-mobile), 1fr);
+  gap: var(--lrb-book-card-gap);
+}
+
+@media (min-width: 768px) {
+  .lrb-book-grid {
+    grid-template-columns: repeat(var(--lrb-grid-columns-tablet), 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .lrb-book-grid {
+    grid-template-columns: repeat(var(--lrb-grid-columns-desktop), 1fr);
+  }
+}
+
+@media (min-width: 1440px) {
+  .lrb-book-grid {
+    grid-template-columns: repeat(var(--lrb-grid-columns-wide), 1fr);
+  }
+}
+
+/* ============================================================================
+   10. SPACING UTILITIES
+   ========================================================================= */
+
+.lrb-section {
+  padding-top: var(--lrb-space-lg);
+  padding-bottom: var(--lrb-space-lg);
+}
+
+.lrb-section--xl {
+  padding-top: var(--lrb-space-xl);
+  padding-bottom: var(--lrb-space-xl);
+}
+
+.lrb-section--hero {
+  padding-top: var(--lrb-space-2xl);
+  padding-bottom: var(--lrb-space-2xl);
+}
+
+/* ============================================================================
+   11. COMPONENT BASE STYLES
+   ========================================================================= */
+
+/* Button base */
+.lrb-button {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-sm);
+  font-weight: var(--lrb-font-weight-medium);
+  letter-spacing: var(--lrb-letter-spacing-wide);
+  text-transform: uppercase;
+  padding: 0.75rem 2rem;
+  border: 1px solid var(--lrb-color-border-dark);
+  border-radius: var(--lrb-radius-none);
+  background: var(--lrb-color-background);
+  color: var(--lrb-color-text);
+  cursor: pointer;
+  transition: all var(--lrb-transition-normal);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.lrb-button:hover {
+  background: var(--lrb-color-text);
+  color: var(--lrb-color-background);
+  border-color: var(--lrb-color-text);
+}
+
+.lrb-button--primary {
+  background: var(--lrb-color-text);
+  color: var(--lrb-color-background);
+  border-color: var(--lrb-color-text);
+}
+
+.lrb-button--primary:hover {
+  background: var(--lrb-color-accent);
+  border-color: var(--lrb-color-accent);
+}
+
+/* Link styles */
+.lrb-link {
+  color: var(--lrb-color-text);
+  text-decoration: underline;
+  text-decoration-color: var(--lrb-color-border);
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color var(--lrb-transition-fast);
+}
+
+.lrb-link:hover {
+  text-decoration-color: var(--lrb-color-text);
+}
+
+/* Card base */
+.lrb-card {
+  background: var(--lrb-color-background);
+  border: 1px solid var(--lrb-color-border);
+  border-radius: var(--lrb-radius-sm);
+  overflow: hidden;
+  transition: border-color var(--lrb-transition-normal);
+}
+
+.lrb-card:hover {
+  border-color: var(--lrb-color-border-dark);
+}
+
+/* ============================================================================
+   12. BOOK CARD COMPONENTS
+   ========================================================================= */
+
+.lrb-book-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lrb-space-sm);
+}
+
+.lrb-book-card__cover {
+  position: relative;
+  aspect-ratio: var(--lrb-book-cover-aspect);
+  overflow: hidden;
+  border-radius: var(--lrb-book-cover-radius);
+  background: var(--lrb-color-background-alt);
+}
+
+.lrb-book-card__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--lrb-transition-slow);
+}
+
+.lrb-book-card:hover .lrb-book-card__cover img {
+  transform: scale(1.02);
+}
+
+.lrb-book-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.lrb-book-card__title {
+  font-family: var(--lrb-font-heading);
+  font-size: var(--lrb-font-size-md);
+  font-weight: var(--lrb-font-weight-semibold);
+  line-height: var(--lrb-line-height-tight);
+  color: var(--lrb-color-text);
+  margin: 0;
+}
+
+.lrb-book-card__author {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-sm);
+  color: var(--lrb-color-text-muted);
+  font-style: italic;
+}
+
+.lrb-book-card__price {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-sm);
+  font-weight: var(--lrb-font-weight-medium);
+  color: var(--lrb-color-text);
+  margin-top: 0.5rem;
+}
+
+/* ============================================================================
+   13. RESPONSIVE ADJUSTMENTS
+   ========================================================================= */
+
+/* Mobile refinements */
+@media (max-width: 767px) {
+  :root {
+    --lrb-font-size-xl: 2rem;        /* 32px on mobile */
+    --lrb-font-size-lg: 1.5rem;      /* 24px on mobile */
+    --lrb-space-lg: 3rem;            /* Tighter on mobile */
+    --lrb-space-xl: 4rem;
+    --lrb-space-2xl: 5rem;
+  }
+  
+  .lrb-container {
+    padding-left: var(--lrb-space-sm);
+    padding-right: var(--lrb-space-sm);
+  }
+}
+
+/* Tablet refinements */
+@media (min-width: 768px) and (max-width: 1023px) {
+  :root {
+    --lrb-font-size-xl: 2.25rem;     /* 36px on tablet */
+  }
+}
+
+/* ============================================================================
+   14. ACCESSIBILITY
+   ========================================================================= */
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid var(--lrb-color-text);
+  outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================================
+   15. UTILITIES
+   ========================================================================= */
+
+/* Text alignment */
+.lrb-text-left { text-align: left; }
+.lrb-text-center { text-align: center; }
+.lrb-text-right { text-align: right; }
+
+/* Text colors */
+.lrb-text-muted { color: var(--lrb-color-text-muted); }
+.lrb-text-subtle { color: var(--lrb-color-text-subtle); }
+.lrb-text-accent { color: var(--lrb-color-accent); }
+
+/* Visually hidden (for screen readers) */
+.lrb-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ============================================================================
+   END LRB DESIGN SYSTEM
+   ========================================================================= */

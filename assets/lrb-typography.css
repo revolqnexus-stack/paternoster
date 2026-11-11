@@ -1,0 +1,265 @@
+/* ============================================================================
+   LRB STORE TYPOGRAPHY
+   Font loading and typographic refinements
+   ========================================================================= */
+
+/* ============================================================================
+   FONT LOADING
+   Using system fonts as base, with optional web fonts
+   ========================================================================= */
+
+/* 
+  TODO: Add Google Fonts or Adobe Fonts for Crimson Text + Inter
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+*/
+
+/* ============================================================================
+   TYPOGRAPHIC DEFAULTS
+   ========================================================================= */
+
+body {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-base);
+  line-height: var(--lrb-line-height-normal);
+  color: var(--lrb-color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--lrb-font-heading);
+  font-weight: var(--lrb-font-weight-normal);
+  line-height: var(--lrb-line-height-tight);
+  letter-spacing: var(--lrb-letter-spacing-tight);
+  color: var(--lrb-color-text);
+  margin: 0;
+}
+
+h1 {
+  font-size: var(--lrb-font-size-xl);
+}
+
+h2 {
+  font-size: var(--lrb-font-size-lg);
+}
+
+h3 {
+  font-size: var(--lrb-font-size-md);
+  font-weight: var(--lrb-font-weight-semibold);
+}
+
+h4, h5, h6 {
+  font-size: var(--lrb-font-size-base);
+  font-weight: var(--lrb-font-weight-semibold);
+}
+
+/* Paragraphs */
+p {
+  margin: 0 0 var(--lrb-space-sm) 0;
+  line-height: var(--lrb-line-height-relaxed);
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--lrb-transition-fast);
+}
+
+/* Lists */
+ul, ol {
+  margin: 0 0 var(--lrb-space-sm) 0;
+  padding-left: var(--lrb-space-md);
+}
+
+li {
+  margin-bottom: 0.25rem;
+}
+
+/* ============================================================================
+   EDITORIAL TYPOGRAPHY
+   ========================================================================= */
+
+/* Pull quotes */
+.lrb-pullquote {
+  font-family: var(--lrb-font-heading);
+  font-size: var(--lrb-font-size-lg);
+  line-height: var(--lrb-line-height-normal);
+  font-style: italic;
+  color: var(--lrb-color-text-muted);
+  margin: var(--lrb-space-lg) 0;
+  padding-left: var(--lrb-space-md);
+  border-left: 3px solid var(--lrb-color-border);
+}
+
+/* Lead paragraph */
+.lrb-lead {
+  font-size: var(--lrb-font-size-md);
+  line-height: var(--lrb-line-height-relaxed);
+  color: var(--lrb-color-text-muted);
+  margin-bottom: var(--lrb-space-md);
+}
+
+/* Small caps for labels */
+.lrb-small-caps {
+  font-variant: small-caps;
+  letter-spacing: var(--lrb-letter-spacing-wide);
+}
+
+/* Metadata text */
+.lrb-metadata {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-sm);
+  color: var(--lrb-color-text-subtle);
+  line-height: var(--lrb-line-height-normal);
+}
+
+/* ============================================================================
+   BOOK-SPECIFIC TYPOGRAPHY
+   ========================================================================= */
+
+/* Book title styling */
+.lrb-book-title {
+  font-family: var(--lrb-font-heading);
+  font-size: var(--lrb-font-size-md);
+  font-weight: var(--lrb-font-weight-semibold);
+  line-height: var(--lrb-line-height-tight);
+  color: var(--lrb-color-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Author name styling */
+.lrb-author {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-sm);
+  font-style: italic;
+  color: var(--lrb-color-text-muted);
+}
+
+/* Publisher/imprint */
+.lrb-publisher {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-xs);
+  color: var(--lrb-color-text-subtle);
+  text-transform: uppercase;
+  letter-spacing: var(--lrb-letter-spacing-wider);
+}
+
+/* ISBN/edition info */
+.lrb-edition-info {
+  font-family: var(--lrb-font-mono);
+  font-size: var(--lrb-font-size-xs);
+  color: var(--lrb-color-text-subtle);
+}
+
+/* Price display */
+.lrb-price {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-base);
+  font-weight: var(--lrb-font-weight-semibold);
+  color: var(--lrb-color-text);
+}
+
+.lrb-price--large {
+  font-size: var(--lrb-font-size-md);
+}
+
+.lrb-price--sale {
+  color: var(--lrb-color-accent);
+}
+
+.lrb-price--compare {
+  text-decoration: line-through;
+  color: var(--lrb-color-text-muted);
+  font-weight: var(--lrb-font-weight-normal);
+}
+
+/* ============================================================================
+   NAVIGATION TYPOGRAPHY
+   ========================================================================= */
+
+/* Primary navigation */
+.lrb-nav-primary {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-sm);
+  font-weight: var(--lrb-font-weight-medium);
+  letter-spacing: var(--lrb-letter-spacing-wide);
+  text-transform: uppercase;
+}
+
+/* Secondary navigation */
+.lrb-nav-secondary {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-sm);
+  font-weight: var(--lrb-font-weight-normal);
+}
+
+/* Breadcrumbs */
+.lrb-breadcrumb {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-xs);
+  color: var(--lrb-color-text-subtle);
+  text-transform: uppercase;
+  letter-spacing: var(--lrb-letter-spacing-wide);
+}
+
+/* ============================================================================
+   RESPONSIVE TYPOGRAPHY
+   ========================================================================= */
+
+@media (max-width: 767px) {
+  /* Scale down headings on mobile */
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  .lrb-book-title {
+    font-size: 1rem;
+  }
+  
+  .lrb-pullquote {
+    font-size: var(--lrb-font-size-md);
+    padding-left: var(--lrb-space-sm);
+  }
+}
+
+/* ============================================================================
+   PRINT STYLES
+   ========================================================================= */
+
+@media print {
+  body {
+    font-family: Georgia, serif;
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #000;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  
+  p, li {
+    orphans: 3;
+    widows: 3;
+  }
+}
+
+/* ============================================================================
+   END LRB TYPOGRAPHY
+   ========================================================================= */
