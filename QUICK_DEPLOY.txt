@@ -1,0 +1,30 @@
+================================================================================
+QUICK DEPLOYMENT - COPY AND PASTE THIS INTO YOUR TERMINAL
+================================================================================
+
+cd /Users/ajmal/johnsir/dawn && ./DEPLOY.sh
+
+Then choose option: 1
+
+================================================================================
+WHAT HAPPENS NEXT:
+================================================================================
+
+1. Browser opens for Shopify login
+2. Authenticate with your Shopify dev store
+3. Theme uploads to Shopify (2-3 minutes)
+4. You get a preview URL like:
+   https://YOUR_STORE.myshopify.com/?preview_theme_id=XXXXX
+
+5. Share that URL with me
+
+6. I will:
+   - Test all features
+   - Compare to lrbstore.co.uk reference
+   - Fix any bugs
+   - Verify visual fidelity
+   - Provide honest verified report
+
+================================================================================
+IMPORTANT: Use a DEVELOPMENT STORE, not live production
+================================================================================
