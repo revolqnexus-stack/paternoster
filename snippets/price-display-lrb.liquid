@@ -1,0 +1,64 @@
+{% comment %}
+  LRB Store Price Display
+  Matches lrbstore.co.uk price format
+  
+  Accepts:
+  - product: {Object} Product object
+  - show_unit_price: {Boolean} Show unit price (default: false)
+  - size: {String} Size variant: 'normal', 'large' (default: 'normal')
+  
+  Usage:
+  {% render 'price-display-lrb', product: product, show_unit_price: true %}
+{% endcomment %}
+
+{%- liquid
+  assign show_unit_price = show_unit_price | default: false
+  assign size = size | default: 'normal'
+  
+  assign current_variant = product.selected_or_first_available_variant
+  assign price = current_variant.price
+  assign compare_price = current_variant.compare_at_price
+  assign available = product.available
+  
+  assign on_sale = false
+  if compare_price > price
+    assign on_sale = true
+  endif
+-%}
+
+<div class="lrb-price-display lrb-price-display--{{ size }}">
+  {%- if on_sale -%}
+    <div class="lrb-price-display__group">
+      <span class="lrb-price-display__label">Regular price</span>
+      <span class="lrb-price lrb-price--compare">
+        {{ compare_price | money }} {{ cart.currency.iso_code }}
+      </span>
+    </div>
+    <div class="lrb-price-display__group">
+      <span class="lrb-price-display__label">Sale price</span>
+      <span class="lrb-price lrb-price--sale">
+        {{ price | money }} {{ cart.currency.iso_code }}
+      </span>
+    </div>
+  {%- else -%}
+    <div class="lrb-price-display__group">
+      <span class="lrb-price-display__label">Regular price</span>
+      <span class="lrb-price">
+        {{ price | money }} {{ cart.currency.iso_code }}
+      </span>
+    </div>
+  {%- endif -%}
+  
+  {%- if show_unit_price and current_variant.unit_price_measurement -%}
+    <div class="lrb-price-display__unit">
+      <span class="lrb-price-display__label">Unit price</span>
+      <span class="lrb-metadata">
+        {{ current_variant.unit_price | money }}
+        {%- if current_variant.unit_price_measurement.reference_value != 1 -%}
+          {{ current_variant.unit_price_measurement.reference_value }}
+        {%- endif -%}
+        {{ current_variant.unit_price_measurement.reference_unit }}
+      </span>
+    </div>
+  {%- endif -%}
+</div>

@@ -1,0 +1,32 @@
+{% comment %}
+  LRB Store Badge Component
+  
+  Accepts:
+  - type: {String} Badge type: 'sale', 'sold-out', 'limited-edition', 'new'
+  - text: {String} Badge text (optional, uses defaults)
+  
+  Usage:
+  {% render 'badge-lrb', type: 'sale' %}
+  {% render 'badge-lrb', type: 'sold-out', text: 'Sold out' %}
+{% endcomment %}
+
+{%- liquid
+  assign badge_type = type | default: 'sale'
+  
+  unless text
+    case badge_type
+      when 'sale'
+        assign text = 'Sale'
+      when 'sold-out'
+        assign text = 'Sold out'
+      when 'limited-edition'
+        assign text = 'Limited Edition'
+      when 'new'
+        assign text = 'New'
+    endcase
+  endunless
+-%}
+
+<span class="lrb-badge lrb-badge--{{ badge_type }}">
+  {{ text }}
+</span>

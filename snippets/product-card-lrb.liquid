@@ -1,0 +1,88 @@
+{% comment %}
+  LRB Store Product Card
+  Optimized for merchandise display with LRB aesthetic
+  
+  Accepts:
+  - product: {Object} Product object
+  - show_vendor: {Boolean} Show vendor/designer name
+  - show_rating: {Boolean} Show product rating (if applicable)
+  - lazy_load: {Boolean} Lazy load images
+  
+  Usage:
+  {% render 'product-card-lrb', product: product, show_vendor: true %}
+{% endcomment %}
+
+{%- liquid
+  assign ratio = 1
+  assign show_vendor = show_vendor | default: false
+  assign lazy_load = lazy_load | default: true
+-%}
+
+<div class="lrb-product-card">
+  <div class="lrb-product-card__inner">
+    
+    {%- comment -%} Product Image {%- endcomment -%}
+    <div class="lrb-product-card__media">
+      <a href="{{ product.url }}" class="lrb-product-card__link" aria-label="{{ product.title | escape }}">
+        {%- if product.featured_media -%}
+          <div class="lrb-product-card__image-wrapper">
+            <img
+              srcset="{%- if product.featured_media.width >= 165 -%}{{ product.featured_media | image_url: width: 165 }} 165w,{%- endif -%}
+                {%- if product.featured_media.width >= 360 -%}{{ product.featured_media | image_url: width: 360 }} 360w,{%- endif -%}
+                {%- if product.featured_media.width >= 533 -%}{{ product.featured_media | image_url: width: 533 }} 533w,{%- endif -%}
+                {%- if product.featured_media.width >= 720 -%}{{ product.featured_media | image_url: width: 720 }} 720w,{%- endif -%}
+                {%- if product.featured_media.width >= 940 -%}{{ product.featured_media | image_url: width: 940 }} 940w,{%- endif -%}
+                {%- if product.featured_media.width >= 1066 -%}{{ product.featured_media | image_url: width: 1066 }} 1066w,{%- endif -%}
+                {{ product.featured_media | image_url }} {{ product.featured_media.width }}w"
+              src="{{ product.featured_media | image_url: width: 533 }}"
+              sizes="(min-width: 1440px) 20vw, (min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+              alt="{{ product.featured_media.alt | escape }}"
+              class="lrb-product-card__image"
+              {% if lazy_load %}loading="lazy"{% endif %}
+              width="{{ product.featured_media.width }}"
+              height="{{ product.featured_media.height }}"
+            >
+          </div>
+        {%- else -%}
+          <div class="lrb-product-card__image-placeholder">
+            {{ 'product-1' | placeholder_svg_tag: 'lrb-product-card__image-placeholder-svg' }}
+          </div>
+        {%- endif -%}
+        
+        {%- comment -%} Badges {%- endcomment -%}
+        {%- if product.available == false or product.compare_at_price > product.price or product.tags contains 'limited-edition' -%}
+          <div class="lrb-product-card__badges">
+            {%- if product.available == false -%}
+              {% render 'badge-lrb', type: 'sold-out', text: 'Sold out' %}
+            {%- elsif product.compare_at_price > product.price -%}
+              {% render 'badge-lrb', type: 'sale', text: 'Sale' %}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </a>
+    </div>
+
+    {%- comment -%} Product Info {%- endcomment -%}
+    <div class="lrb-product-card__content">
+      {%- if show_vendor and product.vendor != blank -%}
+        <div class="lrb-product-card__vendor">
+          <span class="lrb-metadata">{{ product.vendor }}</span>
+        </div>
+      {%- endif -%}
+      
+      <h3 class="lrb-product-card__title">
+        <a href="{{ product.url }}" class="lrb-product-card__title-link">
+          {{ product.title | escape }}
+        </a>
+      </h3>
+      
+      {%- comment -%} Price {%- endcomment -%}
+      <div class="lrb-product-card__price">
+        {% render 'price-display-lrb', 
+          product: product, 
+          show_unit_price: true 
+        %}
+      </div>
+    </div>
+  </div>
+</div>
