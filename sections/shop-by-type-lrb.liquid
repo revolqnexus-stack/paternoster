@@ -8,14 +8,14 @@
   assign collections_list = section.blocks | where: 'type', 'collection'
 -%}
 
-<section class="lrb-section lrb-shop-by-type">
+<section class="lrb-section lrb-shop-by-type animate-on-scroll" data-animation="fade-in-up">
   <div class="lrb-container">
     
     {%- if section.settings.heading != blank -%}
-      <h2 class="lrb-section-heading">{{ section.settings.heading | escape }}</h2>
+      <h2 class="lrb-section-heading text-gradient">{{ section.settings.heading | escape }}</h2>
     {%- endif -%}
     
-    <div class="lrb-shop-by-type__carousel" data-carousel>
+    <div class="lrb-shop-by-type__carousel animate-stagger" data-carousel>
       <div class="lrb-shop-by-type__track" data-carousel-track>
         {%- for block in collections_list -%}
           {%- liquid
@@ -26,7 +26,7 @@
           -%}
           
           <div class="lrb-shop-by-type__slide" data-carousel-slide {{ block.shopify_attributes }}>
-            <a href="{{ collection.url }}" class="lrb-collection-tile">
+            <a href="{{ collection.url }}" class="lrb-collection-tile card-gradient hover-glow">
               <div class="lrb-collection-tile__image-wrapper">
                 {%- if collection.featured_image -%}
                   <img

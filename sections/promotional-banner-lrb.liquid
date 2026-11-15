@@ -7,11 +7,11 @@
   2. Product/category promotion (with featured items)
 {% endcomment %}
 
-<section class="lrb-section lrb-promo-banner lrb-promo-banner--{{ section.settings.style }}">
-  <div class="lrb-promo-banner__content">
+<section class="lrb-section lrb-promo-banner lrb-promo-banner--{{ section.settings.style }} bg-gradient-sunset animate-on-scroll" data-animation="fade-in-up">
+  <div class="lrb-promo-banner__content card-modern">
     
     {%- if section.settings.heading != blank -%}
-      <h2 class="lrb-promo-banner__heading">{{ section.settings.heading | escape }}</h2>
+      <h2 class="lrb-promo-banner__heading text-glow">{{ section.settings.heading | escape }}</h2>
     {%- endif -%}
     
     {%- if section.settings.text != blank -%}
@@ -22,7 +22,7 @@
     
     {%- if section.settings.cta_text != blank and section.settings.cta_link != blank -%}
       <div class="lrb-promo-banner__cta">
-        <a href="{{ section.settings.cta_link }}" class="lrb-button lrb-button--primary">
+        <a href="{{ section.settings.cta_link }}" class="lrb-button lrb-button--primary btn-glow">
           {{ section.settings.cta_text | escape }}
         </a>
       </div>

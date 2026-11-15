@@ -13,12 +13,12 @@
 -%}
 
 {%- if featured_product != blank -%}
-  <section class="lrb-section lrb-hero-product">
+  <section class="lrb-section lrb-hero-product bg-gradient-ocean animate-on-scroll" data-animation="fade-in-up">
     <div class="lrb-container lrb-container--wide">
-      <div class="lrb-hero-product__grid">
+      <div class="lrb-hero-product__grid animate-stagger">
         
         {%- comment -%} Product Image {%- endcomment -%}
-        <div class="lrb-hero-product__media">
+        <div class="lrb-hero-product__media hover-lift animate-float" data-parallax="0.3">
           {%- if featured_product.featured_media -%}
             <a href="{{ featured_product.url }}" class="lrb-hero-product__image-link">
               <img
@@ -52,7 +52,7 @@
 
         {%- comment -%} Product Details {%- endcomment -%}
         <div class="lrb-hero-product__content">
-          <h2 class="lrb-hero-product__title lrb-heading-lg">
+          <h2 class="lrb-hero-product__title lrb-heading-lg text-gradient">
             <a href="{{ featured_product.url }}" class="lrb-hero-product__title-link">
               {{ featured_product.title | escape }}
             </a>
@@ -88,7 +88,7 @@
           </div>
           
           <div class="lrb-hero-product__actions">
-            <a href="{{ featured_product.url }}" class="lrb-view-details">
+            <a href="{{ featured_product.url }}" class="lrb-view-details btn-modern">
               View full details
             </a>
           </div>
