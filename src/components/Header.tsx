@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useCartStore } from '@/lib/store';
-import { Menu, Search, ShoppingBag } from 'lucide-react';
+import { Menu, X, Search, ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
 import CartDrawer from '@/components/CartDrawer';
 
@@ -14,23 +14,17 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-paper border-b border-border py-3">
+      <header className="sticky top-0 z-50 bg-paper border-b border-border py-3 md:py-4">
         <div className="page-container">
-          <div className="flex items-center justify-between py-2">
-            {/* Left: hamburger + search */}
-            <div className="flex items-center gap-3">
+          <div className="flex items-center justify-between py-1 md:py-2">
+            {/* Left: hamburger */}
+            <div className="flex items-center gap-2">
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
                 className="p-2 rounded hover:bg-paper/50 transition-colors"
                 aria-label="Menu"
               >
                 <Menu size={20} strokeWidth={2.5} />
-              </button>
-              <button
-                className="hidden md:block p-2 rounded hover:bg-paper/50 transition-colors"
-                aria-label="Search"
-              >
-                <Search size={16} strokeWidth={2} />
               </button>
             </div>
 
@@ -66,57 +60,61 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile menu */}
+      {/* Editorial hamburger menu — full screen overlay */}
       {menuOpen && (
-        <div className="fixed inset-0 z-40 bg-paper flex flex-col">
-          <div className="p-4 border-b border-border flex justify-between items-center">
-            <h2 className="font-serif text-lg font-normal text-ink">Menu</h2>
-            <button
-              onClick={() => setMenuOpen(false)}
-              className="p-2 rounded hover:bg-paper/50"
-            >
-              <span className="block w-6 h-0.5 bg-ink mb-1"></span>
-              <span className="block w-6 h-0.5 bg-ink"></span>
-            </button>
+        <div className="fixed inset-0 z-40 bg-paper">
+          {/* Close header */}
+          <div className="page-container py-6 md:py-8 border-b border-border mb-12 md:mb-16">
+            <div className="flex items-center justify-between">
+              <h2 className="font-serif text-xl md:text-2xl font-normal text-ink tracking-tight italic">
+                Menu
+              </h2>
+              <button
+                onClick={() => setMenuOpen(false)}
+                className="p-2 rounded hover:bg-paper/50 transition-colors"
+              >
+                <X size={20} strokeWidth={2.5} />
+              </button>
+            </div>
           </div>
-          <nav className="flex-1 overflow-y-auto p-4 space-y-3">
+
+          {/* Menu items — centered, editorial */}
+          <nav className="page-container flex-1 flex flex-col items-center justify-center text-center">
             <Link
               href="/"
-              className="block text-lg font-serif font-normal text-ink hover:text-navy transition-colors"
+              className="block mb-8 md:mb-12 text-4xl md:text-5xl font-serif font-normal text-ink tracking-tight italic hover:text-navy transition-colors"
               onClick={() => setMenuOpen(false)}
             >
               Home
             </Link>
             <Link
               href="/products"
-              className="block text-lg font-serif font-normal text-ink hover:text-navy transition-colors"
+              className="block mb-8 md:mb-12 text-4xl md:text-5xl font-serif font-normal text-ink tracking-tight italic hover:text-navy transition-colors"
               onClick={() => setMenuOpen(false)}
             >
               Shop
             </Link>
             <Link
               href="/collections/books"
-              className="block text-lg font-serif font-normal text-ink hover:text-navy transition-colors"
+              className="block mb-8 md:mb-12 text-4xl md:text-5xl font-serif font-normal text-ink tracking-tight italic hover:text-navy transition-colors"
               onClick={() => setMenuOpen(false)}
             >
               Books
             </Link>
             <Link
               href="/about"
-              className="block text-lg font-serif font-normal text-ink hover:text-navy transition-colors"
+              className="block mb-8 md:mb-12 text-4xl md:text-5xl font-serif font-normal text-ink tracking-tight italic hover:text-navy transition-colors"
               onClick={() => setMenuOpen(false)}
             >
               About
             </Link>
-            <div className="pt-3 border-t border-border">
-              <a
-                href="#subscribe"
-                className="block text-lg font-serif font-normal text-navy hover:text-navy-light transition-colors"
-                onClick={() => setMenuOpen(false)}
-              >
-                Subscribe
-              </a>
-            </div>
+            <a
+              href="#subscribe"
+              className="block mt-8 md:mt-12 text-xl md:text-2xl font-serif font-normal text-navy hover:text-navy-light transition-colors uppercase tracking-wider"
+              onClick={() => setMenuOpen(false)}
+            >
+              Subscribe
+            </a>
           </nav>
         </div>
       )}
