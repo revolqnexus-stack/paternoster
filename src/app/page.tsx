@@ -4,6 +4,7 @@ import Hero from '@/components/Hero';
 import ArticleCard from '@/components/ArticleCard';
 import Marquee from '@/components/Marquee';
 import ImageWithFallback from '@/components/ImageWithFallback';
+import ScrollReveal from '@/components/ScrollReveal';
 import { stockImage } from '@/lib/stock-images';
 
 export const metadata = {
@@ -84,25 +85,27 @@ export default async function Home() {
       <hr className="hairline mb-12 md:mb-20" />
 
       {/* Secondary articles — asymmetric grid: large span 7 + small span 5, alternating */}
-      <section className="grid-12">
-        {rest.map((article, idx) => {
-          const isLarge = idx % 3 === 0;
+      <ScrollReveal type="fade">
+        <section className="grid-12">
+          {rest.map((article, idx) => {
+            const isLarge = idx % 3 === 0;
 
-          return (
-            <div key={article.title} className="mb-8 md:mb-12">
-              <ArticleCard
-                title={article.title}
-                author={article.author}
-                date={article.date}
-                excerpt={article.excerpt}
-                image={article.image}
-                imageAlt={article.imageAlt}
-                span={isLarge ? 7 : 5}
-              />
-            </div>
-          );
-        })}
-      </section>
+            return (
+              <div key={article.title} className="mb-8 md:mb-12">
+                <ArticleCard
+                  title={article.title}
+                  author={article.author}
+                  date={article.date}
+                  excerpt={article.excerpt}
+                  image={article.image}
+                  imageAlt={article.imageAlt}
+                  span={isLarge ? 7 : 5}
+                />
+              </div>
+            );
+          })}
+        </section>
+      </ScrollReveal>
 
       <hr className="hairline mb-12 md:mb-20" />
 
@@ -114,23 +117,25 @@ export default async function Home() {
       {/* Shop section */}
       {products.length > 0 && (
         <section className="section-lg border-t border-border pt-12 md:pt-20">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-12 md:mb-16">
-            <div>
-              <p className="section-kicker">From the shop</p>
-              <h2 className="font-display text-3xl md:text-4xl font-normal mb-2 text-ink leading-tight italic">
-                Books, editions, objects
-              </h2>
-              <p className="font-grotesk text-sm md:text-base text-gray-light italic">
-                Curated from Pater Noster
-              </p>
+          <ScrollReveal type="fade">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-12 md:mb-16">
+              <div>
+                <p className="section-kicker">From the shop</p>
+                <h2 className="font-display text-3xl md:text-4xl font-normal mb-2 text-ink leading-tight italic">
+                  Books, editions, objects
+                </h2>
+                <p className="font-grotesk text-sm md:text-base text-gray-light italic">
+                  Curated from Pater Noster
+                </p>
+              </div>
+              <a
+                href="/products"
+                className="font-grotesk text-sm font-medium text-navy italic underline underline-offset-2 hover:text-navy-light transition-colors"
+              >
+                View all →
+              </a>
             </div>
-            <a
-              href="/products"
-              className="font-grotesk text-sm font-medium text-navy italic underline underline-offset-2 hover:text-navy-light transition-colors"
-            >
-              View all →
-            </a>
-          </div>
+          </ScrollReveal>
           <div className="grid gap-8 md:grid-cols-3">
             {products.map((product: any) => (
               <ProductCard key={product.id} product={product} />
@@ -160,6 +165,7 @@ function ProductCard({ product }: ProductCardProps) {
               alt={image.altText || product.title}
               className="w-full h-full object-cover"
               loading="lazy"
+              data-cursor="view"
             />
           ) : (
             <ImageWithFallback

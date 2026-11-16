@@ -29,6 +29,7 @@ export default function Hero({
           alt={imageAlt}
           className="absolute inset-0 w-full h-full object-cover"
           fallbackKey="reading"
+          data-cursor="view"
         />
         {/* Headline overlapping the image, half off the bottom edge */}
         <div className="absolute bottom-[-8%] left-0 w-full px-6 md:px-12 -translate-y-1/2 z-20">
