@@ -1,0 +1,109 @@
+{
+  "sections": {
+    "hero_featured_product": {
+      "type": "hero-featured-product-lrb",
+      "settings": {
+      }
+    },
+    "shop_by_type": {
+      "type": "shop-by-type-lrb",
+      "blocks": {
+        "collection_1": {
+          "type": "collection",
+          "settings": {
+          }
+        },
+        "collection_2": {
+          "type": "collection",
+          "settings": {
+          }
+        },
+        "collection_3": {
+          "type": "collection",
+          "settings": {
+          }
+        },
+        "collection_4": {
+          "type": "collection",
+          "settings": {
+          }
+        },
+        "collection_5": {
+          "type": "collection",
+          "settings": {
+          }
+        },
+        "collection_6": {
+          "type": "collection",
+          "settings": {
+          }
+        },
+        "collection_7": {
+          "type": "collection",
+          "settings": {
+          }
+        },
+        "collection_8": {
+          "type": "collection",
+          "settings": {
+          }
+        },
+        "collection_9": {
+          "type": "collection",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "collection_1",
+        "collection_2",
+        "collection_3",
+        "collection_4",
+        "collection_5",
+        "collection_6",
+        "collection_7",
+        "collection_8",
+        "collection_9"
+      ],
+      "settings": {
+        "heading": "Shop By Product Type"
+      }
+    },
+    "promo_banner_1": {
+      "type": "promotional-banner-lrb",
+      "settings": {
+        "style": "subscription",
+        "heading": "Subscription Offer",
+        "text": "<p>Subscribe and receive exclusive offers and updates.</p>",
+        "cta_text": "Order now",
+        "cta_link": "",
+        "fine_print": ""
+      }
+    },
+    "promo_banner_2": {
+      "type": "promotional-banner-lrb",
+      "settings": {
+        "style": "product",
+        "heading": "Featured Collection",
+        "text": "<p>Explore our curated selection of products.</p>",
+        "cta_text": "Buy now",
+        "cta_link": "",
+        "fine_print": ""
+      }
+    },
+    "about_store": {
+      "type": "about-store-lrb",
+      "settings": {
+        "heading": "About the Store",
+        "text": "<p>Your store description goes here. Tell your story and connect with customers.</p><p>Share your mission, values, and what makes your store unique.</p>"
+      }
+    }
+  },
+  "order": [
+    "hero_featured_product",
+    "shop_by_type",
+    "promo_banner_1",
+    "promo_banner_2",
+    "about_store"
+  ]
+}

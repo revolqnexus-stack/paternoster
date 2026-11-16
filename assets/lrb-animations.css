@@ -1,0 +1,499 @@
+/* ============================================================================
+   LRB STORE - MODERN ANIMATIONS & EFFECTS
+   React-style animations, vibrant colors, smooth interactions
+   ========================================================================= */
+
+/* ============================================================================
+   1. VIBRANT COLOR SYSTEM
+   ========================================================================= */
+
+:root {
+  /* Vibrant gradients */
+  --lrb-gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --lrb-gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --lrb-gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --lrb-gradient-sunset: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  --lrb-gradient-ocean: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  --lrb-gradient-fire: linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%);
+  
+  /* Vibrant accent colors */
+  --lrb-color-primary: #667eea;
+  --lrb-color-secondary: #f093fb;
+  --lrb-color-accent: #4facfe;
+  --lrb-color-success: #10b981;
+  --lrb-color-warning: #f59e0b;
+  --lrb-color-error: #ef4444;
+  
+  /* Glow effects */
+  --lrb-glow-primary: 0 0 20px rgba(102, 126, 234, 0.6);
+  --lrb-glow-accent: 0 0 20px rgba(79, 172, 254, 0.6);
+  --lrb-glow-fire: 0 0 30px rgba(255, 106, 136, 0.7);
+}
+
+/* ============================================================================
+   2. KEYFRAME ANIMATIONS
+   ========================================================================= */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.8), 0 0 30px rgba(102, 126, 234, 0.6);
+  }
+}
+
+@keyframes rotateIn {
+  from {
+    opacity: 0;
+    transform: rotate(-10deg) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+}
+
+/* ============================================================================
+   3. SCROLL ANIMATIONS
+   ========================================================================= */
+
+.animate-on-scroll {
+  opacity: 0;
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.visible {
+  opacity: 1;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.8s ease-out forwards;
+}
+
+.animate-fade-in-left {
+  animation: fadeInLeft 0.8s ease-out forwards;
+}
+
+.animate-fade-in-right {
+  animation: fadeInRight 0.8s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.6s ease-out forwards;
+}
+
+.animate-rotate-in {
+  animation: rotateIn 0.8s ease-out forwards;
+}
+
+/* Stagger animations */
+.animate-stagger > * {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-stagger > *:nth-child(1) { animation-delay: 0.1s; }
+.animate-stagger > *:nth-child(2) { animation-delay: 0.2s; }
+.animate-stagger > *:nth-child(3) { animation-delay: 0.3s; }
+.animate-stagger > *:nth-child(4) { animation-delay: 0.4s; }
+.animate-stagger > *:nth-child(5) { animation-delay: 0.5s; }
+.animate-stagger > *:nth-child(6) { animation-delay: 0.6s; }
+.animate-stagger > *:nth-child(7) { animation-delay: 0.7s; }
+.animate-stagger > *:nth-child(8) { animation-delay: 0.8s; }
+.animate-stagger > *:nth-child(9) { animation-delay: 0.9s; }
+
+/* ============================================================================
+   4. HOVER EFFECTS
+   ========================================================================= */
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.hover-glow {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+  transform: scale(1.02);
+}
+
+.hover-rotate {
+  transition: transform 0.3s ease;
+}
+
+.hover-rotate:hover {
+  transform: rotate(5deg) scale(1.05);
+}
+
+.hover-scale {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hover-scale:hover {
+  transform: scale(1.1);
+}
+
+.hover-brightness {
+  transition: filter 0.3s ease;
+}
+
+.hover-brightness:hover {
+  filter: brightness(1.2);
+}
+
+/* ============================================================================
+   5. GRADIENT BACKGROUNDS
+   ========================================================================= */
+
+.bg-gradient-primary {
+  background: var(--lrb-gradient-primary);
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+}
+
+.bg-gradient-secondary {
+  background: var(--lrb-gradient-secondary);
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite;
+}
+
+.bg-gradient-accent {
+  background: var(--lrb-gradient-accent);
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+}
+
+.bg-gradient-sunset {
+  background: var(--lrb-gradient-sunset);
+  background-size: 200% 200%;
+  animation: gradientShift 5s ease infinite;
+}
+
+.bg-gradient-ocean {
+  background: var(--lrb-gradient-ocean);
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite;
+}
+
+/* ============================================================================
+   6. BUTTON EFFECTS
+   ========================================================================= */
+
+.btn-modern {
+  position: relative;
+  overflow: hidden;
+  background: var(--lrb-gradient-primary);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-modern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-modern:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+.btn-modern:hover::before {
+  left: 100%;
+}
+
+.btn-glow {
+  background: var(--lrb-gradient-accent);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  animation: glow 2s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+.btn-glow:hover {
+  transform: scale(1.05);
+}
+
+/* ============================================================================
+   7. CARD EFFECTS
+   ========================================================================= */
+
+.card-modern {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-modern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--lrb-gradient-primary);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.card-modern:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card-modern:hover::before {
+  transform: scaleX(1);
+}
+
+.card-gradient {
+  background: var(--lrb-gradient-ocean);
+  border-radius: 20px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-gradient::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-gradient:hover::after {
+  opacity: 1;
+}
+
+/* ============================================================================
+   8. TEXT EFFECTS
+   ========================================================================= */
+
+.text-gradient {
+  background: var(--lrb-gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+  font-weight: 700;
+}
+
+.text-shimmer {
+  background: linear-gradient(90deg, #000 0%, #fff 50%, #000 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+.text-glow {
+  color: var(--lrb-color-primary);
+  text-shadow: 0 0 10px rgba(102, 126, 234, 0.5),
+               0 0 20px rgba(102, 126, 234, 0.3);
+}
+
+/* ============================================================================
+   9. LOADING ANIMATIONS
+   ========================================================================= */
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+  border-radius: 8px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(102, 126, 234, 0.1);
+  border-top-color: var(--lrb-color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================================================
+   10. PARALLAX EFFECTS
+   ========================================================================= */
+
+.parallax-slow {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.parallax-medium {
+  transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.parallax-fast {
+  transition: transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ============================================================================
+   11. UTILITY CLASSES
+   ========================================================================= */
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+.transition-smooth {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-bounce {
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Add some juice to images */
+img {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+img:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}

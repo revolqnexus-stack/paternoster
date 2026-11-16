@@ -1,0 +1,288 @@
+{% comment %}
+  LRB Store - Customer Login Page
+  Includes Google Sign-In button with modern styling
+{% endcomment %}
+
+{{ 'lrb-animations.css' | asset_url | stylesheet_tag }}
+
+<div class="lrb-customer-login animate-on-scroll" data-animation="fade-in-up">
+  <div class="lrb-container lrb-container--narrow">
+    
+    <div class="lrb-customer-login__wrapper card-modern">
+      
+      <h1 class="lrb-customer-login__title text-gradient">Sign in to your account</h1>
+      
+      {%- form 'customer_login', novalidate: 'novalidate' -%}
+        {%- if form.errors -%}
+          <div class="lrb-form-errors" role="alert">
+            <h2 class="lrb-form-errors__title">
+              {{ 'templates.contact.form.error_heading' | t }}
+            </h2>
+            <ul>
+              {%- for field in form.errors -%}
+                <li>
+                  {%- if field == 'form' -%}
+                    {{ form.errors.messages[field] }}
+                  {%- else -%}
+                    <a href="#CustomerLogin-{{ field }}">
+                      {{ form.errors.translated_fields[field] | capitalize }}
+                      {{ form.errors.messages[field] }}
+                    </a>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
+        <div class="lrb-form-group">
+          <label for="CustomerEmail" class="lrb-form-label">
+            Email
+          </label>
+          <input
+            type="email"
+            name="customer[email]"
+            id="CustomerEmail"
+            class="lrb-form-input"
+            autocomplete="email"
+            autocapitalize="off"
+            {% if form.email %}value="{{ form.email }}"{% endif %}
+            aria-required="true"
+            {% if form.errors contains 'email' %}
+              aria-invalid="true"
+              aria-describedby="CustomerEmail-error"
+            {% endif %}
+          >
+          {%- if form.errors contains 'email' -%}
+            <span id="CustomerEmail-error" class="lrb-form-error">
+              {{ form.errors.translated_fields.email | capitalize }}
+              {{ form.errors.messages.email }}.
+            </span>
+          {%- endif -%}
+        </div>
+
+        <div class="lrb-form-group">
+          <label for="CustomerPassword" class="lrb-form-label">
+            Password
+          </label>
+          <input
+            type="password"
+            name="customer[password]"
+            id="CustomerPassword"
+            class="lrb-form-input"
+            autocomplete="current-password"
+            aria-required="true"
+            {% if form.errors contains 'password' %}
+              aria-invalid="true"
+              aria-describedby="CustomerPassword-error"
+            {% endif %}
+          >
+          {%- if form.errors contains 'password' -%}
+            <span id="CustomerPassword-error" class="lrb-form-error">
+              {{ form.errors.translated_fields.password | capitalize }}
+              {{ form.errors.messages.password }}.
+            </span>
+          {%- endif -%}
+        </div>
+
+        <div class="lrb-form-actions">
+          <button type="submit" class="lrb-button lrb-button--primary btn-modern">
+            Sign in
+          </button>
+          
+          <a href="{{ routes.account_recover_url }}" class="lrb-link">
+            Forgot your password?
+          </a>
+        </div>
+      {%- endform -%}
+
+      {%- comment -%} Google Sign-In Button {%- endcomment -%}
+      <div class="lrb-social-login">
+        <div class="lrb-divider">
+          <span>or</span>
+        </div>
+        
+        {%- if shop.customer_accounts_optional or shop.customer_accounts_required -%}
+          <a href="/account/login/multipass" class="lrb-button lrb-button--google btn-glow">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19.8 10.2273C19.8 9.51818 19.7364 8.83636 19.6182 8.18182H10V12.05H15.4818C15.2364 13.3 14.5273 14.3591 13.4727 15.0682V17.5773H16.7636C18.6091 15.8364 19.8 13.2727 19.8 10.2273Z" fill="#4285F4"/>
+              <path d="M10 20C12.7 20 14.9636 19.1045 16.7636 17.5773L13.4727 15.0682C12.5818 15.6682 11.4182 16.0227 10 16.0227C7.39545 16.0227 5.19091 14.2636 4.40455 11.9H0.990906V14.4909C2.77273 18.0045 6.11364 20 10 20Z" fill="#34A853"/>
+              <path d="M4.40455 11.9C4.20455 11.3 4.09091 10.6591 4.09091 10C4.09091 9.34091 4.20455 8.7 4.40455 8.1V5.50909H0.990906C0.359091 6.76364 0 8.18182 0 10C0 11.8182 0.359091 13.2364 0.990906 14.4909L4.40455 11.9Z" fill="#FBBC05"/>
+              <path d="M10 3.97727C11.5318 3.97727 12.9045 4.48182 13.9818 5.50909L16.8909 2.6C14.9591 0.781818 12.6955 0 10 0C6.11364 0 2.77273 1.99545 0.990906 5.50909L4.40455 8.1C5.19091 5.73636 7.39545 3.97727 10 3.97727Z" fill="#EA4335"/>
+            </svg>
+            Continue with Google
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="lrb-customer-login__footer">
+        <p>Don't have an account? 
+          <a href="{{ routes.account_register_url }}" class="lrb-link text-gradient">
+            Create account
+          </a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+.lrb-customer-login {
+  padding: var(--lrb-space-xl) 0;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+}
+
+.lrb-customer-login__wrapper {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: var(--lrb-space-lg);
+}
+
+.lrb-customer-login__title {
+  font-size: var(--lrb-font-size-xl);
+  font-weight: var(--lrb-font-weight-bold);
+  text-align: center;
+  margin-bottom: var(--lrb-space-lg);
+}
+
+.lrb-form-group {
+  margin-bottom: var(--lrb-space-md);
+}
+
+.lrb-form-label {
+  display: block;
+  font-weight: var(--lrb-font-weight-medium);
+  margin-bottom: var(--lrb-space-xs);
+  color: var(--lrb-color-text);
+}
+
+.lrb-form-input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid var(--lrb-color-border);
+  border-radius: 8px;
+  font-size: var(--lrb-font-size-base);
+  transition: all 0.3s ease;
+}
+
+.lrb-form-input:focus {
+  outline: none;
+  border-color: var(--lrb-color-primary);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.lrb-form-error {
+  display: block;
+  color: var(--lrb-color-error);
+  font-size: var(--lrb-font-size-sm);
+  margin-top: var(--lrb-space-xs);
+}
+
+.lrb-form-errors {
+  background: #fef2f2;
+  border: 1px solid #fee2e2;
+  border-radius: 8px;
+  padding: var(--lrb-space-md);
+  margin-bottom: var(--lrb-space-md);
+}
+
+.lrb-form-errors__title {
+  color: var(--lrb-color-error);
+  font-size: var(--lrb-font-size-md);
+  margin-bottom: var(--lrb-space-xs);
+}
+
+.lrb-form-errors ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lrb-form-errors li {
+  color: var(--lrb-color-error);
+  margin-bottom: var(--lrb-space-xs);
+}
+
+.lrb-form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lrb-space-sm);
+  margin-top: var(--lrb-space-md);
+}
+
+.lrb-button {
+  display: inline-block;
+  padding: 1rem 2rem;
+  text-align: center;
+  font-weight: var(--lrb-font-weight-semibold);
+  text-decoration: none;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.lrb-button--primary {
+  background: var(--lrb-gradient-primary);
+  color: white;
+}
+
+.lrb-button--google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: white;
+  color: var(--lrb-color-text);
+  border: 2px solid var(--lrb-color-border);
+}
+
+.lrb-button--google:hover {
+  border-color: var(--lrb-color-primary);
+}
+
+.lrb-social-login {
+  margin-top: var(--lrb-space-lg);
+}
+
+.lrb-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: var(--lrb-space-md) 0;
+}
+
+.lrb-divider::before,
+.lrb-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--lrb-color-border);
+}
+
+.lrb-divider span {
+  padding: 0 var(--lrb-space-sm);
+  color: var(--lrb-color-text-muted);
+  font-size: var(--lrb-font-size-sm);
+}
+
+.lrb-customer-login__footer {
+  text-align: center;
+  margin-top: var(--lrb-space-lg);
+  padding-top: var(--lrb-space-lg);
+  border-top: 1px solid var(--lrb-color-border);
+}
+
+.lrb-link {
+  color: var(--lrb-color-primary);
+  text-decoration: none;
+  font-weight: var(--lrb-font-weight-medium);
+  transition: opacity 0.3s ease;
+}
+
+.lrb-link:hover {
+  opacity: 0.8;
+}
+</style>

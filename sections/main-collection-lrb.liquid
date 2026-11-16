@@ -1,0 +1,234 @@
+{% comment %}
+  LRB Store Collection Page
+  Product grid with sorting, matches lrbstore.co.uk collection pages
+{% endcomment %}
+
+{{ 'lrb-components.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign sort_by = collection.sort_by | default: collection.default_sort_by
+  assign products_per_page = section.settings.products_per_page | default: 24
+-%}
+
+<div class="lrb-collection">
+  <div class="lrb-container">
+    
+    {%- comment -%} Collection Header {%- endcomment -%}
+    <div class="lrb-collection__header">
+      <h1 class="lrb-collection__title lrb-heading-xl">{{ collection.title }}</h1>
+      
+      {%- if collection.description != blank -%}
+        <div class="lrb-collection__description">
+          {{ collection.description }}
+        </div>
+      {%- endif -%}
+    </div>
+    
+    {%- comment -%} Sorting {%- endcomment -%}
+    <div class="lrb-collection__toolbar">
+      <div class="lrb-collection__sort">
+        <label for="SortBy" class="lrb-collection__sort-label">Sort by:</label>
+        <select
+          name="sort_by"
+          id="SortBy"
+          class="lrb-collection__sort-select"
+          aria-describedby="a11y-refresh-page-message"
+        >
+          {%- assign sort_options = 'manual,best-selling,title-ascending,title-descending,price-ascending,price-descending,created-ascending,created-descending' | split: ',' -%}
+          {%- for option in sort_options -%}
+            <option
+              value="{{ option }}"
+              {% if option == sort_by %}selected="selected"{% endif %}
+            >
+              {%- case option -%}
+                {%- when 'manual' -%}
+                  Featured
+                {%- when 'best-selling' -%}
+                  Best selling
+                {%- when 'title-ascending' -%}
+                  Alphabetically, A-Z
+                {%- when 'title-descending' -%}
+                  Alphabetically, Z-A
+                {%- when 'price-ascending' -%}
+                  Price, low to high
+                {%- when 'price-descending' -%}
+                  Price, high to low
+                {%- when 'created-ascending' -%}
+                  Date, old to new
+                {%- when 'created-descending' -%}
+                  Date, new to old
+              {%- endcase -%}
+            </option>
+          {%- endfor -%}
+        </select>
+      </div>
+      
+      <div class="lrb-collection__count">
+        {{ collection.products_count }} 
+        {%- if collection.products_count == 1 -%}
+          product
+        {%- else -%}
+          products
+        {%- endif -%}
+      </div>
+    </div>
+    
+    {%- comment -%} Product Grid {%- endcomment -%}
+    <div class="lrb-collection__products">
+      {%- if collection.products.size > 0 -%}
+        <div class="lrb-book-grid">
+          {%- for product in collection.products -%}
+            {% render 'product-card-lrb',
+              product: product,
+              show_vendor: section.settings.show_vendor,
+              lazy_load: true
+            %}
+          {%- endfor -%}
+        </div>
+        
+        {%- comment -%} Pagination {%- endcomment -%}
+        {%- if paginate.pages > 1 -%}
+          <div class="lrb-collection__pagination">
+            {% render 'pagination', paginate: paginate %}
+          </div>
+        {%- endif -%}
+      {%- else -%}
+        <div class="lrb-collection__empty">
+          <p>No products found in this collection.</p>
+        </div>
+      {%- endif -%}
+    </div>
+    
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const sortSelect = document.getElementById('SortBy');
+  if (sortSelect) {
+    sortSelect.addEventListener('change', function(e) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('sort_by', e.target.value);
+      window.location.href = url.toString();
+    });
+  }
+});
+</script>
+
+<style>
+.lrb-collection {
+  padding: var(--lrb-space-xl) 0;
+}
+
+.lrb-collection__header {
+  text-align: center;
+  margin-bottom: var(--lrb-space-lg);
+}
+
+.lrb-collection__title {
+  margin: 0 0 var(--lrb-space-sm) 0;
+}
+
+.lrb-collection__description {
+  max-width: var(--lrb-container-narrow);
+  margin: 0 auto;
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-base);
+  line-height: var(--lrb-line-height-relaxed);
+  color: var(--lrb-color-text-muted);
+}
+
+.lrb-collection__toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--lrb-space-lg);
+  padding-bottom: var(--lrb-space-sm);
+  border-bottom: 1px solid var(--lrb-color-border);
+}
+
+.lrb-collection__sort {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lrb-collection__sort-label {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-sm);
+  color: var(--lrb-color-text);
+}
+
+.lrb-collection__sort-select {
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  border: 1px solid var(--lrb-color-border-dark);
+  border-radius: var(--lrb-radius-sm);
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-sm);
+  background-color: var(--lrb-color-background);
+  color: var(--lrb-color-text);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%231a1a1a' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+}
+
+.lrb-collection__count {
+  font-family: var(--lrb-font-body);
+  font-size: var(--lrb-font-size-sm);
+  color: var(--lrb-color-text-muted);
+}
+
+.lrb-collection__products {
+  margin-top: var(--lrb-space-lg);
+}
+
+.lrb-collection__pagination {
+  margin-top: var(--lrb-space-xl);
+  display: flex;
+  justify-content: center;
+}
+
+.lrb-collection__empty {
+  text-align: center;
+  padding: var(--lrb-space-xl) 0;
+  font-family: var(--lrb-font-body);
+  color: var(--lrb-color-text-muted);
+}
+
+@media (max-width: 767px) {
+  .lrb-collection__toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--lrb-space-sm);
+  }
+  
+  .lrb-collection__sort-select {
+    width: 100%;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Collection LRB",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 24,
+      "label": "Products per page"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "Show product vendor/designer"
+    }
+  ]
+}
+{% endschema %}

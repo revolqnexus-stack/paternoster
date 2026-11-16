@@ -1,0 +1,237 @@
+{% comment %}
+  LRB Store - Customer Registration Page
+  Modern sign-up form with Google OAuth
+{% endcomment %}
+
+{{ 'lrb-animations.css' | asset_url | stylesheet_tag }}
+
+<div class="lrb-customer-register animate-on-scroll" data-animation="fade-in-up">
+  <div class="lrb-container lrb-container--narrow">
+    
+    <div class="lrb-customer-register__wrapper card-modern">
+      
+      <h1 class="lrb-customer-register__title text-gradient">Create your account</h1>
+      
+      {%- form 'create_customer', novalidate: 'novalidate' -%}
+        {%- if form.errors -%}
+          <div class="lrb-form-errors" role="alert">
+            <h2 class="lrb-form-errors__title">
+              Please fix the following:
+            </h2>
+            <ul>
+              {%- for field in form.errors -%}
+                <li>
+                  {%- if field == 'form' -%}
+                    {{ form.errors.messages[field] }}
+                  {%- else -%}
+                    {{ form.errors.translated_fields[field] | capitalize }}
+                    {{ form.errors.messages[field] }}
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
+        <div class="lrb-form-row">
+          <div class="lrb-form-group">
+            <label for="RegisterForm-FirstName" class="lrb-form-label">
+              First name
+            </label>
+            <input
+              type="text"
+              name="customer[first_name]"
+              id="RegisterForm-FirstName"
+              class="lrb-form-input"
+              autocomplete="given-name"
+              {% if form.first_name %}value="{{ form.first_name }}"{% endif %}
+            >
+          </div>
+
+          <div class="lrb-form-group">
+            <label for="RegisterForm-LastName" class="lrb-form-label">
+              Last name
+            </label>
+            <input
+              type="text"
+              name="customer[last_name]"
+              id="RegisterForm-LastName"
+              class="lrb-form-input"
+              autocomplete="family-name"
+              {% if form.last_name %}value="{{ form.last_name }}"{% endif %}
+            >
+          </div>
+        </div>
+
+        <div class="lrb-form-group">
+          <label for="RegisterForm-email" class="lrb-form-label">
+            Email <span class="required">*</span>
+          </label>
+          <input
+            type="email"
+            name="customer[email]"
+            id="RegisterForm-email"
+            class="lrb-form-input"
+            spellcheck="false"
+            autocapitalize="off"
+            autocomplete="email"
+            aria-required="true"
+            {% if form.email %}value="{{ form.email }}"{% endif %}
+            {% if form.errors contains 'email' %}
+              aria-invalid="true"
+              aria-describedby="RegisterForm-email-error"
+            {% endif %}
+          >
+          {%- if form.errors contains 'email' -%}
+            <span id="RegisterForm-email-error" class="lrb-form-error">
+              {{ form.errors.translated_fields.email | capitalize }}
+              {{ form.errors.messages.email }}.
+            </span>
+          {%- endif -%}
+        </div>
+
+        <div class="lrb-form-group">
+          <label for="RegisterForm-password" class="lrb-form-label">
+            Password <span class="required">*</span>
+          </label>
+          <input
+            type="password"
+            name="customer[password]"
+            id="RegisterForm-password"
+            class="lrb-form-input"
+            aria-required="true"
+            {% if form.errors contains 'password' %}
+              aria-invalid="true"
+              aria-describedby="RegisterForm-password-error"
+            {% endif %}
+          >
+          {%- if form.errors contains 'password' -%}
+            <span id="RegisterForm-password-error" class="lrb-form-error">
+              {{ form.errors.translated_fields.password | capitalize }}
+              {{ form.errors.messages.password }}.
+            </span>
+          {%- endif -%}
+          <small class="lrb-form-hint">Must be at least 5 characters</small>
+        </div>
+
+        <div class="lrb-form-checkbox">
+          <input
+            type="checkbox"
+            name="customer[accepts_marketing]"
+            id="RegisterForm-newsletter"
+            class="lrb-checkbox"
+          >
+          <label for="RegisterForm-newsletter" class="lrb-checkbox-label">
+            Send me exclusive offers and updates
+          </label>
+        </div>
+
+        <div class="lrb-form-actions">
+          <button type="submit" class="lrb-button lrb-button--primary btn-modern">
+            Create account
+          </button>
+        </div>
+      {%- endform -%}
+
+      {%- comment -%} Google Sign-Up Button {%- endcomment -%}
+      <div class="lrb-social-login">
+        <div class="lrb-divider">
+          <span>or</span>
+        </div>
+        
+        <a href="/account/login/multipass" class="lrb-button lrb-button--google btn-glow">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19.8 10.2273C19.8 9.51818 19.7364 8.83636 19.6182 8.18182H10V12.05H15.4818C15.2364 13.3 14.5273 14.3591 13.4727 15.0682V17.5773H16.7636C18.6091 15.8364 19.8 13.2727 19.8 10.2273Z" fill="#4285F4"/>
+            <path d="M10 20C12.7 20 14.9636 19.1045 16.7636 17.5773L13.4727 15.0682C12.5818 15.6682 11.4182 16.0227 10 16.0227C7.39545 16.0227 5.19091 14.2636 4.40455 11.9H0.990906V14.4909C2.77273 18.0045 6.11364 20 10 20Z" fill="#34A853"/>
+            <path d="M4.40455 11.9C4.20455 11.3 4.09091 10.6591 4.09091 10C4.09091 9.34091 4.20455 8.7 4.40455 8.1V5.50909H0.990906C0.359091 6.76364 0 8.18182 0 10C0 11.8182 0.359091 13.2364 0.990906 14.4909L4.40455 11.9Z" fill="#FBBC05"/>
+            <path d="M10 3.97727C11.5318 3.97727 12.9045 4.48182 13.9818 5.50909L16.8909 2.6C14.9591 0.781818 12.6955 0 10 0C6.11364 0 2.77273 1.99545 0.990906 5.50909L4.40455 8.1C5.19091 5.73636 7.39545 3.97727 10 3.97727Z" fill="#EA4335"/>
+          </svg>
+          Continue with Google
+        </a>
+      </div>
+
+      <div class="lrb-customer-register__footer">
+        <p>Already have an account? 
+          <a href="{{ routes.account_login_url }}" class="lrb-link text-gradient">
+            Sign in
+          </a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+.lrb-customer-register {
+  padding: var(--lrb-space-xl) 0;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+}
+
+.lrb-customer-register__wrapper {
+  max-width: 540px;
+  margin: 0 auto;
+  padding: var(--lrb-space-lg);
+}
+
+.lrb-customer-register__title {
+  font-size: var(--lrb-font-size-xl);
+  font-weight: var(--lrb-font-weight-bold);
+  text-align: center;
+  margin-bottom: var(--lrb-space-lg);
+}
+
+.lrb-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--lrb-space-md);
+  margin-bottom: var(--lrb-space-md);
+}
+
+@media (max-width: 640px) {
+  .lrb-form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lrb-form-hint {
+  display: block;
+  font-size: var(--lrb-font-size-sm);
+  color: var(--lrb-color-text-muted);
+  margin-top: var(--lrb-space-xs);
+}
+
+.lrb-form-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--lrb-space-sm);
+  margin: var(--lrb-space-md) 0;
+}
+
+.lrb-checkbox {
+  margin-top: 0.25rem;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 2px solid var(--lrb-color-border);
+  cursor: pointer;
+}
+
+.lrb-checkbox:checked {
+  background: var(--lrb-color-primary);
+  border-color: var(--lrb-color-primary);
+}
+
+.lrb-checkbox-label {
+  font-size: var(--lrb-font-size-sm);
+  color: var(--lrb-color-text);
+  cursor: pointer;
+  user-select: none;
+}
+
+.required {
+  color: var(--lrb-color-error);
+}
+</style>
