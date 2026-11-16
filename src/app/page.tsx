@@ -68,56 +68,120 @@ export default async function Home() {
 
   return (
     <div className="page-wrap">
-      {/* Featured article — large, text-first */}
-      <section className="featured-article">
-        <p className="featured-kicker">Featured</p>
-        <h1 className="featured-title">
-          {featured.title}
-        </h1>
-        <p className="featured-byline">
-          By {featured.author}
-        </p>
-        <p className="featured-excerpt">
-          {featured.excerpt}
-        </p>
+      {/* Hero — full-bleed image with overlay text */}
+      <section className="hero">
+        <ImageWithFallback
+          src={featured.image}
+          alt={featured.imageAlt}
+          className="hero-image"
+          fallbackKey="reading"
+        />
+        <div className="hero-overlay" />
+        <div className="hero-content">
+          <p className="hero-kicker">Featured</p>
+          <h1 className="hero-title">
+            {featured.title}
+          </h1>
+          <p className="hero-byline">
+            By {featured.author}
+          </p>
+          <p className="hero-excerpt">
+            {featured.excerpt}
+          </p>
+          <a
+            href="/"
+            className="text-ink underline underline-offset-2 hover:text-muted transition-colors"
+          >
+            Read the essay →
+          </a>
+        </div>
       </section>
 
-      <hr className="section-divider" />
+      <hr className="hairline mb-8 md:mb-12" />
 
       {/* Contents list — LRB style */}
-      <section className="article-list section">
+      <section className="section-md">
         <h2 className="section-title">In this issue</h2>
-        {rest.map((article, idx) => (
-          <div
-            key={article.title}
-            className="article-row"
-          >
-            <div className="article-number">
-              0{idx + 1}
-            </div>
-            <div className="article-content">
-              <p className="article-author">
-                {article.author}
-              </p>
-              <a
-                href="/"
-                className="article-title"
-              >
-                {article.title}
-              </a>
-              {article.date && (
-                <p className="article-date">
-                  {article.date}
+        <div className="article-list">
+          {rest.map((article, idx) => (
+            <div
+              key={article.title}
+              className="article-row"
+            >
+              <div className="article-number">
+                0{idx + 1}
+              </div>
+              <div className="article-content">
+                <p className="article-author">
+                  {article.author}
                 </p>
-              )}
+                <a
+                  href="/"
+                  className="article-title"
+                >
+                  {article.title}
+                </a>
+                {article.date && (
+                  <p className="article-date">
+                    {article.date}
+                  </p>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </section>
 
-      <hr className="section-divider" />
+      <hr className="hairline mb-8 md:mb-12" />
 
-      {/* Shop section — simple */}
+      {/* Editorial essay grid — asymmetric */}
+      <section className="section">
+        <h2 className="section-title">Writing</h2>
+        <div className="grid-12">
+          {rest.map((article, idx) => {
+            const isLarge = idx % 2 === 0;
+            return (
+              <div
+                key={article.title}
+                className=""
+                style={{ gridColumn: `span ${isLarge ? 7 : 5}` }}
+              >
+                <article className="article-card">
+                  <div className="article-card-image">
+                    <ImageWithFallback
+                      src={article.image}
+                      alt={article.imageAlt}
+                      className="w-full h-full object-cover"
+                      fallbackKey="bookshelf"
+                    />
+                  </div>
+                  <p className="article-card-category">
+                    Editorial
+                  </p>
+                  <a
+                    href="/"
+                    className="article-card-title"
+                  >
+                    {article.title}
+                  </a>
+                  <p className="article-author">
+                    {article.author}
+                  </p>
+                  {article.date && (
+                    <p className="article-date">
+                      {article.date}
+                    </p>
+                  )}
+                </article>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <hr className="hairline mb-8 md:mb-12" />
+
+      {/* Shop section */}
       {products.length > 0 && (
         <section className="section-md border-t border-hairline pt-6">
           <h2 className="section-title">From the shop</h2>

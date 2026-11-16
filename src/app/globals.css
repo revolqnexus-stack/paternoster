@@ -1,15 +1,14 @@
 @import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Serif+4:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
-/* Pater Noster — lrb.co.uk aesthetic */
-/* Clean text-first newspaper/magazine: black serif on cream, hairline rules */
+/* Pater Noster — editorial layout, LRB palette */
+/* Cream paper, black serif, hairline rules, full-bleed photography, asymmetric grids */
 
 :root {
   --paper: #f8f6f0;
   --ink: #000000;
   --muted: #4a4a4a;
   --hairline: #d9d6cc;
-  --link: #000000;
   --max-width-page: 1200px;
   --max-width-measure: 65ch;
 }
@@ -19,7 +18,6 @@
   --color-ink: var(--ink);
   --color-muted: var(--muted);
   --color-hairline: var(--hairline);
-  --color-link: var(--link);
 
   --font-serif: "Playfair Display", Georgia, serif;
   --font-serif-body: "Source Serif 4", Georgia, serif;
@@ -27,6 +25,11 @@
 
   --max-width-page: 1200px;
   --max-width-measure: 65ch;
+
+  /* Type scale */
+  --step-display: clamp(2.5rem, 7vw, 4rem);
+  --step-h1: clamp(1.75rem, 4vw, 2.5rem);
+  --step-h2: clamp(1.25rem, 2vw, 1.75rem);
 }
 
 *,
@@ -60,17 +63,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: var(--step-display);
   letter-spacing: -0.02em;
 }
 
 h2 {
-  font-size: 1.75rem;
+  font-size: var(--step-h1);
   letter-spacing: -0.01em;
 }
 
 h3 {
-  font-size: 1.25rem;
+  font-size: var(--step-h2);
 }
 
 p {
@@ -81,9 +84,9 @@ p {
 .font-serif-body { font-family: var(--font-serif-body); }
 .font-mono { font-family: var(--font-mono); }
 
-/* Links — black, understated */
+/* Links — black with subtle underline */
 a {
-  color: var(--color-link);
+  color: var(--color-ink);
   text-decoration: underline;
   text-underline-offset: 2px;
   text-decoration-thickness: 1px;
@@ -94,7 +97,7 @@ a:hover {
   color: var(--color-muted);
 }
 
-/* Small caps — tracked */
+/* Small caps — tracked mono */
 .small-caps {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
@@ -140,7 +143,7 @@ a:hover {
   padding: 0 2rem;
 }
 
-/* Header / Masthead — LRB style: logo left, nav right, simple */
+/* Header / Masthead — LRB style */
 .masthead {
   border-bottom: 1px solid var(--color-hairline);
   padding: 1.5rem 0;
@@ -181,56 +184,90 @@ a:hover {
   text-decoration: none;
 }
 
-/* Featured article — large, text-first */
-.featured-article {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+/* Hero — full-bleed image with overlay text */
+.hero {
+  position: relative;
+  min-height: 70svh;
+  overflow: hidden;
   margin-bottom: 3rem;
 }
 
-.featured-kicker {
+.hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0.05) 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 4rem 2rem;
+  max-width: var(--max-width-measure);
+}
+
+.hero-kicker {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
   font-weight: 400;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--color-muted);
+  display: block;
+  margin-bottom: 1rem;
 }
 
-.featured-title {
+.hero-title {
   font-family: var(--font-serif);
   font-weight: 500;
-  font-size: clamp(2rem, 5vw, 3rem);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
   color: var(--color-ink);
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
 }
 
-.featured-byline {
+.hero-byline {
   font-family: var(--font-serif-body);
   font-size: 0.875rem;
   font-style: italic;
   color: var(--color-muted);
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
 }
 
-.featured-excerpt {
+.hero-excerpt {
   font-family: var(--font-serif-body);
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   line-height: 1.7;
   color: var(--color-ink);
-  max-width: var(--max-width-measure);
+  margin-bottom: 1.5rem;
 }
 
-/* Article list — LRB contents style */
-.article-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+/* Editorial grid — asymmetric, LRB palette */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 2rem;
+  width: 100%;
+  margin-bottom: 3rem;
 }
 
+@media (min-width: 1025px) {
+  .grid-12 { gap: 3rem; }
+}
+
+@media (max-width: 768px) {
+  .grid-12 { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+
+/* Article row — contents list style */
 .article-row {
   display: grid;
   grid-template-columns: 1fr 3fr;
@@ -243,48 +280,14 @@ a:hover {
   border-bottom: none;
 }
 
-.article-number {
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
-  font-weight: 400;
-  color: var(--color-muted);
-  text-align: right;
+@media (max-width: 768px) {
+  .article-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 }
 
-.article-content {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.article-author {
-  font-family: var(--font-serif-body);
-  font-size: 0.875rem;
-  font-style: italic;
-  color: var(--color-muted);
-}
-
-.article-title {
-  font-family: var(--font-serif);
-  font-weight: 500;
-  font-size: 1.25rem;
-  line-height: 1.3;
-  color: var(--color-ink);
-  text-decoration: none;
-}
-
-.article-title:hover {
-  color: var(--color-muted);
-  text-decoration: underline;
-}
-
-.article-date {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--color-muted);
-}
-
-/* Article card — for shop/essays grid */
+/* Article card — 3/4 portrait image, text below */
 .article-card {
   display: flex;
   flex-direction: column;
@@ -334,7 +337,7 @@ a:hover {
   color: var(--color-ink);
 }
 
-/* Section title — LRB style */
+/* Section title */
 .section-title {
   font-family: var(--font-serif);
   font-weight: 500;
@@ -344,7 +347,6 @@ a:hover {
   margin-bottom: 1.5rem;
 }
 
-/* Layout containers */
 .section { padding: 3rem 0; }
 .section-md { padding: 2.5rem 0; }
 
@@ -364,20 +366,3 @@ a:hover {
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--color-paper); }
 ::-webkit-scrollbar-thumb { background: var(--color-hairline); border-radius: 4px; }
-
-/* Responsive */
-@media (max-width: 768px) {
-  .article-row {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  .article-number {
-    text-align: left;
-  }
-  .masthead-nav {
-    gap: 1rem;
-  }
-  .masthead-nav a {
-    font-size: 0.875rem;
-  }
-}
