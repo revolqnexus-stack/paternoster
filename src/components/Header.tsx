@@ -13,7 +13,7 @@ export default function Header() {
 
   return (
     <>
-      {/* Masthead — Vogue editorial style */}
+      {/* Masthead — Vogue editorial style, compact */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -33,6 +33,7 @@ export default function Header() {
               whileHover={{ x: 5 }}
               href="/"
               className="text-ink hover:text-accent transition-colors"
+              data-cursor="view"
             >
               Home
             </motion.a>
@@ -40,6 +41,7 @@ export default function Header() {
               whileHover={{ x: 5 }}
               href="/products"
               className="text-ink hover:text-accent transition-colors"
+              data-cursor="view"
             >
               Shop
             </motion.a>
@@ -47,6 +49,7 @@ export default function Header() {
               whileHover={{ x: 5 }}
               href="/about"
               className="text-ink hover:text-accent transition-colors"
+              data-cursor="view"
             >
               About
             </motion.a>
@@ -54,6 +57,7 @@ export default function Header() {
               onClick={() => setCartDrawerOpen(true)}
               className="text-ink hover:text-accent transition-colors p-0 bg-none border-none font-serif-body text-sm"
               aria-label="Cart"
+              data-cursor="view"
             >
               <ShoppingBag size={16} strokeWidth={1.5} />
               {cartCount > 0 && (
@@ -89,6 +93,7 @@ export default function Header() {
               onClick={() => setCartDrawerOpen(false)}
               className="absolute top-4 right-4 p-2 rounded hover:bg-paper/50 transition-colors"
               aria-label="Close"
+              data-cursor="view"
             >
               <span className="block w-5 h-0.5 bg-ink mb-1"></span>
               <span className="block w-5 h-0.5 bg-ink"></span>

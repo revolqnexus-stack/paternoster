@@ -4,6 +4,7 @@ import Link from 'next/link';
 import ImageWithFallback from '@/components/ImageWithFallback';
 import { stockImage } from '@/lib/stock-images';
 import { motion } from 'framer-motion';
+import LiquidBoundary from '@/components/LiquidBoundary';
 
 interface Article {
   title: string;
@@ -44,81 +45,84 @@ interface HomeClientProps {
 export default function HomeClient({ featured, rest, products }: HomeClientProps) {
   return (
     <div className="page-wrap">
-      {/* ===== HERO — full width bg, two-column editorial ===== */}
-      <section className="section-full hero-bg">
-        <div className="container section-padding-lg">
-          <div className="hero-content-wrap">
-            <div className="hero-image-col">
-              <div className="hero-image-wrap">
-                <motion.div
-                  initial={{ scale: 1.15 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] as const }}
-                  className="hero-image"
-                >
-                  <ImageWithFallback
-                    src={featured.image}
-                    alt={featured.imageAlt}
-                    className="w-full h-full object-cover"
-                    fallbackKey="reading"
-                  />
-                </motion.div>
-                <div className="hero-overlay" />
+      {/* ===== HERO — full width bg, liquid glass edges, two-column editorial ===== */}
+      <LiquidBoundary className="hero-bg">
+        <section className="section-full">
+          <div className="container section-padding-lg">
+            <div className="hero-content-wrap">
+              <div className="hero-image-col">
+                <div className="hero-image-wrap">
+                  <motion.div
+                    initial={{ scale: 1.15 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] as const }}
+                    className="hero-image"
+                  >
+                    <ImageWithFallback
+                      src={featured.image}
+                      alt={featured.imageAlt}
+                      className="w-full h-full object-cover"
+                      fallbackKey="reading"
+                    />
+                  </motion.div>
+                  <div className="hero-overlay" />
+                </div>
               </div>
-            </div>
-            <div className="hero-text-col">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] as const }}
-                className="hero-content"
-              >
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.6 }}
-                  className="hero-kicker"
-                >
-                  Featured
-                </motion.p>
-                <motion.h1
+              <div className="hero-text-col">
+                <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.8 }}
-                  className="hero-title"
+                  transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] as const }}
+                  className="hero-content"
                 >
-                  {featured.title}
-                </motion.h1>
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6, duration: 0.6 }}
-                  className="hero-byline"
-                >
-                  By {featured.author}
-                </motion.p>
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8, duration: 0.8 }}
-                  className="hero-excerpt"
-                >
-                  {featured.excerpt}
-                </motion.p>
-                <motion.a
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1, duration: 0.6 }}
-                  href="/"
-                  className="text-ink underline underline-offset-2 hover:text-accent transition-colors font-serif"
-                >
-                  Read the essay →
-                </motion.a>
-              </motion.div>
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2, duration: 0.6 }}
+                    className="hero-kicker"
+                  >
+                    Featured
+                  </motion.p>
+                  <motion.h1
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.8 }}
+                    className="hero-title"
+                  >
+                    {featured.title}
+                  </motion.h1>
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6, duration: 0.6 }}
+                    className="hero-byline"
+                  >
+                    By {featured.author}
+                  </motion.p>
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8, duration: 0.8 }}
+                    className="hero-excerpt"
+                  >
+                    {featured.excerpt}
+                  </motion.p>
+                  <motion.a
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1, duration: 0.6 }}
+                    href="/"
+                    className="text-ink underline underline-offset-2 hover:text-accent transition-colors font-serif"
+                    data-cursor="view"
+                  >
+                    Read the essay →
+                  </motion.a>
+                </motion.div>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </LiquidBoundary>
 
       <hr className="hairline mb-8 md:mb-12" />
 
@@ -164,6 +168,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
                     transition={{ delay: 0.15 + idx * 0.05, duration: 0.5 }}
                     href="/"
                     className="issue-title"
+                    data-cursor="view"
                   >
                     {article.title}
                   </motion.a>
@@ -205,7 +210,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
                   style={{ gridColumn: `span ${isLarge ? 7 : 5}` }}
                   transition={{ delay: idx * 0.1 }}
                 >
-                  <article className="article-card">
+                  <article className="article-card glass-card">
                     <motion.div
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
@@ -233,6 +238,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
                       transition={{ delay: 0.3 + idx * 0.05, duration: 0.5 }}
                       href="/"
                       className="article-card-title"
+                      data-cursor="view"
                     >
                       {article.title}
                     </motion.a>
@@ -313,11 +319,12 @@ function ProductCard({ product }: ProductCardProps) {
       whileHover={{ y: -5 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
       className="block"
+      data-cursor="view"
     >
       <motion.article
         whileHover={{ y: -5 }}
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        className="article-card"
+        className="article-card glass-card"
       >
         <div className="article-card-image">
           {images[0]?.url ? (
@@ -345,6 +352,7 @@ function ProductCard({ product }: ProductCardProps) {
           href={`/products/${product.handle}`}
           className="article-card-title"
           whileHover={{ color: 'rgba(26,26,26,0.7)' }}
+          data-cursor="view"
         >
           {product.title}
         </motion.a>

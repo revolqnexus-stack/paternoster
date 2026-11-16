@@ -2,10 +2,16 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import Aurora from '@/components/Aurora';
 
 export default function Footer() {
   return (
     <footer className="bg-ink-black border-line">
+      {/* Aurora champagne glow behind footer */}
+      <div className="absolute inset-0 z-0 -z-10 pointer-events-none">
+        <Aurora colorSticks={['#c9a266', '#efece3', '#c9a266']} amplitude={0.6} blend={0.4} />
+      </div>
+
       <div className="footer-bg">
         <div className="footer-inner relative z-1">
           {/* Ghost wordmark — light on black */}

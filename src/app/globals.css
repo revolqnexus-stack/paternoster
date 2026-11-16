@@ -250,14 +250,13 @@ a:hover { color: var(--color-accent); }
   width: 100%;
   border-bottom: 1px solid var(--color-hairline);
   background: var(--color-paper);
-  position: relative;
 }
 
 .masthead-inner {
   width: 100%;
   max-width: var(--container-wide);
   margin-inline: auto;
-  padding: 1.5rem var(--gutter);
+  padding: 0.85rem var(--gutter);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -272,7 +271,7 @@ a:hover { color: var(--color-accent); }
 .masthead-logo {
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
   letter-spacing: -0.02em;
   text-decoration: none;
   color: var(--color-ink);
@@ -886,8 +885,67 @@ footer {
 }
 
 /* ============================================================
-   Reduce motion
+   Liquid glass — Revol-Q animation utilities
    ============================================================ */
+
+.liquid-glass-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.liquid-edge {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 40px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.liquid-edge-top {
+  top: 0;
+}
+
+.liquid-edge-bottom {
+  bottom: 0;
+}
+
+.liquid-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.liquid-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Glass card utility for article cards */
+.glass-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.glass-card:hover::before {
+  opacity: 1;
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

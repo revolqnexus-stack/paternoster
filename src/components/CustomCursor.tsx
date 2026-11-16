@@ -1,16 +1,16 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 /**
- * Custom cursor: small circle that follows the mouse.
- * Grows to a "VIEW" label when hovering over elements with data-cursor attribute.
- * Respects prefers-reduced-motion.
+ * Custom cursor — Revol-Q style.
+ * Small champagne dot that follows the mouse.
+ * Grows to a "VIEW" label when hovering over interactive elements.
+ * mix-blend-mode: multiply so it's visible on both light and dark backgrounds.
  */
 export default function CustomCursor() {
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [state, setState] = useState<'default' | 'view'>('default');
-  const cursorRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useRef<boolean>(false);
 
   useEffect(() => {
@@ -47,26 +47,32 @@ export default function CustomCursor() {
     };
   }, []);
 
-  const cursorStyle = {
-    transform: `translate(${pos.x}px, ${pos.y}px) translate(-50%, -50%)`,
-  };
-
   if (reducedMotion.current) return null;
 
   return (
     <div
-      ref={cursorRef}
-      className="fixed z-[9999] pointer-events-none rounded-full border border-ink/30 bg-ink/10 transition-all duration-300 ease-out"
+      className="fixed z-[99999] pointer-events-none rounded-full transition-all duration-300 ease-out"
       style={{
-        ...cursorStyle,
-        width: state === 'view' ? 60 : 24,
-        height: state === 'view' ? 60 : 24,
-        backgroundColor: state === 'view' ? 'rgba(10, 31, 51, 0.9)' : 'rgba(10, 10, 10, 0.6)',
-        borderColor: state === 'view' ? 'transparent' : 'rgba(10, 10, 10, 0.3)',
+        transform: `translate(${pos.x}px, ${pos.y}px) translate(-50%, -50%)`,
+        width: state === 'view' ? 64 : 20,
+        height: state === 'view' ? 64 : 20,
+        backgroundColor: state === 'view' ? 'rgba(201, 162, 102, 0.9)' : 'rgba(201, 162, 102, 0.85)',
+        borderColor: state === 'view' ? 'transparent' : 'rgba(201, 162, 102, 0.5)',
+        mixBlendMode: state === 'view' ? 'screen' : 'multiply',
+        border: state === 'view' ? 'none' : '1px solid rgba(201, 162, 102, 0.5)',
       }}
     >
       {state === 'view' && (
-        <span className="font-grotesk text-[0.6rem] font-medium text-paper uppercase tracking-wider leading-none">
+        <span
+          className="font-mono text-[0.65rem] font-medium text-ink uppercase tracking-wider leading-none"
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            opacity: state === 'view' ? 1 : 0,
+          }}
+        >
           VIEW
         </span>
       )}
