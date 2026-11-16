@@ -8,7 +8,12 @@ export const metadata = {
 };
 
 export default async function ProductsPage() {
-  const products = await getProducts(40);
+  let products: any[] = [];
+  try {
+    products = await getProducts(40);
+  } catch {
+    products = [];
+  }
 
   return (
     <div className="min-h-screen bg-ivory">

@@ -3,7 +3,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export default async function Home() {
-  const products = await getProducts(8);
+  let products: any[] = [];
+  try {
+    products = await getProducts(8);
+  } catch {
+    products = [];
+  }
 
   return (
     <div className="min-h-screen bg-ivory">

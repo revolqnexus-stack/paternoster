@@ -15,7 +15,12 @@ export default async function CollectionPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const products = await getProducts(40);
+  let products: any[] = [];
+  try {
+    products = await getProducts(40);
+  } catch {
+    products = [];
+  }
 
   // Filter by tag/collection slug for now (Shopify collection query can be added later)
   const filteredProducts = slug === 'all'
