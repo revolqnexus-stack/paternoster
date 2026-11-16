@@ -9,10 +9,10 @@ import CartDrawer from '@/components/CartDrawer';
 
 const MENU_ITEMS = [
   { index: '01', label: 'Home', href: '/' },
-  { index: '02', label: 'Shop', href: '/products' },
-  { index: '03', label: 'Books', href: '/collections/books' },
-  { index: '04', label: 'About', href: '/about' },
-  { index: '05', label: 'Subscribe', href: '#subscribe' },
+  { index: '02', label: 'Journal', href: '/products' },
+  { index: '03', label: 'Shop', href: '/collections/books' },
+  { index: '04', label: 'Books', href: '/collections/merchandise' },
+  { index: '05', label: 'About', href: '/about' },
 ];
 
 export default function Header() {
@@ -23,12 +23,14 @@ export default function Header() {
 
   // Scroll-driven logo scale and header background
   const { scrollY } = useScroll({ offset: ['start', 'end 300px'] });
-  const logoScale = useTransform(scrollY, [0, 300], [1, 0.55]);
+  const logoScale = useTransform(scrollY, [0, 300], [1, 0.6]);
   const headerBg = useTransform(
     scrollY,
     [0, 300],
-    ['rgba(250,250,247,0)', 'rgba(250,250,247,0.85)']
+    ['rgba(247,245,239,0)', 'rgba(247,245,239,0.85)']
   );
+
+  const [scrolled, setScrolled] = useState(false);
 
   // Hide on scroll down, reveal on scroll up
   const [isScrollingDown, setIsScrollingDown] = useState(false);
@@ -39,6 +41,7 @@ export default function Header() {
     let ticking = false;
     const onScroll = () => {
       const current = window.scrollY;
+      setScrolled(current > 0);
       if (current > 400) setHasScrolledPastThreshold(true);
       if (!ticking) {
         window.requestAnimationFrame(() => {
@@ -68,16 +71,36 @@ export default function Header() {
 
   return (
     <>
+      {/* Masthead strip (LRB) */}
+      <div
+        className="border-b border-hairline bg-paper py-1 md:py-2 z-30"
+        style={{
+          transform: isScrollingDown && hasScrolledPastThreshold
+            ? 'translateY(-100%)'
+            : 'translateY(0)',
+          transition: 'transform 0.4s cubic-bezier(0.76, 0, 0.24, 1)',
+        }}
+      >
+        <div className="page-container-header flex items-center justify-between text-[0.6875rem] font-ui-sans font-medium uppercase tracking-widest text-muted">
+          <span>Vol. 48 · No. 22</span>
+          <time dateTime="2026-11-16">16 November 2026</time>
+          <a href="#subscribe" className="text-ink hover:text-blue transition-colors">
+            Log in
+          </a>
+        </div>
+      </div>
+
+      {/* Header (Vogue) */}
       <header
-        className={`fixed top-0 left-0 right-0 z-40 border-b border-border pointer-events-auto transition-all duration-500 ease-out ${
+        className={`fixed top-0 left-0 right-0 z-40 border-b border-hairline pointer-events-auto transition-all duration-500 ease-out ${
           isScrollingDown && hasScrolledPastThreshold
             ? '-translate-y-full'
             : ''
         }`}
         style={{
           background: headerBg as unknown as string,
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
+          backdropFilter: scrolled ? 'blur(12px)' : 'none',
+          WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none',
         }}
       >
         <div className="page-container-header">
@@ -94,17 +117,17 @@ export default function Header() {
             <div className="col-start-1">
               <button
                 onClick={toggleMenu}
-                className="p-2 rounded hover:bg-paper/50 transition-colors"
+                className="p-2 rounded-sm hover:bg-paper-2 transition-colors"
                 aria-label="Menu"
               >
                 <Menu size={20} strokeWidth={2.5} />
               </button>
             </div>
 
-            {/* Center: logo */}
+            {/* Center: logo — bold, caps, normal (not italic), normal size */}
             <div className="col-start-2 text-center">
               <Link href="/" className="flex-shrink-0 block" onClick={closeMenu}>
-                <h1 className="font-display text-[clamp(1.5rem,4vw,2.5rem)] font-normal text-ink tracking-tight italic leading-none">
+                <h1 className="font-display font-bold text-[clamp(1.5rem,4vw,2rem)] text-ink tracking-[-0.02em] leading-none uppercase">
                   Pater Noster
                 </h1>
               </Link>
@@ -114,19 +137,19 @@ export default function Header() {
             <div className="col-start-3 flex justify-end items-center gap-3">
               <button
                 onClick={() => setCartDrawerOpen(true)}
-                className="relative p-2 rounded hover:bg-paper/50 transition-colors"
+                className="relative p-2 rounded-sm hover:bg-paper-2 transition-colors"
                 aria-label="Cart"
               >
                 <ShoppingBag size={18} strokeWidth={2} />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-ink text-paper text-[10px] rounded-full w-4 h-4 flex items-center justify-center font-medium">
+                  <span className="absolute -top-1 -right-1 bg-ink text-blue-ink text-[10px] rounded-full w-4 h-4 flex items-center justify-center font-medium">
                     {cartCount}
                   </span>
                 )}
               </button>
               <a
                 href="#subscribe"
-                className="px-4 py-2 bg-ink text-paper font-grotesk text-[0.8rem] font-medium uppercase tracking-wider rounded hover:bg-navy-light transition-colors"
+                className="px-5 py-2 bg-blue text-blue-ink font-ui-sans text-[0.7rem] font-medium uppercase tracking-wider rounded-sm hover:bg-ink hover:text-blue-ink transition-colors"
               >
                 Subscribe
               </a>
@@ -135,28 +158,26 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Full-screen editorial overlay menu */}
+      {/* Full-screen editorial overlay menu (blue background) */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
             initial={{ clipPath: 'circle(0% at 50% 0%)' }}
             animate={{ clipPath: 'circle(150% at 50% 0%)' }}
             exit={{ clipPath: 'circle(0% at 50% 0%)' }}
-            className="fixed inset-0 z-50 bg-paper"
+            className="fixed inset-0 z-50 bg-blue"
             transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] as const }}
           >
-            <div className="page-container-header py-6 md:py-8 border-b border-border mb-20 md:mb-32">
-              <div className="flex items-center justify-between">
-                <h2 className="font-display text-xl md:text-2xl font-normal text-ink tracking-tight italic">
-                  Menu
-                </h2>
-                <button
-                  onClick={closeMenu}
-                  className="p-2 rounded hover:bg-paper/50 transition-colors"
-                >
-                  <X size={20} strokeWidth={2.5} />
-                </button>
-              </div>
+            <div className="page-container-header py-6 md:py-8 border-b border-blue-ink/20 mb-20 md:mb-32 relative">
+              <button
+                onClick={closeMenu}
+                className="absolute top-6 right-6 p-2 rounded-sm hover:bg-blue-ink/10 transition-colors"
+              >
+                <X size={20} strokeWidth={2.5} className="text-paper" />
+              </button>
+              <h2 className="font-display text-xl md:text-2xl font-normal text-blue-ink tracking-tight italic">
+                Menu
+              </h2>
             </div>
 
             <motion.div
@@ -170,23 +191,39 @@ export default function Header() {
                   .a
                   href={item.href}
                   onClick={closeMenu}
-                  whileHover={{ y: -2 }}
+                  whileHover={{ x: 24 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                   key={item.index}
                   className={`block mb-12 md:mb-16 group relative inline-block ${
-                    item.href === window.location.pathname ? 'text-navy' : 'text-ink'
+                    item.href === window.location.pathname ? 'text-blue-ink' : 'text-paper'
                   }`}
                 >
-                  <span className="block text-gray-light text-xs md:text-sm uppercase tracking-widest mb-1 font-serif font-normal">
+                  <span className="block text-blue-ink/50 text-xs md:text-sm uppercase tracking-widest mb-1 font-ui-sans font-medium">
                     {item.index}
                   </span>
                   <motion.span
-                    className="block text-4xl md:text-5xl lg:text-6xl font-serif font-normal tracking-tight italic group-hover:text-navy transition-all duration-300"
+                    className="block text-4xl md:text-5xl lg:text-6xl font-display font-normal tracking-tight italic group-hover:text-blue-ink transition-all duration-300"
                   >
                     {item.label}
                   </motion.span>
                 </motion.a>
               ))}
+
+              {/* Secondary links */}
+              <div className="mt-16 md:mt-24 flex flex-col gap-4 text-center">
+                <a
+                  href="#subscribe"
+                  className="font-text-serif text-sm text-blue-ink/70 italic hover:text-paper transition-colors"
+                >
+                  Subscribe
+                </a>
+                <a
+                  href="/about"
+                  className="font-text-serif text-sm text-blue-ink/70 italic hover:text-paper transition-colors"
+                >
+                  Contact
+                </a>
+              </div>
             </motion.div>
           </motion.div>
         )}
