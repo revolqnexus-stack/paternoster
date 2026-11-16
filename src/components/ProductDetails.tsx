@@ -3,6 +3,7 @@
 import { useCartStore } from '@/lib/store';
 import Link from 'next/link';
 import Image from 'next/image';
+import { stockImage } from '@/lib/stock-images';
 import { Plus, Minus, ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
 
@@ -90,9 +91,13 @@ export default function ProductDetails({
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-gray-light text-[10px] uppercase tracking-wider">
-                📦
-              </div>
+              <Image
+                src={stockImage('bookshelf')}
+                alt={product.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             )}
             {onSale && (
               <span className="absolute top-3 right-3 bg-navy text-paper text-xs font-serif px-2 py-1 uppercase tracking-wider">

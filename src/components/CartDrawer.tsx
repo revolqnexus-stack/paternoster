@@ -2,7 +2,9 @@
 
 import { useCartStore } from '@/lib/store';
 import { removeFromCart as apiRemoveFromCart } from '@/lib/shopify';
+import { stockImage } from '@/lib/stock-images';
 import { X, ShoppingBag, Plus, Minus, Trash2 } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -76,9 +78,17 @@ export default function CartDrawer({
                   >
                     <div className="relative aspect-[4/5] w-20 h-24 flex-shrink-0 rounded overflow-hidden bg-border border border-border">
                       {image ? (
-                        <img src={image} alt={line.merchandise.product.title} className="w-full h-full object-cover" />
+                        <Image
+                          src={image}
+                          alt={line.merchandise.product.title}
+                          className="w-full h-full object-cover"
+                        />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-light text-sm italic">📦</div>
+                        <Image
+                          src={stockImage('bookshelf')}
+                          alt={line.merchandise.product.title}
+                          className="w-full h-full object-cover"
+                        />
                       )}
                       {deleting.has(line.id) && (
                         <div className="absolute inset-0 bg-ink/20 flex items-center justify-center">

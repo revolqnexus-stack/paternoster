@@ -1,5 +1,7 @@
 import { getProducts } from '@/lib/shopify';
 import Link from 'next/link';
+import Image from 'next/image';
+import { stockImage } from '@/lib/stock-images';
 
 export const metadata = {
   title: 'Pater Noster',
@@ -64,11 +66,12 @@ export default async function Home() {
               </Link>
             </div>
             <div className="hidden md:block">
-              <div className="aspect-[4/5] bg-border rounded-lg overflow-hidden">
-                <div className="w-full h-full flex items-center justify-center text-gray-light text-sm italic">
-                  Image
-                </div>
-              </div>
+              <Image
+                src={stockImage('library')}
+                alt="Library books"
+                className="w-full h-auto rounded-lg"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
           </div>
           <hr className="section-divider mt-8" />
@@ -96,11 +99,12 @@ export default async function Home() {
               </Link>
             </div>
             <div className="order-1 md:order-2 hidden md:block">
-              <div className="aspect-[4/5] bg-border rounded-lg overflow-hidden">
-                <div className="w-full h-full flex items-center justify-center text-gray-light text-sm italic">
-                  Image
-                </div>
-              </div>
+              <Image
+                src={stockImage('desk')}
+                alt="Writing desk"
+                className="w-full h-auto rounded-lg"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
           </div>
           <hr className="section-divider mt-8" />
@@ -108,6 +112,12 @@ export default async function Home() {
 
         {/* Fourth article */}
         <section className="mb-24">
+          <Image
+            src={stockImage('typewriter')}
+            alt="Typewriter"
+            className="w-full h-auto rounded-lg mb-6"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
           <h3 className="font-serif text-2xl md:text-3xl font-normal mb-3 text-ink leading-tight">
             Who owns the glen?
           </h3>
