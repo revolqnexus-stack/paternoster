@@ -70,24 +70,26 @@ export default function ProductDetails({
   };
 
   return (
-    <div className="page-wrap relative z-10">
-      <div className="page-container py-8 md:py-16">
+    <div className="page-wrap">
+      <div className="page-container">
         <Link
           href="/products"
-          className="font-ui-sans text-xs font-medium text-blue italic underline underline-offset-2 mb-8 md:mb-12 inline-block hover:text-ink transition-colors"
+          className="text-muted hover:text-ink transition-colors text-sm font-serif-body italic"
         >
           ← The Shop
         </Link>
 
-        <div className="grid lg:grid-cols-12 gap-12">
-          {/* Product image - left, span 7 */}
-          <div className="lg:col-span-7">
-            <div className="relative aspect-[4/5] bg-paper-2 overflow-hidden">
+        <h1 className="section-title mb-4">{product.title}</h1>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Product image */}
+          <div>
+            <div className="article-card-image mb-4">
               {images[0]?.url ? (
                 <img
                   src={images[0].url}
                   alt={images[0].altText || product.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]"
+                  className="w-full h-full object-cover"
                 />
               ) : (
                 <ImageWithFallback
@@ -100,135 +102,126 @@ export default function ProductDetails({
             </div>
           </div>
 
-          {/* Product info - right, span 5 */}
-          <div className="lg:col-span-5 flex flex-col justify-between min-h-[600px]">
-            <div>
-              <p className="font-ui-sans text-xs font-medium text-blue uppercase tracking-widest mb-2">
-                {product.tags[0] || 'Editorial'}
-              </p>
-              <h1 className="font-display font-bold text-[clamp(2.5rem,6vw,4rem)] leading-[1.1] tracking-[-0.02em] text-ink mb-4 italic">
-                {product.title}
-              </h1>
+          {/* Product info */}
+          <div>
+            <p className="label mb-2">
+              {product.tags[0] || 'Editorial'}
+            </p>
 
-              <div className="mb-8">
-                {onSale && comparePrice ? (
-                  <div className="flex items-baseline gap-3">
-                    <span className="font-display font-bold text-[clamp(2rem,5vw,3rem)] leading-none text-ink">
-                      £{price.toFixed(2)}
-                    </span>
-                    <span className="font-ui-sans text-lg font-medium text-muted line-through">
-                      £{comparePrice.toFixed(2)}
-                    </span>
-                  </div>
-                ) : (
-                  <span className="font-display font-bold text-[clamp(2rem,5vw,3rem)] leading-none text-ink">
+            <div className="mb-4">
+              {onSale && comparePrice ? (
+                <div className="flex items-baseline gap-2">
+                  <span className="font-serif text-lg font-normal">
                     £{price.toFixed(2)}
                   </span>
-                )}
-              </div>
-
-              {variants.length > 1 && (
-                <div className="mb-8">
-                  <p className="font-ui-sans text-xs font-medium text-muted uppercase tracking-widest mb-3">
-                    Choose variant
-                  </p>
-                  <div className="flex flex-wrap gap-3">
-                    {variants.map((v) => {
-                      const isSelected = selectedVariant?.id === v.id;
-                      const vPrice = parseFloat(v.priceV2.amount);
-                      return (
-                        <button
-                          key={v.id}
-                          onClick={() => setSelectedVariant(v)}
-                          className={`px-6 py-3 font-ui-sans text-xs font-medium uppercase tracking-wider border transition-all duration-300 ${
-                            isSelected
-                              ? 'bg-ink text-blue-ink border-ink'
-                              : 'bg-paper text-ink border-hairline hover:border-blue hover:bg-blue/5'
-                          }`}
-                        >
-                          {v.title} — £{vPrice.toFixed(2)}
-                        </button>
-                      );
-                    })}
-                  </div>
+                  <span className="text-muted line-through">
+                    £{comparePrice.toFixed(2)}
+                  </span>
                 </div>
-              )}
-
-              <div className="mb-8">
-                <div className="flex items-center gap-4">
-                  <button
-                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                    disabled={quantity <= 1 || !product.availableForSale}
-                    className="w-10 h-10 rounded-sm border border-hairline bg-paper flex items-center justify-center text-ink hover:bg-ink hover:text-paper transition-colors disabled:opacity-50 disabled:pointer-events-none"
-                  >
-                    <Minus size={14} strokeWidth={2} />
-                  </button>
-                  <input
-                    type="number"
-                    value={quantity}
-                    onChange={(e) =>
-                      setQuantity(Math.max(1, parseInt(e.target.value) || 1))
-                    }
-                    className="w-12 h-10 text-center border border-hairline rounded-sm text-ink font-ui-sans font-medium text-sm focus:outline-none focus:border-blue"
-                  />
-                  <button
-                    onClick={() => setQuantity((q) => q + 1)}
-                    disabled={!product.availableForSale}
-                    className="w-10 h-10 rounded-sm border border-hairline bg-paper flex items-center justify-center text-ink hover:bg-ink hover:text-paper transition-colors disabled:opacity-50 disabled:pointer-events-none"
-                  >
-                    <Plus size={14} strokeWidth={2} />
-                  </button>
-                </div>
-              </div>
-
-              <button
-                onClick={handleAddToCart}
-                disabled={
-                  isAdding ||
-                  cartLoading ||
-                  !product.availableForSale ||
-                  !selectedVariant
-                }
-                className={`w-full py-5 rounded-sm font-ui-sans text-sm font-medium uppercase tracking-wider transition-all duration-300 ${
-                  isAdding ||
-                  cartLoading ||
-                  !product.availableForSale ||
-                  !selectedVariant
-                    ? 'bg-muted text-paper cursor-not-allowed'
-                    : 'bg-blue text-blue-ink hover:bg-ink'
-                }`}
-              >
-                {isAdding ? 'Adding…' : 'Add to bag'}
-              </button>
-
-              {!product.availableForSale && (
-                <p className="mt-4 text-[0.8rem] font-ui-sans text-muted italic text-center">
-                  Currently unavailable
-                </p>
+              ) : (
+                <span className="font-serif text-lg font-normal">
+                  £{price.toFixed(2)}
+                </span>
               )}
             </div>
 
-            <hr className="hairline my-8" />
+            {variants.length > 1 && (
+              <div className="mb-6">
+                <p className="label mb-2">Choose variant</p>
+                <div className="flex flex-wrap gap-2">
+                  {variants.map((v) => {
+                    const isSelected = selectedVariant?.id === v.id;
+                    const vPrice = parseFloat(v.priceV2.amount);
+                    return (
+                      <button
+                        key={v.id}
+                        onClick={() => setSelectedVariant(v)}
+                        className={`border border-hairline bg-paper px-3 py-1.5 text-xs font-serif-body text-ink transition-colors ${
+                          isSelected
+                            ? 'bg-ink text-paper border-ink'
+                            : 'hover:border-ink hover:bg-ink/5'
+                        }`}
+                      >
+                        {v.title} — £{vPrice.toFixed(2)}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
-            {/* Details */}
-            <div>
-              <h2 className="font-display font-bold text-xl leading-[1.1] text-ink mb-4 italic">
-                Details
-              </h2>
-              <div className="font-text-serif text-lg leading-relaxed measure text-ink opacity-90">
-                {product.descriptionHtml ? (
-                  <div
-                    className="prose-html"
-                    dangerouslySetInnerHTML={{
-                      __html: product.descriptionHtml,
-                    }}
-                  />
-                ) : (
-                  <p>{product.description || 'No description available.'}</p>
-                )}
+            <div className="mb-6">
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                  disabled={quantity <= 1 || !product.availableForSale}
+                  className="w-8 h-8 rounded border border-hairline bg-paper flex items-center justify-center text-ink hover:bg-ink hover:text-paper transition-colors disabled:opacity-50 disabled:pointer-events-none"
+                >
+                  <Minus size={12} strokeWidth={2} />
+                </button>
+                <input
+                  type="number"
+                  value={quantity}
+                  onChange={(e) =>
+                    setQuantity(Math.max(1, parseInt(e.target.value) || 1))
+                  }
+                  className="w-8 h-8 text-center border border-hairline rounded text-ink font-serif-body text-sm focus:outline-none focus:border-ink"
+                />
+                <button
+                  onClick={() => setQuantity((q) => q + 1)}
+                  disabled={!product.availableForSale}
+                  className="w-8 h-8 rounded border border-hairline bg-paper flex items-center justify-center text-ink hover:bg-ink hover:text-paper transition-colors disabled:opacity-50 disabled:pointer-events-none"
+                >
+                  <Plus size={12} strokeWidth={2} />
+                </button>
               </div>
             </div>
+
+            <button
+              onClick={handleAddToCart}
+              disabled={
+                isAdding ||
+                cartLoading ||
+                !product.availableForSale ||
+                !selectedVariant
+              }
+              className={`w-full py-3 border border-hairline bg-paper text-xs font-serif-body text-ink uppercase tracking-widest transition-colors ${
+                isAdding ||
+                cartLoading ||
+                !product.availableForSale ||
+                !selectedVariant
+                  ? 'bg-muted text-paper cursor-not-allowed'
+                  : 'hover:bg-ink hover:text-paper'
+              }`}
+            >
+              {isAdding ? 'Adding…' : 'Add to bag'}
+            </button>
+
+            {!product.availableForSale && (
+              <p className="mt-3 text-xs font-serif-body text-muted italic">
+                Currently unavailable
+              </p>
+            )}
           </div>
+        </div>
+
+        <hr className="section-divider my-8" />
+
+        {/* Details */}
+        <h2 className="text-lg font-serif font-semibold mb-2 text-ink">
+          Details
+        </h2>
+        <div className="font-serif-body text-lg leading-relaxed measure text-ink">
+          {product.descriptionHtml ? (
+            <div
+              className="prose-html"
+              dangerouslySetInnerHTML={{
+                __html: product.descriptionHtml,
+              }}
+            />
+          ) : (
+            <p>{product.description || 'No description available.'}</p>
+          )}
         </div>
       </div>
     </div>

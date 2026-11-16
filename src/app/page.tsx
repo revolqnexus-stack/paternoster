@@ -1,9 +1,6 @@
 import { getProducts } from '@/lib/shopify';
-import Hero from '@/components/Hero';
-import ArticleCard from '@/components/ArticleCard';
-import Marquee from '@/components/Marquee';
+import Link from 'next/link';
 import ImageWithFallback from '@/components/ImageWithFallback';
-import ScrollReveal from '@/components/ScrollReveal';
 import { stockImage } from '@/lib/stock-images';
 
 export const metadata = {
@@ -70,170 +67,64 @@ export default async function Home() {
   const [featured, ...rest] = ARTICLES;
 
   return (
-    <div className="page-wrap relative z-10">
-      {/* Hero */}
-      <Hero
-        kicker="FEATURED"
-        title={featured.title}
-        byline={featured.author}
-        excerpt={featured.excerpt}
-        image={featured.image}
-        imageAlt={featured.imageAlt}
-      />
+    <div className="page-wrap">
+      {/* Featured article — large, text-first */}
+      <section className="featured-article">
+        <p className="featured-kicker">Featured</p>
+        <h1 className="featured-title">
+          {featured.title}
+        </h1>
+        <p className="featured-byline">
+          By {featured.author}
+        </p>
+        <p className="featured-excerpt">
+          {featured.excerpt}
+        </p>
+      </section>
 
-      <hr className="hairline mb-12 md:mb-20" />
+      <hr className="section-divider" />
 
-      {/* IN THIS ISSUE (LRB contents list) */}
-      <ScrollReveal type="fade">
-        <section className="section-md border-t border-hairline pt-12 md:pt-20">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10 md:mb-16">
-            <div>
-              <p className="section-kicker">In this issue</p>
-              <h2 className="font-display font-bold text-[clamp(2.5rem,6vw,6rem)] leading-[1.1] tracking-[-0.02em] text-ink italic mb-2">
-                Contents
-              </h2>
+      {/* Contents list — LRB style */}
+      <section className="article-list section">
+        <h2 className="section-title">In this issue</h2>
+        {rest.map((article, idx) => (
+          <div
+            key={article.title}
+            className="article-row"
+          >
+            <div className="article-number">
+              0{idx + 1}
             </div>
-            <a
-              href="/products"
-              className="font-ui-sans text-xs font-medium text-blue uppercase tracking-wider underline underline-offset-2 hover:text-ink transition-colors"
-            >
-              View all →
-            </a>
-          </div>
-
-          <div className="space-y-0">
-            {rest.map((article, idx) => (
-              <div
-                key={article.title}
-                className={`grid grid-cols-12 gap-6 border-b border-hairline pb-8 md:pb-12 ${
-                  idx === 0 ? 'pt-0' : ''
-                }`}
+            <div className="article-content">
+              <p className="article-author">
+                {article.author}
+              </p>
+              <a
+                href="/"
+                className="article-title"
               >
-                <div className="col-span-2 md:col-span-1 text-right hidden md:block">
-                  <span className="font-ui-sans text-xs font-medium text-blue uppercase tracking-widest">
-                    0{idx + 1}
-                  </span>
-                </div>
-                <div className="col-span-10 md:col-span-8">
-                  <p className="font-ui-sans text-[0.7rem] font-medium text-muted uppercase tracking-[0.18em] mb-1">
-                    By {article.author}
-                  </p>
-                  <h3 className="font-text-serif font-medium text-[clamp(1.25rem,1.6vw,1.75rem)] leading-[1.25] text-ink mb-1 group-hover:text-blue transition-colors">
-                    {article.title}
-                  </h3>
-                  {article.date && (
-                    <p className="font-ui-sans text-xs text-muted">
-                      {article.date}
-                    </p>
-                  )}
-                </div>
-                {/* Only first row gets excerpt */}
-                {idx === 0 && (
-                  <div className="col-span-12 md:col-span-10 md:col-start-3 mt-4 md:mt-0 md:row-span-1">
-                    <p className="font-text-serif text-sm text-muted leading-relaxed max-w-[55ch]">
-                      {article.excerpt}
-                    </p>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </section>
-      </ScrollReveal>
-
-      <hr className="hairline mb-12 md:mb-20" />
-
-      {/* LATEST ESSAYS (Vogue asymmetric grid, LRB text) */}
-      <section className="section-lg border-t border-hairline pt-12 md:pt-20">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12 md:mb-16">
-          <div>
-            <p className="section-kicker">Latest essays</p>
-            <h2 className="font-display font-bold text-[clamp(2.5rem,6vw,6rem)] leading-[1.1] tracking-[-0.02em] text-ink italic">
-              Writing
-            </h2>
-          </div>
-        </div>
-
-        <div className="grid-12">
-          {rest.map((article, idx) => {
-            const isLarge = idx % 3 === 0;
-            return (
-              <div
-                key={article.title}
-                className=""
-                style={{ gridColumn: `span ${isLarge ? 7 : 5}` }}
-              >
-                <ArticleCard
-                  title={article.title}
-                  author={article.author}
-                  date={article.date}
-                  excerpt={article.excerpt}
-                  image={article.image}
-                  imageAlt={article.imageAlt}
-                  index={idx}
-                />
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      <hr className="hairline mb-12 md:mb-20" />
-
-      {/* PULL QUOTE */}
-      <section className="bg-paper-2 py-16 md:py-24 text-center">
-        <div className="page-container">
-          <p className="font-display font-bold text-[clamp(3rem,8vw,5rem)] leading-[0.95] tracking-[-0.03em] text-ink italic mb-6">
-            "Reading is a conversation with the mind."
-          </p>
-          <p className="font-ui-sans text-[0.6875rem] font-medium text-muted uppercase tracking-[0.2em]">
-            — Pater Noster
-          </p>
-        </div>
-      </section>
-
-      <hr className="hairline mb-12 md:mb-20" />
-
-      {/* MARQUEE */}
-      <Marquee />
-
-      <hr className="hairline mb-12 md:mb-20" />
-
-      {/* THE SHOP SHELF (Fitzcarraldo - blue band) */}
-      {products.length > 0 && (
-        <section className="bg-blue text-blue-ink py-16 md:py-24">
-          <div className="page-container">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12 md:mb-16">
-              <div>
-                <p className="label-caps mb-2 uppercase tracking-widest text-blue-ink/70">
-                  The shop
+                {article.title}
+              </a>
+              {article.date && (
+                <p className="article-date">
+                  {article.date}
                 </p>
-                <h2 className="font-display font-bold text-[clamp(2.5rem,6vw,4rem)] leading-[1.1] tracking-[-0.02em] text-blue-ink italic">
-                  The Pater Noster Editions
-                </h2>
-              </div>
+              )}
             </div>
+          </div>
+        ))}
+      </section>
 
-            <div className="grid gap-8 md:grid-cols-5 justify-center">
-              {products.map((product: any) => (
-                <BookCard key={product.id} product={product} />
-              ))}
-            </div>
+      <hr className="section-divider" />
 
-            <div className="flex flex-col md:flex-row justify-center gap-4 mt-12 md:mt-16">
-              <a
-                href="/products"
-                className="px-6 py-3 border border-blue-ink text-blue-ink font-ui-sans text-xs font-medium uppercase tracking-wider hover:bg-blue-ink hover:text-paper transition-colors"
-              >
-                Shop all books
-              </a>
-              <a
-                href="#subscribe"
-                className="px-6 py-3 border border-blue-ink text-blue-ink font-ui-sans text-xs font-medium uppercase tracking-wider hover:bg-blue-ink hover:text-paper transition-colors"
-              >
-                Subscribe to the series
-              </a>
-            </div>
+      {/* Shop section — simple */}
+      {products.length > 0 && (
+        <section className="section-md border-t border-hairline pt-6">
+          <h2 className="section-title">From the shop</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {products.map((product: any) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
           </div>
         </section>
       )}
@@ -241,43 +132,47 @@ export default async function Home() {
   );
 }
 
-interface BookCardProps {
+interface ProductCardProps {
   product: any;
 }
 
-function BookCard({ product }: BookCardProps) {
-  const images = product.images?.edges?.map((e: any) => e.node) || [];
+function ProductCard({ product }: ProductCardProps) {
+  const image = product.images?.edges?.[0]?.node;
   const price = parseFloat(product.priceRange.minVariantPrice.amount);
 
   return (
-    <article className="flex flex-col items-center group">
-      <div className="relative aspect-[2/3] bg-paper-2 overflow-hidden mb-4 group-hover:translate-y-[-8px] transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]">
-        {images[0]?.url ? (
-          <img
-            src={images[0].url}
-            alt={images[0].altText || product.title}
-            className="w-full h-full object-cover"
-            loading="lazy"
-            data-cursor="view"
-          />
-        ) : (
-          <ImageWithFallback
-            src={stockImage('bookshelf')}
-            alt={product.title}
-            className="w-full h-full object-cover"
-            fallbackKey="bookshelf"
-          />
-        )}
-      </div>
-      <h4 className="font-text-serif font-medium text-[clamp(1rem,1.6vw,1.125rem)] leading-[1.3] text-ink mb-1 text-center">
-        {product.title}
-      </h4>
-      <p className="font-ui-sans text-[0.6875rem] font-medium text-muted uppercase tracking-[0.18em] mb-2 text-center">
-        By {product.tags?.[0] || 'Editorial'}
-      </p>
-      <p className="font-ui-sans text-sm font-medium text-ink text-center">
-        £{price.toFixed(2)}
-      </p>
-    </article>
+    <Link key={product.id} href={`/products/${product.handle}`} className="block">
+      <article className="article-card">
+        <div className="article-card-image">
+          {image?.url ? (
+            <img
+              src={image.url}
+              alt={image.altText || product.title}
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
+          ) : (
+            <ImageWithFallback
+              src={stockImage('bookshelf')}
+              alt={product.title}
+              className="w-full h-full object-cover"
+              fallbackKey="bookshelf"
+            />
+          )}
+        </div>
+        <p className="article-card-category">
+          Editorial
+        </p>
+        <a
+          href={`/products/${product.handle}`}
+          className="article-card-title"
+        >
+          {product.title}
+        </a>
+        <p className="article-card-price">
+          £{price.toFixed(2)}
+        </p>
+      </article>
+    </Link>
   );
 }

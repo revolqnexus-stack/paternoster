@@ -18,35 +18,18 @@ export default async function ProductsPage() {
 
   return (
     <div className="page-wrap">
-      <div className="page-container py-12 md:py-32">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-20">
-          <div>
-            <h1 className="font-display font-bold text-[clamp(3rem,8vw,5rem)] leading-[1.1] tracking-[-0.02em] text-ink mb-2 italic">
-              The Shop
-            </h1>
-            <p className="font-ui-sans text-xs font-medium text-muted uppercase tracking-widest">
-              Books, editions, and objects
-            </p>
-          </div>
-          <p className="font-ui-sans text-xs font-medium text-muted uppercase tracking-widest">
-            {products.length} items
-          </p>
-        </div>
+      <div className="page-container">
+        <h1 className="section-title mb-6">The Shop</h1>
+        <p className="label mb-4">
+          {products.length} items
+        </p>
 
         {products.length === 0 ? (
-          <div className="text-center py-32 measure mx-auto">
-            <p className="font-text-serif text-lg text-muted italic mb-6">
-              No products found.
-            </p>
-            <Link
-              href="/"
-              className="font-ui-sans text-base font-medium text-blue underline underline-offset-2 hover:text-ink transition-colors"
-            >
-              Back to Home →
-            </Link>
-          </div>
+          <p className="font-serif-body text-muted">
+            No products found.
+          </p>
         ) : (
-          <div className="grid gap-12 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {products.map((product: any) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -67,7 +50,7 @@ function ProductCard({ product }: ProductCardProps) {
 
   return (
     <Link key={product.id} href={`/products/${product.handle}`} className="block">
-      <article className="article-card group relative">
+      <article className="article-card">
         <div className="article-card-image">
           {images[0]?.url ? (
             <img
@@ -85,17 +68,18 @@ function ProductCard({ product }: ProductCardProps) {
             />
           )}
         </div>
-        <div className="p-4 pt-3 flex flex-col h-full">
-          <p className="label-caps mb-2 uppercase tracking-widest text-blue">
-            Editorial
-          </p>
-          <h4 className="article-card-title mb-2 group-hover:text-blue transition-colors duration-300">
-            {product.title}
-          </h4>
-          <p className="font-ui-sans text-sm font-medium text-ink mt-auto">
-            £{price.toFixed(2)}
-          </p>
-        </div>
+        <p className="article-card-category">
+          Editorial
+        </p>
+        <a
+          href={`/products/${product.handle}`}
+          className="article-card-title"
+        >
+          {product.title}
+        </a>
+        <p className="article-card-price">
+          £{price.toFixed(2)}
+        </p>
       </article>
     </Link>
   );
