@@ -4,7 +4,6 @@ import Link from 'next/link';
 import ImageWithFallback from '@/components/ImageWithFallback';
 import { stockImage } from '@/lib/stock-images';
 import { motion } from 'framer-motion';
-import LiquidBoundary from '@/components/LiquidBoundary';
 
 interface Article {
   title: string;
@@ -45,9 +44,8 @@ interface HomeClientProps {
 export default function HomeClient({ featured, rest, products }: HomeClientProps) {
   return (
     <div className="page-wrap">
-      {/* ===== HERO — full width bg, liquid glass edges, two-column editorial ===== */}
-      <LiquidBoundary className="hero-bg">
-        <section className="section-full">
+      {/* ===== HERO — full width bg, two-column editorial ===== */}
+      <section className="section-full hero-bg">
           <div className="container section-padding-lg">
             <div className="hero-content-wrap">
               <div className="hero-image-col">
@@ -122,7 +120,6 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
             </div>
           </div>
         </section>
-      </LiquidBoundary>
 
       <hr className="hairline mb-8 md:mb-12" />
 
