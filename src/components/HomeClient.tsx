@@ -44,244 +44,254 @@ interface HomeClientProps {
 export default function HomeClient({ featured, rest, products }: HomeClientProps) {
   return (
     <div className="page-wrap">
-      {/* Hero — full-bleed image with animated overlay text */}
-      <section className="hero">
-        <motion.div
-          initial={{ scale: 1.15 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] as const }}
-          className="hero-image"
-        >
-          <ImageWithFallback
-            src={featured.image}
-            alt={featured.imageAlt}
-            className="w-full h-full object-cover"
-            fallbackKey="reading"
-          />
-        </motion.div>
-        <div className="hero-overlay" />
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] as const }}
-          className="hero-content"
-        >
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="hero-kicker"
-          >
-            Featured
-          </motion.p>
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="hero-title"
-          >
-            {featured.title}
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            className="hero-byline"
-          >
-            By {featured.author}
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-            className="hero-excerpt"
-          >
-            {featured.excerpt}
-          </motion.p>
-          <motion.a
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 0.6 }}
-            className="text-ink underline underline-offset-2 hover:text-muted transition-colors"
-          >
-            Read the essay →
-          </motion.a>
-        </motion.div>
-      </section>
-
-      <hr className="hairline mb-8 md:mb-12" />
-
-      {/* Contents list — LRB style with stagger animation */}
-      <section className="section-md">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="section-title"
-        >
-          In this issue
-        </motion.h2>
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="article-list"
-        >
-          {rest.map((article, idx) => (
-            <motion.div
-              key={article.title}
-              variants={itemVariants}
-              className="article-row"
-            >
-              <div className="article-number">
-                0{idx + 1}
-              </div>
-              <div className="article-content">
-                <motion.p
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1 + idx * 0.05, duration: 0.5 }}
-                  className="article-author"
+      {/* ===== HERO — full width bg, two-column editorial ===== */}
+      <section className="section-full hero-bg">
+        <div className="container section-padding-lg">
+          <div className="hero-content-wrap">
+            <div className="hero-image-col">
+              <div className="hero-image-wrap">
+                <motion.div
+                  initial={{ scale: 1.15 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] as const }}
+                  className="hero-image"
                 >
-                  {article.author}
+                  <ImageWithFallback
+                    src={featured.image}
+                    alt={featured.imageAlt}
+                    className="w-full h-full object-cover"
+                    fallbackKey="reading"
+                  />
+                </motion.div>
+                <div className="hero-overlay" />
+              </div>
+            </div>
+            <div className="hero-text-col">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] as const }}
+                className="hero-content"
+              >
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.6 }}
+                  className="hero-kicker"
+                >
+                  Featured
+                </motion.p>
+                <motion.h1
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.8 }}
+                  className="hero-title"
+                >
+                  {featured.title}
+                </motion.h1>
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6, duration: 0.6 }}
+                  className="hero-byline"
+                >
+                  By {featured.author}
+                </motion.p>
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8, duration: 0.8 }}
+                  className="hero-excerpt"
+                >
+                  {featured.excerpt}
                 </motion.p>
                 <motion.a
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.15 + idx * 0.05, duration: 0.5 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1, duration: 0.6 }}
                   href="/"
-                  className="article-title"
+                  className="text-ink underline underline-offset-2 hover:text-accent transition-colors font-serif"
                 >
-                  {article.title}
+                  Read the essay →
                 </motion.a>
-                {article.date && (
-                  <motion.p
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2 + idx * 0.05, duration: 0.5 }}
-                    className="article-date"
-                  >
-                    {article.date}
-                  </motion.p>
-                )}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
-
-      <hr className="hairline mb-8 md:mb-12" />
-
-      {/* Editorial essay grid — asymmetric */}
-      <section className="section">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="section-title"
-        >
-          Writing
-        </motion.h2>
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="grid-12"
-        >
-          {rest.map((article, idx) => {
-            const isLarge = idx % 2 === 0;
-            return (
-              <motion.div
-                key={article.title}
-                variants={itemVariants}
-                className=""
-                style={{ gridColumn: `span ${isLarge ? 7 : 5}` }}
-                transition={{ delay: idx * 0.1 }}
-              >
-                <article className="article-card">
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.1 + idx * 0.05, duration: 0.6 }}
-                    className="article-card-image"
-                  >
-                    <ImageWithFallback
-                      src={article.image}
-                      alt={article.imageAlt}
-                      className="w-full h-full object-cover"
-                      fallbackKey="bookshelf"
-                    />
-                  </motion.div>
-                  <motion.p
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 + idx * 0.05, duration: 0.5 }}
-                    className="article-card-category"
-                  >
-                    Editorial
-                  </motion.p>
-                  <motion.a
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 + idx * 0.05, duration: 0.5 }}
-                    href="/"
-                    className="article-card-title"
-                  >
-                    {article.title}
-                  </motion.a>
-                  <motion.p
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 + idx * 0.05, duration: 0.5 }}
-                    className="article-author"
-                  >
-                    {article.author}
-                  </motion.p>
-                  {article.date && (
-                    <motion.p
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 + idx * 0.05, duration: 0.5 }}
-                      className="article-date"
-                    >
-                      {article.date}
-                    </motion.p>
-                  )}
-                </article>
               </motion.div>
-            );
-          })}
-        </motion.div>
+            </div>
+          </div>
+        </div>
       </section>
 
       <hr className="hairline mb-8 md:mb-12" />
 
-      {/* Shop section */}
-      {products.length > 0 && (
-        <section className="section-md border-t border-hairline pt-6">
-          <motion.div
+      {/* ===== IN THIS ISSUE — full width bg, three-column index ===== */}
+      <section className="section-full bg-paper-2">
+        <div className="container section-padding-md">
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            className="section-title"
           >
-            <h2 className="section-title">From the shop</h2>
-          </motion.div>
+            In this issue
+          </motion.h2>
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="issue-list-wrap"
           >
-            {products.map((product: any, idx: number) => (
+            {rest.map((article, idx) => (
               <motion.div
-                key={product.id}
+                key={article.title}
                 variants={itemVariants}
                 transition={{ delay: idx * 0.08 }}
+                className="issue-list"
               >
-                <ProductCard product={product} />
+                <div className="issue-number">
+                  0{idx + 1}
+                </div>
+                <div className="issue-info">
+                  <motion.p
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 + idx * 0.05, duration: 0.5 }}
+                    className="issue-author"
+                  >
+                    {article.author}
+                  </motion.p>
+                  <motion.a
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.15 + idx * 0.05, duration: 0.5 }}
+                    href="/"
+                    className="issue-title"
+                  >
+                    {article.title}
+                  </motion.a>
+                </div>
+                <div className="issue-meta">
+                  {article.date || ''}
+                </div>
               </motion.div>
             ))}
           </motion.div>
+        </div>
+      </section>
+
+      <hr className="hairline mb-8 md:mb-12" />
+
+      {/* ===== EDITORIAL ESSAY GRID — full width bg, centered container ===== */}
+      <section className="section-full">
+        <div className="container section-padding-lg">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="section-title"
+          >
+            Writing
+          </motion.h2>
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid-12"
+          >
+            {rest.map((article, idx) => {
+              const isLarge = idx % 2 === 0;
+              return (
+                <motion.div
+                  key={article.title}
+                  variants={itemVariants}
+                  style={{ gridColumn: `span ${isLarge ? 7 : 5}` }}
+                  transition={{ delay: idx * 0.1 }}
+                >
+                  <article className="article-card">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.1 + idx * 0.05, duration: 0.6 }}
+                      className="article-card-image"
+                    >
+                      <ImageWithFallback
+                        src={article.image}
+                        alt={article.imageAlt}
+                        className="w-full h-full object-cover"
+                        fallbackKey="bookshelf"
+                      />
+                    </motion.div>
+                    <motion.p
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 + idx * 0.05, duration: 0.5 }}
+                      className="article-card-category"
+                    >
+                      Editorial
+                    </motion.p>
+                    <motion.a
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 + idx * 0.05, duration: 0.5 }}
+                      href="/"
+                      className="article-card-title"
+                    >
+                      {article.title}
+                    </motion.a>
+                    <motion.p
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 + idx * 0.05, duration: 0.5 }}
+                      className="article-card-author"
+                    >
+                      {article.author}
+                    </motion.p>
+                    {article.date && (
+                      <motion.p
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5 + idx * 0.05, duration: 0.5 }}
+                        className="article-card-date"
+                      >
+                        {article.date}
+                      </motion.p>
+                    )}
+                  </article>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </div>
+      </section>
+
+      <hr className="hairline mb-8 md:mb-12" />
+
+      {/* ===== SHOP — full width bg, centered container ===== */}
+      {products.length > 0 && (
+        <section className="section-full border-t border-hairline">
+          <div className="container section-padding-lg">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="section-title">From the shop</h2>
+            </motion.div>
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              {products.map((product: any, idx: number) => (
+                <motion.div
+                  key={product.id}
+                  variants={itemVariants}
+                  transition={{ delay: idx * 0.08 }}
+                >
+                  <ProductCard product={product} />
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
         </section>
       )}
     </div>
@@ -334,7 +344,7 @@ function ProductCard({ product }: ProductCardProps) {
         <motion.a
           href={`/products/${product.handle}`}
           className="article-card-title"
-          whileHover={{ color: 'rgba(11,11,11,0.7)' }}
+          whileHover={{ color: 'rgba(26,26,26,0.7)' }}
         >
           {product.title}
         </motion.a>

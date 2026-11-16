@@ -20,7 +20,7 @@ export default function Header() {
         transition={{ duration: 0.6 }}
         className="masthead"
       >
-        <div className="masthead-container page-container">
+        <div className="masthead-inner">
           <motion.a
             whileHover={{ x: -5 }}
             href="/"

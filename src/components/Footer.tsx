@@ -5,14 +5,13 @@ import { motion } from 'framer-motion';
 
 export default function Footer() {
   return (
-    <footer className="bg-paper border-hairline relative overflow-hidden">
-      <div className="relative z-10">
-        {/* Ghost wordmark — light */}
-        <span className="ghost-text absolute top-[-1.5rem] left-1/2 -translate-x-1/2" aria-hidden="true">
-          PATER NOSTER
-        </span>
-
-        <div className="page-container relative z-1">
+    <footer className="bg-ink-black border-line">
+      <div className="footer-bg">
+        <div className="footer-inner relative z-1">
+          {/* Ghost wordmark — light on black */}
+          <span className="footer-ghost absolute top-[-2rem] left-1/2 -translate-x-1/2" aria-hidden="true">
+            PATER NOSTER
+          </span>
           {/* 4-column grid */}
           <div className="footer-grid">
             {/* Brand */}
@@ -52,6 +51,13 @@ export default function Footer() {
                 </motion.a>
                 <motion.a
                   whileHover={{ x: 5 }}
+                  href="/journal"
+                  className="footer-link"
+                >
+                  Journal
+                </motion.a>
+                <motion.a
+                  whileHover={{ x: 5 }}
                   href="/contact"
                   className="footer-link"
                 >
@@ -62,7 +68,7 @@ export default function Footer() {
 
             {/* Services */}
             <div className="footer-col">
-              <span className="footer-label">Services</span>
+              <span className="footer-label">Explore</span>
               <div className="flex flex-col gap-2">
                 <motion.a
                   whileHover={{ x: 5 }}
@@ -129,7 +135,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <hr className="hairline mb-12" />
+          <hr className="footer-divider" />
 
           {/* Bottom bar */}
           <motion.div
@@ -138,8 +144,14 @@ export default function Footer() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="footer-bottom relative z-1"
           >
-            <span>© {new Date().getFullYear()} PATER NOSTER</span>
-            <span className="text-accent">paternoster.in</span>
+            <div className="footer-bottom-left">
+              <span>© {new Date().getFullYear()} PATER NOSTER</span>
+              <span className="text-dim">paternoster.in</span>
+            </div>
+            <div className="flex gap-4">
+              <motion.a whileHover={{ x: 5 }} href="/privacy" className="footer-link text-[0.65rem]">Privacy Policy</motion.a>
+              <motion.a whileHover={{ x: 5 }} href="/terms" className="footer-link text-[0.65rem]">Terms of Service</motion.a>
+            </div>
           </motion.div>
         </div>
       </div>
