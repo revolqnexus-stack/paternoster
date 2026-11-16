@@ -1,221 +1,247 @@
 import { getProducts } from '@/lib/shopify';
 import Link from 'next/link';
-import Image from 'next/image';
+
+export const metadata = {
+  title: 'Pater Noster',
+  description: 'Pater Noster — reading, writing, and the life of the mind.',
+};
 
 export default async function Home() {
   let products: any[] = [];
   try {
-    products = await getProducts(8);
+    products = await getProducts(6);
   } catch {
     products = [];
   }
 
   return (
-    <div className="min-h-screen bg-ivory">
-      {/* Announcement Bar */}
-      <div className="bg-burgundy text-ivory text-center py-2 px-4 text-sm">
-        Free UK shipping on orders over £50
+    <div className="min-h-screen bg-paper">
+      {/* Announcement bar */}
+      <div className="bg-navy text-paper text-center py-2 px-4 text-[11px] font-serif uppercase tracking-wider">
+        Pater Noster — new writing, new books, new thinking
       </div>
 
-      {/* Editorial Hero */}
-      <section className="border-b border-border-subtle">
-        <div className="max-w-container mx-auto px-6 py-16 md:py-24">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+      <div className="max-w-measure mx-auto px-6 py-12 md:py-20">
+        {/* Featured essay */}
+        <section className="mb-24">
+          <h2 className="font-serif text-4xl md:text-5xl font-normal mb-6 text-ink leading-tight italic">
+            Is curiosity good for us?
+          </h2>
+          <p className="font-serif text-lg md:text-xl font-normal text-gray-light mb-4 italic">
+            Adam Phillips
+          </p>
+          <p className="font-serif-alt text-lg md:text-xl text-ink leading-relaxed">
+            The superego — and its precursor, conscience — refers to the part of us
+            that has no curiosity about ourselves. It’s the saboteur of curiosity
+            about ourselves. And that part of us, like a narrow-minded fascist, has
+            only one project: to destroy our pleasures in being alive by trying to
+            kill our curiosity (or by making us frightened of our curiosity, which
+            amounts to the same thing).
+          </p>
+          <hr className="section-divider" />
+        </section>
+
+        {/* Second article */}
+        <section className="mb-24">
+          <div className="grid md:grid-cols-2 gap-12 items-start">
             <div>
-              <h1 className="font-heading text-5xl md:text-7xl font-normal mb-6 text-soft-black leading-tight">
-                Pater Noster
-              </h1>
-              <p className="font-heading text-xl md:text-2xl text-charcoal mb-4 font-light italic">
-                The London Review of Books Store
+              <h3 className="font-serif text-2xl md:text-3xl font-normal mb-3 text-ink leading-tight">
+                #TFA
+              </h3>
+              <p className="font-serif text-base font-normal text-gray-light mb-3 italic">
+                Deborah Friedell · 11 November 2026
               </p>
-              <p className="text-base md:text-lg text-charcoal/80 leading-relaxed mb-8 max-w-prose">
-                Curated books, exclusive merchandise, and literary subscriptions from Europe's leading magazine of culture and ideas.
+              <p className="font-serif-alt text-lg text-ink leading-relaxed mb-4">
+                Since the 25th Amendment was ratified in 1967, the temporary transfer
+                of presidential powers has become almost routine — usually for a
+                colonoscopy.
               </p>
+              <Link
+                href="/"
+                className="inline-block font-serif text-base font-normal text-navy italic"
+              >
+                Read more ›
+              </Link>
+            </div>
+            <div className="hidden md:block">
+              <div className="aspect-[4/5] bg-border rounded-lg overflow-hidden">
+                <div className="w-full h-full flex items-center justify-center text-gray-light text-sm italic">
+                  Image
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr className="section-divider mt-8" />
+        </section>
+
+        {/* Third article */}
+        <section className="mb-24">
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+            <div className="order-2 md:order-1">
+              <h3 className="font-serif text-2xl md:text-3xl font-normal mb-3 text-ink leading-tight">
+                Beyond Consent
+              </h3>
+              <p className="font-serif text-base font-normal text-gray-light mb-3 italic">
+                Katie Tobin · 10 November 2026
+              </p>
+              <p className="font-serif-alt text-lg text-ink leading-relaxed mb-4">
+                Russell Brand has been sentenced to ten years in prison for raping
+                one woman and sexually assaulting three others.
+              </p>
+              <Link
+                href="/"
+                className="inline-block font-serif text-base font-normal text-navy italic"
+              >
+                Read more ›
+              </Link>
+            </div>
+            <div className="order-1 md:order-2 hidden md:block">
+              <div className="aspect-[4/5] bg-border rounded-lg overflow-hidden">
+                <div className="w-full h-full flex items-center justify-center text-gray-light text-sm italic">
+                  Image
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr className="section-divider mt-8" />
+        </section>
+
+        {/* Fourth article */}
+        <section className="mb-24">
+          <h3 className="font-serif text-2xl md:text-3xl font-normal mb-3 text-ink leading-tight">
+            Who owns the glen?
+          </h3>
+          <p className="font-serif text-base font-normal text-gray-light mb-4 italic">
+            Fraser MacDonald · 5 November 2026
+          </p>
+          <p className="font-serif-alt text-lg text-ink leading-relaxed mb-6">
+            In March 1973, before taking his new play, The Cheviot, the Stag and the
+            Black, Black Oil, around the village halls of the Highlands, John McGrath
+            accepted a last-minute invitation…
+          </p>
+          <Link
+            href="/"
+            className="inline-block font-serif text-base font-normal text-navy italic"
+          >
+            Read more ›
+          </Link>
+        </section>
+      </div>
+
+      {/* Shop section — subtle */}
+      {products.length > 0 && (
+        <section className="py-20 border-t border-border">
+          <div className="max-w-measure mx-auto px-6">
+            <div className="flex justify-between items-end mb-8">
+              <div>
+                <h2 className="font-serif text-2xl font-normal mb-2 text-ink">
+                  From the shop
+                </h2>
+                <p className="font-serif text-base font-normal text-gray-light italic">
+                  Books, editions, and objects
+                </p>
+              </div>
               <Link
                 href="/products"
-                className="inline-block border-2 border-soft-black text-soft-black px-8 py-3 hover:bg-soft-black hover:text-ivory transition-all duration-200 font-medium text-sm uppercase tracking-wider"
+                className="font-serif text-base font-normal text-navy italic underline underline-offset-2"
               >
-                Browse Collection
+                View all ›
               </Link>
             </div>
-            <div className="bg-cream border border-border-subtle aspect-[4/5] flex items-center justify-center">
-              <span className="font-heading text-3xl text-charcoal/30">Editorial Image</span>
-            </div>
-          </div>
-        </div>
-      </section>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {products.map((product: any) => {
+                const image = product.images?.edges?.[0]?.node;
+                const price = parseFloat(product.priceRange.minVariantPrice.amount);
 
-      {/* Featured Products Grid */}
-      <section className="py-12 md:py-20 px-6">
-        <div className="max-w-container mx-auto">
-          <div className="flex items-baseline justify-between mb-8">
-            <h2 className="font-heading text-3xl md:text-5xl font-normal text-soft-black">
-              Featured Selection
-            </h2>
-            <Link 
-              href="/products" 
-              className="text-xs uppercase tracking-wider text-charcoal hover:text-burgundy transition-colors border-b border-transparent hover:border-burgundy pb-1"
-            >
-              View All
-            </Link>
-          </div>
-          
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {products.map((product: any) => {
-              const image = product.images?.edges?.[0]?.node;
-              const price = parseFloat(product.priceRange.minVariantPrice.amount);
-              const compareAtPrice = product.compareAtPriceRange?.minVariantPrice?.amount;
-              const comparePrice = compareAtPrice && parseFloat(compareAtPrice) > 0 ? parseFloat(compareAtPrice) : null;
-              const onSale = comparePrice && comparePrice > price;
-
-              return (
-                <Link
-                  key={product.id}
-                  href={`/products/${product.handle}`}
-                  className="group block"
-                >
-                  <article>
-                    {/* Image */}
-                    <div className="relative aspect-[3/4] bg-cream border border-border-subtle mb-4 overflow-hidden group-hover:border-charcoal transition-all duration-300">
-                      {image?.url ? (
-                        <Image
-                          src={image.url}
-                          alt={image.altText || product.title}
-                          fill
-                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                          className="object-cover group-hover:scale-105 transition-transform duration-700"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <div className="text-center p-6">
-                            <div className="font-heading text-4xl text-charcoal/20 mb-2">📚</div>
-                            <span className="text-xs uppercase tracking-wider text-charcoal/40">
-                              {product.tags[0] || 'Book'}
-                            </span>
+                return (
+                  <Link
+                    key={product.id}
+                    href={`/products/${product.handle}`}
+                    className="block"
+                  >
+                    <div className="mb-4">
+                      <div className="aspect-square bg-border rounded overflow-hidden mb-3">
+                        {image?.url ? (
+                          <img
+                            src={image.url}
+                            alt={image.altText || product.title}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-gray-light text-[10px] uppercase tracking-wider">
+                            📦
                           </div>
-                        </div>
-                      )}
-                      
-                      {/* Badges */}
-                      {(onSale || !product.availableForSale) && (
-                        <div className="absolute top-3 right-3 flex flex-col gap-2">
-                          {onSale && (
-                            <span className="bg-burgundy text-ivory text-xs px-2 py-1 uppercase tracking-wide font-medium">
-                              Sale
-                            </span>
-                          )}
-                          {!product.availableForSale && (
-                            <span className="bg-charcoal text-ivory text-xs px-2 py-1 uppercase tracking-wide font-medium">
-                              Sold Out
-                            </span>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                    
-                    {/* Details */}
-                    <div>
-                      <h3 className="font-heading text-base md:text-lg leading-tight mb-2 text-soft-black group-hover:text-burgundy transition-colors line-clamp-2">
-                        {product.title}
-                      </h3>
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-sm md:text-base font-medium text-charcoal">
-                          £{price.toFixed(2)}
-                        </span>
-                        {onSale && comparePrice && (
-                          <span className="text-xs md:text-sm text-sage line-through">
-                            £{comparePrice.toFixed(2)}
-                          </span>
                         )}
                       </div>
+                      <h4 className="font-serif text-base font-normal mb-1 text-ink leading-tight">
+                        {product.title}
+                      </h4>
+                      <p className="font-serif text-sm font-normal text-gray">
+                        £{price.toFixed(2)}
+                      </p>
                     </div>
-                  </article>
-                </Link>
-              );
-            })}
-          </div>
-
-          <div className="text-center mt-12">
-            <Link
-              href="/products"
-              className="inline-block border-2 border-soft-black text-soft-black px-10 py-3 hover:bg-soft-black hover:text-ivory transition-all duration-200 font-medium text-sm uppercase tracking-wider"
-            >
-              View Full Collection
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Collection Highlight */}
-      <section className="border-t border-border-subtle py-12 md:py-20 px-6 bg-warm-white">
-        <div className="max-w-container mx-auto">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-            <div className="bg-cream border border-border-subtle aspect-square"></div>
-            <div>
-              <h2 className="font-heading text-3xl md:text-4xl font-normal mb-4 text-soft-black">
-                The LRB Collection
-              </h2>
-              <p className="text-base text-charcoal/80 leading-relaxed mb-6">
-                Exclusive books, essays, and critical writing from Europe's foremost literary magazine. 
-                Each title carefully selected by our editorial team.
-              </p>
-              <Link
-                href="/collections/books"
-                className="inline-block border-2 border-soft-black text-soft-black px-8 py-3 hover:bg-soft-black hover:text-ivory transition-all duration-200 font-medium text-sm uppercase tracking-wider"
-              >
-                Explore Books
-              </Link>
+                  </Link>
+                );
+              })}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* About */}
-      <section className="border-t border-border-subtle py-12 md:py-20 px-6">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="font-heading text-3xl md:text-4xl font-normal mb-8 text-soft-black text-center">
-            About Pater Noster
+      {/* Subscribe section */}
+      <section id="subscribe" className="py-20 border-t border-border">
+        <div className="max-w-measure mx-auto px-6 text-center">
+          <h2 className="font-serif text-3xl font-normal mb-4 text-ink">
+            Subscribe to Pater Noster
           </h2>
-          <div className="space-y-6 text-base md:text-lg text-charcoal/90 leading-relaxed">
-            <p>
-              Pater Noster is the official store of <em>The London Review of Books</em>, 
-              Europe's leading magazine of culture and ideas. Published twice a month, 
-              the LRB provides a space for some of the world's best writers to explore 
-              a wide variety of subjects in exhilarating detail.
-            </p>
-            <p>
-              We offer authentic LRB merchandise to readers and fans around the world — 
-              from exclusive books and audiobooks to limited-edition tote bags and subscriptions.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Newsletter */}
-      <section className="border-t border-border-subtle py-12 md:py-16 px-6 bg-warm-white">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="font-heading text-2xl md:text-3xl font-normal mb-4 text-soft-black">
-            Stay Informed
-          </h2>
-          <p className="text-charcoal/80 mb-6">
-            Receive updates on new arrivals, exclusive offers, and literary news.
+          <p className="font-serif text-lg font-normal text-gray-light mb-8">
+            New writing, new books, new thinking. Delivered to your inbox.
           </p>
-          <form className="flex max-w-md mx-auto border-2 border-soft-black">
+          <form className="flex flex-col sm:flex-row gap-3 justify-center items-center">
             <input
               type="email"
               placeholder="Email address"
-              className="flex-1 px-4 py-3 bg-ivory text-sm focus:outline-none"
-              required
+              className="flex-1 max-w-md px-4 py-3 bg-paper border border-border rounded text-ink focus:outline-none focus:border-navy"
             />
             <button
               type="submit"
-              className="px-6 py-3 bg-soft-black text-ivory hover:bg-burgundy transition-colors text-sm uppercase tracking-wider font-medium"
+              className="px-6 py-3 bg-navy text-paper text-xs font-serif uppercase tracking-wider rounded hover:bg-navy-light transition-colors"
             >
               Subscribe
             </button>
           </form>
         </div>
       </section>
+
+      <hr className="section-divider" />
+
+      {/* Footer */}
+      <footer className="py-12 px-6">
+        <div className="max-w-measure mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+            <p className="font-serif text-sm font-normal text-gray-light">
+              © {new Date().getFullYear()} Pater Noster
+            </p>
+            <div className="flex gap-6">
+              <Link
+                href="/about"
+                className="font-serif text-sm font-normal text-gray-light hover:text-navy transition-colors"
+              >
+                About
+              </Link>
+              <Link
+                href="/contact"
+                className="font-serif text-sm font-normal text-gray-light hover:text-navy transition-colors"
+              >
+                Contact
+              </Link>
+            </div>
+          </div>
+          <p className="font-serif text-xs font-normal text-gray-light">
+            Pater Noster is an independent journal of writing and ideas.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }

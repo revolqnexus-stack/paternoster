@@ -4,7 +4,7 @@ import { getCart } from '@/lib/shopify';
 import { useCartStore, type CartLine } from '@/lib/store';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { ShoppingBag, Trash2, Plus, Minus, ExternalLink } from 'lucide-react';
+import { ShoppingBag, Trash2, Plus, Minus } from 'lucide-react';
 
 export default async function CartPage() {
   const { cartId, lines: storeLines, removeFromCart, addToCart } = useCartStore();
@@ -71,10 +71,10 @@ export default async function CartPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-ivory flex items-center justify-center py-20 px-6">
+      <div className="min-h-screen bg-paper flex items-center justify-center py-20 px-6">
         <div className="text-center">
-          <div className="w-8 h-8 border-4 border-border-subtle border-t-burgundy rounded-full animate-spin mb-4"></div>
-          <p className="text-charcoal/60">Loading your cart…</p>
+          <div className="w-8 h-8 border-4 border-border border-t-ink rounded-full animate-spin mb-4"></div>
+          <p className="font-serif text-lg text-gray-light">Loading your cart…</p>
         </div>
       </div>
     );
@@ -82,20 +82,20 @@ export default async function CartPage() {
 
   if (!cartId || lines.length === 0) {
     return (
-      <div className="min-h-screen bg-ivory py-20 px-6">
-        <div className="max-w-prose mx-auto text-center">
-          <ShoppingBag size={48} className="text-border-subtle mb-6" />
-          <h1 className="font-heading text-4xl font-normal mb-4 text-soft-black">
+      <div className="min-h-screen bg-paper py-20 px-6">
+        <div className="max-w-measure mx-auto text-center">
+          <ShoppingBag size={48} className="text-border mb-6" />
+          <h1 className="font-serif text-4xl font-normal mb-4 text-ink leading-tight">
             Your Cart is Empty
           </h1>
-          <p className="text-charcoal/60 mb-8">
+          <p className="font-serif-alt text-lg text-gray-light mb-8">
             Looks like you haven't added anything yet. Start browsing the collection.
           </p>
           <Link
             href="/products"
-            className="inline-block border-2 border-soft-black text-soft-black px-10 py-3 hover:bg-soft-black hover:text-ivory transition-all font-medium text-sm uppercase tracking-wider"
+            className="font-serif text-base font-normal text-navy italic underline underline-offset-2"
           >
-            Start Shopping
+            Start Shopping ›
           </Link>
         </div>
       </div>
@@ -103,22 +103,23 @@ export default async function CartPage() {
   }
 
   return (
-    <div className="min-h-screen bg-ivory py-12 px-6">
+    <div className="min-h-screen bg-paper py-12 px-6">
       <div className="max-w-container mx-auto">
         <nav className="mb-8">
           <Link
             href="/products"
-            className="text-xs uppercase tracking-wider text-charcoal hover:text-burgundy transition-colors flex items-center gap-1"
+            className="font-serif text-sm font-normal text-navy italic underline underline-offset-2 flex items-center gap-2"
           >
-            <ShoppingBag size={14} /> Continue Shopping
+            <ShoppingBag size={14} strokeWidth={2} /> Continue Shopping
           </Link>
         </nav>
 
-        <h1 className="font-heading text-4xl md:text-5xl font-normal mb-8 text-soft-black">
+        <h1 className="font-serif text-4xl md:text-5xl font-normal mb-8 text-ink leading-tight">
           Your Cart
         </h1>
 
         <div className="lg:grid-cols-3 gap-8">
+          {/* Cart Items */}
           <div className="lg:col-span-2">
             {lines.map((line) => {
               const image = line.merchandise.product.images.edges[0]?.node.url;
@@ -128,50 +129,50 @@ export default async function CartPage() {
               return (
                 <div
                   key={line.id}
-                  className="flex gap-4 items-start bg-white p-4 rounded-lg border border-border-subtle mb-4"
+                  className="flex gap-4 items-start bg-paper p-4 rounded border border-border mb-4"
                 >
-                  <div className="relative aspect-[4/5] w-24 h-30 flex-shrink-0 rounded-md overflow-hidden bg-cream border border-border-subtle">
+                  <div className="relative aspect-[4/5] w-24 h-30 flex-shrink-0 rounded overflow-hidden bg-border border border-border">
                     {image ? (
                       <img src={image} alt={line.merchandise.product.title} className="w-full h-full object-cover" />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-charcoal/20 text-sm">📦</div>
+                      <div className="w-full h-full flex items-center justify-center text-gray-light text-sm italic">📦</div>
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-heading text-sm font-normal text-soft-black leading-tight line-clamp-2 mb-2">
+                    <p className="font-serif text-sm font-normal text-ink leading-tight line-clamp-2 mb-2">
                       {line.merchandise.product.title}
                     </p>
                     <div className="flex items-center gap-4 mb-2">
-                      <span className="font-body font-medium text-charcoal">
+                      <span className="font-serif font-medium text-ink">
                         £{price.toFixed(2)}
                       </span>
-                      <div className="flex items-center gap-1 bg-ivory rounded-lg px-2 py-1">
+                      <div className="flex items-center gap-1 bg-border rounded px-2 py-1">
                         <button
                           onClick={() => handleQtyChange(line.id, line.merchandise.id, -1)}
-                          className="w-6 h-6 rounded border border-border-subtle bg-white flex items-center justify-center text-charcoal hover:bg-charcoal hover:text-white transition-colors text-xs disabled:opacity-50"
+                          className="w-6 h-6 rounded border border-border bg-paper flex items-center justify-center text-ink hover:bg-ink hover:text-paper transition-colors text-xs disabled:opacity-50"
                           disabled={line.quantity <= 1}
                         >
-                          <Minus size={12} />
+                          <Minus size={12} strokeWidth={2} />
                         </button>
-                        <span className="font-mono text-xs text-charcoal w-6 text-center">
+                        <span className="font-serif text-xs text-ink w-6 text-center">
                           {line.quantity}
                         </span>
                         <button
                           onClick={() => handleQtyChange(line.id, line.merchandise.id, 1)}
-                          className="w-6 h-6 rounded border border-border-subtle bg-white flex items-center justify-center text-charcoal hover:bg-charcoal hover:text-white transition-colors text-xs"
+                          className="w-6 h-6 rounded border border-border bg-paper flex items-center justify-center text-ink hover:bg-ink hover:text-paper transition-colors text-xs"
                         >
-                          <Plus size={12} />
+                          <Plus size={12} strokeWidth={2} />
                         </button>
                       </div>
-                      <span className="ml-auto font-body font-medium text-charcoal">
+                      <span className="ml-auto font-serif font-medium text-ink">
                         £{lineTotal.toFixed(2)}
                       </span>
                     </div>
                     <button
                       onClick={() => handleRemove(line.id)}
-                      className="text-xs text-red-600 hover:bg-red-50 hover:text-red-800 transition-colors px-2 py-1 rounded"
+                      className="text-xs font-serif text-gray-light hover:text-ink transition-colors px-2 py-1"
                     >
-                      <Trash2 size={14} className="mr-1" /> Remove
+                      <Trash2 size={14} strokeWidth={2} className="mr-1" /> Remove
                     </button>
                   </div>
                 </div>
@@ -179,23 +180,24 @@ export default async function CartPage() {
             })}
           </div>
 
+          {/* Order Summary */}
           <div className="lg:col-span-1">
-            <div className="bg-white p-6 rounded-lg border border-border-subtle sticky top-24">
-              <h2 className="font-heading text-lg font-normal mb-4 text-soft-black">
+            <div className="bg-paper p-6 rounded border border-border sticky top-24">
+              <h2 className="font-serif text-lg font-normal mb-4 text-ink">
                 Order Summary
               </h2>
               <div className="mb-6">
                 <div className="flex justify-between text-sm mb-2">
-                  <span className="text-charcoal/60">Subtotal</span>
-                  <span className="font-body font-medium text-charcoal">
+                  <span className="font-serif text-gray-light">Subtotal</span>
+                  <span className="font-serif font-medium text-ink">
                     £{subtotal.toFixed(2)}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm mb-2">
-                  <span className="text-charcoal/60">Shipping</span>
-                  <span className="font-body font-medium text-charcoal">Calculated at checkout</span>
+                  <span className="font-serif text-gray-light">Shipping</span>
+                  <span className="font-serif font-medium text-ink">Calculated at checkout</span>
                 </div>
-                <div className="flex justify-between text-sm font-medium text-soft-black pt-4 border-t border-border-subtle">
+                <div className="flex justify-between text-sm font-medium text-ink pt-4 border-t border-border">
                   <span>Total</span>
                   <span>£{subtotal.toFixed(2)}</span>
                 </div>
@@ -208,15 +210,15 @@ export default async function CartPage() {
                     window.location.href = checkoutUrl;
                   }
                 }}
-                className={`w-full py-4 rounded-lg font-body text-sm font-medium uppercase tracking-wider transition-all ${
+                className={`w-full py-4 rounded-lg font-serif text-sm font-normal uppercase tracking-wider transition-all ${
                   isLoading
-                    ? 'bg-sage text-white cursor-not-allowed'
-                    : 'bg-soft-black text-ivory hover:bg-burgundy'
+                    ? 'bg-gray-light text-paper cursor-not-allowed'
+                    : 'bg-ink text-paper hover:bg-navy-light'
                 }`}
               >
                 {isLoading ? 'Processing…' : 'Proceed to Checkout'}
               </button>
-              <p className="mt-4 text-center text-xs text-charcoal/50">
+              <p className="mt-4 text-center text-xs font-serif text-gray-light italic">
                 Secure checkout powered by Shopify
               </p>
             </div>

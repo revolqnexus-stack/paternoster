@@ -1,12 +1,10 @@
 'use client';
 
-import { getProduct } from '@/lib/shopify';
 import { useCartStore } from '@/lib/store';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
 import { Plus, Minus, ShoppingBag } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 interface ProductImage {
   url: string;
@@ -60,14 +58,6 @@ export default function ProductDetails({
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
 
-  const inCart = selectedVariant
-    ? (() => {
-        const lines = (useCartStore.getState() as any).lines;
-        return lines.find((l: any) => l.merchandise.id === selectedVariant?.id);
-      })()
-    : null;
-  const cartQty = inCart ? inCart.quantity : 0;
-
   const handleAddToCart = async () => {
     if (!selectedVariant) return;
     setIsAdding(true);
@@ -79,11 +69,18 @@ export default function ProductDetails({
   };
 
   return (
-    <div className="max-w-container mx-auto px-6 py-12 md:py-24">
-      <div className="grid lg:grid-cols-2 gap-12 md:gap-16 items-start">
+    <div className="max-w-measure mx-auto px-6 py-12 md:py-24">
+      <Link
+        href="/products"
+        className="font-serif text-sm font-normal text-navy italic underline underline-offset-2 mb-6 inline-block"
+      >
+        ← The Shop
+      </Link>
+
+      <div className="grid lg:grid-cols-2 gap-16 items-start">
         {/* Images */}
         <div className="flex flex-col gap-4">
-          <div className="relative aspect-[4/5] bg-cream border border-border-subtle rounded-lg overflow-hidden">
+          <div className="relative aspect-square bg-border rounded overflow-hidden">
             {images[0]?.url ? (
               <Image
                 src={images[0].url}
@@ -93,17 +90,17 @@ export default function ProductDetails({
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-charcoal/20 text-4xl">
-                📖
+              <div className="w-full h-full flex items-center justify-center text-gray-light text-[10px] uppercase tracking-wider">
+                📦
               </div>
             )}
             {onSale && (
-              <span className="absolute top-3 right-3 bg-burgundy text-ivory text-xs px-2 py-1 uppercase tracking-wide font-medium">
+              <span className="absolute top-3 right-3 bg-navy text-paper text-xs font-serif px-2 py-1 uppercase tracking-wider">
                 Sale
               </span>
             )}
             {!product.availableForSale && (
-              <span className="absolute top-3 right-3 bg-charcoal text-ivory text-xs px-2 py-1 uppercase tracking-wide font-medium">
+              <span className="absolute top-3 right-3 bg-ink text-paper text-xs font-serif px-2 py-1 uppercase tracking-wider">
                 Sold Out
               </span>
             )}
@@ -113,7 +110,7 @@ export default function ProductDetails({
               {images.slice(0, 4).map((img) => (
                 <button
                   key={img.url}
-                  className="aspect-square bg-cream border border-border-subtle rounded-md overflow-hidden hover:border-charcoal transition-colors"
+                  className="aspect-square bg-border border border-border rounded overflow-hidden hover:border-ink transition-colors"
                 >
                   <img src={img.url} alt={img.altText} className="w-full h-full object-cover" />
                 </button>
@@ -124,25 +121,25 @@ export default function ProductDetails({
 
         {/* Details */}
         <div>
-          <p className="text-xs uppercase tracking-widest text-burgundy font-medium mb-2">
+          <p className="font-serif text-xs font-normal text-navy uppercase tracking-widest mb-2">
             {product.tags[0] || 'Editorial'}
           </p>
-          <h1 className="font-heading text-4xl md:text-5xl font-normal mb-4 text-soft-black leading-tight">
+          <h1 className="font-serif text-4xl md:text-5xl font-normal mb-4 text-ink leading-tight">
             {product.title}
           </h1>
 
-          <div className="mb-2">
+          <div className="mb-6">
             {onSale && comparePrice ? (
               <div className="flex items-baseline gap-2">
-                <span className="text-xl font-body font-medium text-charcoal">
+                <span className="text-2xl font-serif font-normal text-ink">
                   £{price.toFixed(2)}
                 </span>
-                <span className="text-sm text-sage line-through">
+                <span className="font-serif text-lg font-normal text-gray-light line-through">
                   £{comparePrice.toFixed(2)}
                 </span>
               </div>
             ) : (
-              <span className="text-xl font-body font-medium text-charcoal">
+              <span className="text-2xl font-serif font-normal text-ink">
                 £{price.toFixed(2)}
               </span>
             )}
@@ -150,11 +147,11 @@ export default function ProductDetails({
 
           {/* Variants */}
           {variants.length > 1 && (
-            <div className="mb-6">
-              <p className="text-xs uppercase tracking-wider text-charcoal/60 font-medium mb-3">
+            <div className="mb-8">
+              <p className="font-serif text-xs font-normal text-gray-light uppercase tracking-widest mb-3">
                 Choose variant
               </p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 {variants.map((v) => {
                   const isSelected = selectedVariant?.id === v.id;
                   const vPrice = parseFloat(v.priceV2.amount);
@@ -162,10 +159,10 @@ export default function ProductDetails({
                     <button
                       key={v.id}
                       onClick={() => setSelectedVariant(v)}
-                      className={`px-4 py-2 text-xs font-medium uppercase tracking-wider rounded-full border transition-all ${
+                      className={`px-5 py-2.5 font-serif text-sm font-normal uppercase tracking-wider rounded-full border transition-all ${
                         isSelected
-                          ? 'bg-soft-black text-ivory border-soft-black'
-                          : 'bg-white text-charcoal border-border-subtle hover:border-charcoal'
+                          ? 'bg-ink text-paper border-ink'
+                          : 'bg-paper text-ink border-border hover:border-ink'
                       }`}
                     >
                       {v.title} — £{vPrice.toFixed(2)}
@@ -178,13 +175,13 @@ export default function ProductDetails({
 
           {/* Quantity + Add to Cart */}
           <div className="mb-8">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               <button
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                 disabled={quantity <= 1 || !product.availableForSale}
-                className="w-10 h-10 rounded-full border border-border-subtle bg-white flex items-center justify-center text-charcoal hover:bg-charcoal hover:text-white transition-colors disabled:opacity-50"
+                className="w-10 h-10 rounded-full border border-border bg-paper flex items-center justify-center text-ink hover:bg-ink hover:text-paper transition-colors disabled:opacity-50"
               >
-                <Minus size={16} />
+                <Minus size={14} strokeWidth={2} />
               </button>
               <input
                 type="number"
@@ -192,14 +189,14 @@ export default function ProductDetails({
                 onChange={(e) =>
                   setQuantity(Math.max(1, parseInt(e.target.value) || 1))
                 }
-                className="w-12 h-10 text-center border border-border-subtle rounded-lg text-charcoal font-medium text-sm focus:outline-none focus:border-burgundy"
+                className="w-12 h-10 text-center border border-border rounded text-ink font-serif font-normal text-sm focus:outline-none focus:border-navy"
               />
               <button
                 onClick={() => setQuantity((q) => q + 1)}
                 disabled={!product.availableForSale}
-                className="w-10 h-10 rounded-full border border-border-subtle bg-white flex items-center justify-center text-charcoal hover:bg-charcoal hover:text-white transition-colors disabled:opacity-50"
+                className="w-10 h-10 rounded-full border border-border bg-paper flex items-center justify-center text-ink hover:bg-ink hover:text-paper transition-colors disabled:opacity-50"
               >
-                <Plus size={16} />
+                <Plus size={14} strokeWidth={2} />
               </button>
             </div>
           </div>
@@ -212,36 +209,30 @@ export default function ProductDetails({
               !product.availableForSale ||
               !selectedVariant
             }
-            className={`w-full py-5 rounded-lg font-body text-sm font-medium uppercase tracking-wider transition-all ${
+            className={`w-full py-5 rounded-lg font-serif text-sm font-normal uppercase tracking-wider transition-all ${
               isAdding ||
               cartLoading ||
               !product.availableForSale ||
               !selectedVariant
-                ? 'bg-sage text-white cursor-not-allowed'
-                : cartQty > 0
-                  ? 'bg-burgundy text-ivory hover:bg-burgundy-light'
-                  : 'bg-soft-black text-ivory hover:bg-burgundy'
+                ? 'bg-gray-light text-paper cursor-not-allowed'
+                : 'bg-ink text-paper hover:bg-navy-light'
             }`}
           >
-            {isAdding
-              ? 'Adding…'
-              : cartQty > 0
-                ? `Added ({cartQty})`
-                : 'Add to Cart'}
+            {isAdding ? 'Adding…' : 'Add to Cart'}
           </button>
 
           {!product.availableForSale && (
-            <p className="mt-3 text-xs text-charcoal/50 text-center">
+            <p className="mt-3 text-xs font-serif text-gray-light italic text-center">
               Currently unavailable
             </p>
           )}
 
           {/* Description */}
-          <div className="mt-12 border-t border-border-subtle pt-8">
-            <h2 className="font-heading text-xl font-normal mb-4 text-soft-black">
+          <div className="mt-16 border-t border-border pt-8">
+            <h2 className="font-serif text-xl font-normal mb-4 text-ink">
               Details
             </h2>
-            <div className="prose prose-sm text-charcoal/80 leading-relaxed max-w-none">
+            <div className="font-serif-alt text-lg text-ink leading-relaxed max-w-none">
               {product.descriptionHtml ? (
                 <div
                   className="prose-html"
