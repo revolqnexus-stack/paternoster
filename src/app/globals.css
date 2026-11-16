@@ -1,15 +1,21 @@
 @import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Serif+4:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
-/* Pater Noster — LRB design language + editorial motion */
-/* Cream paper, black serif, hairline rules, full-bleed photography, animated */
+/* Pater Noster — LRB design language + Revol-Q energy */
+/* Cream paper, black serif, hairline rules, dark footer, cobalt accent */
 
 :root {
   --paper: #f8f6f0;
   --paper-2: #efece3;
   --ink: #000000;
+  --ink2: #050505;
   --muted: #4a4a4a;
   --hairline: #d9d6cc;
+  --line: #e0e0e0;
+  --white: #ffffff;
+  --fog: #8a8a8a;
+  --dim: #5a5a5a;
+  --cobalt2: #1b2be0;
   --max-width-page: 1200px;
   --max-width-measure: 65ch;
 
@@ -23,8 +29,14 @@
   --color-paper: var(--paper);
   --color-paper-2: var(--paper-2);
   --color-ink: var(--ink);
+  --color-ink2: var(--ink2);
   --color-muted: var(--muted);
   --color-hairline: var(--hairline);
+  --color-line: var(--line);
+  --color-white: var(--white);
+  --color-fog: var(--fog);
+  --color-dim: var(--dim);
+  --color-cobalt2: var(--cobalt2);
 
   --font-serif: "Playfair Display", Georgia, serif;
   --font-serif-body: "Source Serif 4", Georgia, serif;
@@ -335,11 +347,16 @@ a:hover { color: var(--color-muted); }
 
 .text-ink { color: var(--color-ink); }
 .text-muted { color: var(--color-muted); }
+.text-white { color: var(--color-white); }
+.text-cobalt2 { color: var(--color-cobalt2); }
+.text-dim { color: var(--color-dim); }
 
 .bg-paper { background-color: var(--color-paper); }
 .bg-paper-2 { background-color: var(--color-paper-2); }
+.bg-ink2 { background-color: var(--color-ink2); }
 
 .border-hairline { border-color: var(--color-hairline); }
+.border-line { border-color: var(--color-line); }
 
 .rounded-0 { border-radius: 0; }
 
@@ -425,3 +442,145 @@ a:hover { color: var(--color-muted); }
 }
 
 .preloader-bar.loaded { transform: scaleX(1); }
+
+/* Footer — Revol-Q energy */
+footer {
+  background: var(--color-ink2);
+  border-top: 1px solid var(--color-line);
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-ghost {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.footer-wordmark {
+  position: absolute;
+  top: -1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: 1.3rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-white);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.footer-brand {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: 1.3rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.footer-desc {
+  font-size: 0.85rem;
+  color: var(--color-fog);
+  line-height: 1.9;
+  max-width: 220px;
+}
+
+.footer-small {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--color-dim);
+}
+
+.footer-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-dim);
+  margin-bottom: 1rem;
+}
+
+.footer-link {
+  font-size: 0.85rem;
+  color: var(--color-fog);
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+
+.footer-link:hover {
+  color: var(--color-white);
+}
+
+.footer-whatsapp {
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  color: var(--color-cobalt2);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 200ms ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.footer-whatsapp:hover {
+  color: var(--color-white);
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--color-line);
+  padding-top: 1.5rem;
+  margin-top: 3rem;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-bottom span {
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--color-dim);
+}
+
+@media (max-width: 900px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr !important;
+    row-gap: 2.5rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+  }
+  footer {
+    padding: 3rem 1.5rem 2rem !important;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+}

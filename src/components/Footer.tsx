@@ -5,130 +5,155 @@ import { motion } from 'framer-motion';
 
 export default function Footer() {
   return (
-    <footer className="border-t border-hairline bg-paper py-16 mt-12">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="page-container"
-      >
-        <hr className="hairline mb-12" />
-
-        <motion.div
-          variants={{
-            hidden: { opacity: 0 },
-            visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
-          }}
-          initial="hidden"
-          animate="visible"
-          className="grid grid-cols-12 gap-8 mb-12"
+    <footer className="bg-ink2 border-line">
+      <div className="relative z-10">
+        {/* Ghost overlay */}
+        <div
+          className="absolute inset-0 z-0 opacity-45 pointer-events-none"
+          aria-hidden="true"
         >
-          <div className="col-span-4 md:col-span-2">
-            <h3 className="text-xs font-mono text-muted uppercase tracking-wider mb-4">
-              Pater Noster
-            </h3>
-            <p className="font-serif-body text-sm text-muted leading-relaxed max-w-[45ch]">
-              Independent journal of writing and ideas. Essays, reviews,
-              criticism — and the books and objects that accompany them.
-            </p>
-          </div>
-          <div className="col-span-4 md:col-span-2">
-            <h3 className="text-xs font-mono text-muted uppercase tracking-wider mb-4">
-              Shop
-            </h3>
-            <ul className="space-y-2">
-              <li>
+          <div className="w-full h-full" />
+        </div>
+
+        {/* Ghost wordmark */}
+        <span
+          className="ghost-text absolute top-[-1.5rem] left-1/2 -translate-x-1/2"
+          aria-hidden="true"
+        >
+          PATER NOSTER
+        </span>
+
+        <div className="page-container relative z-1">
+          {/* 4-column grid */}
+          <div className="footer-grid">
+            {/* Brand */}
+            <div className="footer-col">
+              <span className="footer-brand">PATER NOSTER</span>
+              <p className="footer-desc">
+                Independent journal of writing and ideas. Essays, reviews,
+                criticism — and the books and objects that accompany them.
+              </p>
+              <p className="footer-small">India · 2025</p>
+            </div>
+
+            {/* Navigate */}
+            <div className="footer-col">
+              <span className="footer-label">Navigate</span>
+              <div className="display:flex;flex-direction:column;gap:0.7rem">
+                <motion.a
+                  whileHover={{ x: 5 }}
+                  href="/"
+                  className="footer-link"
+                >
+                  Home
+                </motion.a>
                 <motion.a
                   whileHover={{ x: 5 }}
                   href="/products"
-                  className="text-muted hover:text-ink transition-colors text-sm font-serif-body"
+                  className="footer-link"
                 >
-                  All Products
+                  Shop
                 </motion.a>
-              </li>
-              <li>
                 <motion.a
                   whileHover={{ x: 5 }}
-                  href="/collections/books"
-                  className="text-muted hover:text-ink transition-colors text-sm font-serif-body"
+                  href="/about"
+                  className="footer-link"
+                >
+                  About
+                </motion.a>
+                <motion.a
+                  whileHover={{ x: 5 }}
+                  href="/contact"
+                  className="footer-link"
+                >
+                  Contact
+                </motion.a>
+              </div>
+            </div>
+
+            {/* Services */}
+            <div className="footer-col">
+              <span className="footer-label">Services</span>
+              <div className="display:flex;flex-direction:column;gap:0.7rem">
+                <motion.a
+                  whileHover={{ x: 5 }}
+                  href="/products"
+                  className="footer-link"
                 >
                   Books
                 </motion.a>
-              </li>
-            </ul>
-          </div>
-          <div className="col-span-4 md:col-span-2">
-            <h3 className="text-xs font-mono text-muted uppercase tracking-wider mb-4">
-              Journal
-            </h3>
-            <ul className="space-y-2">
-              <li>
+                <motion.a
+                  whileHover={{ x: 5 }}
+                  href="/collections/books"
+                  className="footer-link"
+                >
+                  Collections
+                </motion.a>
                 <motion.a
                   whileHover={{ x: 5 }}
                   href="/about"
-                  className="text-muted hover:text-ink transition-colors text-sm font-serif-body"
+                  className="footer-link"
                 >
-                  Essays
+                  Journal
                 </motion.a>
-              </li>
-              <li>
-                <motion.a
-                  whileHover={{ x: 5 }}
-                  href="/about"
-                  className="text-muted hover:text-ink transition-colors text-sm font-serif-body"
-                >
-                  Reviews
-                </motion.a>
-              </li>
-            </ul>
-          </div>
-          <div className="col-span-4 md:col-span-2">
-            <h3 className="text-xs font-mono text-muted uppercase tracking-wider mb-4">
-              Visit
-            </h3>
-            <ul className="space-y-2">
-              <li>
                 <motion.a
                   whileHover={{ x: 5 }}
                   href="https://www.lrb.co.uk/"
-                  className="text-muted hover:text-ink transition-colors text-sm font-serif-body italic"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="footer-link italic"
                 >
-                  The London Review of Books
+                  The LRB
                 </motion.a>
-              </li>
-            </ul>
-          </div>
-        </motion.div>
+              </div>
+            </div>
 
-        <hr className="hairline mb-12" />
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-          className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-[0.6875rem] font-mono text-muted uppercase tracking-wider"
-        >
-          <p>© {new Date().getFullYear()} Pater Noster</p>
-          <div className="flex gap-6">
-            <motion.a
-              whileHover={{ x: 5 }}
-              href="/privacy"
-              className="text-muted hover:text-ink transition-colors"
-            >
-              Privacy Policy
-            </motion.a>
-            <motion.a
-              whileHover={{ x: 5 }}
-              href="/terms"
-              className="text-muted hover:text-ink transition-colors"
-            >
-              Terms of Service
-            </motion.a>
+            {/* Contact */}
+            <div className="footer-col">
+              <span className="footer-label">Contact</span>
+              <div className="display:flex;flex-direction:column;gap:0.7rem">
+                <motion.a
+                  whileHover={{ x: 5 }}
+                  href="tel:+917306085895"
+                  className="footer-link"
+                >
+                  +91 73060 85895
+                </motion.a>
+                <motion.a
+                  whileHover={{ x: 5 }}
+                  href="mailto:hello@paternoster.in"
+                  className="footer-link"
+                >
+                  hello@paternoster.in
+                </motion.a>
+                <span className="footer-link">India</span>
+                <motion.a
+                  whileHover={{ x: 5 }}
+                  href="https://wa.me/917306085895"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-whatsapp"
+                >
+                  WHATSAPP US →
+                </motion.a>
+              </div>
+            </div>
           </div>
-        </motion.div>
-      </motion.div>
+
+          <hr className="hairline mb-12" />
+
+          {/* Bottom bar */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="footer-bottom relative z-1"
+          >
+            <span>© {new Date().getFullYear()} PATER NOSTER</span>
+            <span className="text-cobalt2">paternoster.in</span>
+          </motion.div>
+        </div>
+      </div>
     </footer>
   );
 }
