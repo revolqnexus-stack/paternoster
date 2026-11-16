@@ -250,13 +250,15 @@ a:hover { color: var(--color-accent); }
   width: 100%;
   border-bottom: 1px solid var(--color-hairline);
   background: var(--color-paper);
+  height: 64px;
 }
 
 .masthead-inner {
   width: 100%;
   max-width: var(--container-wide);
   margin-inline: auto;
-  padding: 0.85rem var(--gutter);
+  padding: 0.5rem var(--gutter);
+  height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -264,32 +266,35 @@ a:hover { color: var(--color-accent); }
 
 @media (max-width: 768px) {
   .masthead-inner {
-    padding: 1.5rem var(--gutter-mobile);
+    padding: 0.5rem var(--gutter-mobile);
+    height: 56px;
   }
 }
 
 .masthead-logo {
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: clamp(1.25rem, 3vw, 1.5rem);
+  font-size: clamp(1rem, 2vw, 1.125rem);
   letter-spacing: -0.02em;
   text-decoration: none;
   color: var(--color-ink);
+  line-height: 1;
 }
 
 .masthead-nav {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
   align-items: center;
 }
 
 .masthead-nav a {
   font-family: var(--font-serif-body);
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 400;
   text-decoration: none;
   color: var(--color-ink);
   letter-spacing: -0.01em;
+  line-height: 1;
 }
 
 .masthead-nav a:hover { color: var(--color-accent); text-decoration: none; }
