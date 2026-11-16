@@ -16,6 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
+        <div className="film-grain" />
         <Header />
         <main>{children}</main>
         <Footer />

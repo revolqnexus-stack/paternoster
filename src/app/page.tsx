@@ -1,5 +1,9 @@
 import { getProducts } from '@/lib/shopify';
 import Link from 'next/link';
+import Hero from '@/components/Hero';
+import ArticleCard from '@/components/ArticleCard';
+import Marquee from '@/components/Marquee';
+import ImageWithFallback from '@/components/ImageWithFallback';
 import { stockImage } from '@/lib/stock-images';
 
 export const metadata = {
@@ -63,145 +67,77 @@ export default async function Home() {
     products = [];
   }
 
-  const [featured, ...secondary] = ARTICLES;
+  const [featured, ...rest] = ARTICLES;
 
   return (
-    <div className="page-wrap">
-      <div className="page-container py-12 md:py-24">
-        {/* Featured story */}
-        <section className="featured-article mb-12 md:mb-20">
-          <div className="featured-article-image">
-            <img
-              src={featured.image}
-              alt={featured.imageAlt}
-              className="w-full h-auto max-h-[500px] object-cover"
-            />
-          </div>
-          <div className="featured-article-content">
-            <span className="section-kicker">Featured</span>
-            <h1 className="featured-article-title mb-4">
-              {featured.title}
-            </h1>
-            <p className="label-caps mb-2 uppercase tracking-wider text-gray-light">
-              By {featured.author}
-            </p>
-            <p className="featured-article-excerpt">
-              {featured.excerpt}
-            </p>
-          </div>
-        </section>
+    <div className="page-wrap relative z-10">
+      {/* Hero — full-bleed, giant overlapping headline */}
+      <Hero
+        kicker="FEATURED"
+        title={featured.title}
+        byline={featured.author}
+        excerpt={featured.excerpt}
+        image={featured.image}
+        imageAlt={featured.imageAlt}
+      />
 
-        <hr className="section-divider" />
+      <hr className="hairline mb-12 md:mb-20" />
 
-        {/* Secondary articles */}
-        <section className="secondary-grid mb-12 md:mb-20">
-          {secondary.map((article, idx) => (
-            <article
-              key={article.title}
-              className="article-card border-t border-border pt-6 lg:grid-cols-2 lg:gap-8 lg:items-center"
+      {/* Secondary articles — asymmetric grid: large span 7 + small span 5, alternating */}
+      <section className="grid-12">
+        {rest.map((article, idx) => {
+          const isLarge = idx % 3 === 0;
+
+          return (
+            <div key={article.title} className="mb-8 md:mb-12">
+              <ArticleCard
+                title={article.title}
+                author={article.author}
+                date={article.date}
+                excerpt={article.excerpt}
+                image={article.image}
+                imageAlt={article.imageAlt}
+                span={isLarge ? 7 : 5}
+              />
+            </div>
+          );
+        })}
+      </section>
+
+      <hr className="hairline mb-12 md:mb-20" />
+
+      {/* Marquee ticker */}
+      <Marquee />
+
+      <hr className="hairline mb-12 md:mb-20" />
+
+      {/* Shop section */}
+      {products.length > 0 && (
+        <section className="section-lg border-t border-border pt-12 md:pt-20">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-12 md:mb-16">
+            <div>
+              <p className="section-kicker">From the shop</p>
+              <h2 className="font-display text-3xl md:text-4xl font-normal mb-2 text-ink leading-tight italic">
+                Books, editions, objects
+              </h2>
+              <p className="font-grotesk text-sm md:text-base text-gray-light italic">
+                Curated from Pater Noster
+              </p>
+            </div>
+            <a
+              href="/products"
+              className="font-grotesk text-sm font-medium text-navy italic underline underline-offset-2 hover:text-navy-light transition-colors"
             >
-              {idx % 2 === 0 ? (
-                <>
-                  <div className="order-2 md:order-1">
-                    <h3 className="article-card-title mb-3">
-                      {article.title}
-                    </h3>
-                    <p className="label-caps mb-2 uppercase tracking-wider text-gray-light">
-                      By {article.author}
-                    </p>
-                    {article.date && (
-                      <p className="text-xs font-serif text-gray-light mb-4">
-                        {article.date}
-                      </p>
-                    )}
-                    <p className="font-serif-alt text-lg text-ink leading-relaxed mb-4">
-                      {article.excerpt}
-                    </p>
-                    <Link
-                      href="/"
-                      className="text-base font-normal text-navy italic underline underline-offset-2"
-                    >
-                      Read more ›
-                    </Link>
-                  </div>
-                  <div className="order-1 md:order-2">
-                    <div className="article-card-image">
-                      <img
-                        src={article.image}
-                        alt={article.imageAlt}
-                        className="w-full h-auto max-h-[400px] object-cover"
-                      />
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="order-1 md:order-1">
-                    <div className="article-card-image">
-                      <img
-                        src={article.image}
-                        alt={article.imageAlt}
-                        className="w-full h-auto max-h-[400px] object-cover"
-                      />
-                    </div>
-                  </div>
-                  <div className="order-2 md:order-2">
-                    <h3 className="article-card-title mb-3">
-                      {article.title}
-                    </h3>
-                    <p className="label-caps mb-2 uppercase tracking-wider text-gray-light">
-                      By {article.author}
-                    </p>
-                    {article.date && (
-                      <p className="text-xs font-serif text-gray-light mb-4">
-                        {article.date}
-                      </p>
-                    )}
-                    <p className="font-serif-alt text-lg text-ink leading-relaxed mb-4">
-                      {article.excerpt}
-                    </p>
-                    <Link
-                      href="/"
-                      className="text-base font-normal text-navy italic underline underline-offset-2"
-                    >
-                      Read more ›
-                    </Link>
-                  </div>
-                </>
-              )}
-            </article>
-          ))}
+              View all →
+            </a>
+          </div>
+          <div className="grid gap-8 md:grid-cols-3">
+            {products.map((product: any) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
         </section>
-
-        <hr className="section-divider" />
-
-        {/* Shop section */}
-        {products.length > 0 && (
-          <section className="section-md border-t border-border">
-            <div className="flex justify-between items-end mb-8">
-              <div>
-                <h2 className="font-serif text-2xl font-normal mb-2 text-ink">
-                  From the shop
-                </h2>
-                <p className="font-serif text-base font-normal text-gray-light italic">
-                  Books, editions, and objects
-                </p>
-              </div>
-              <Link
-                href="/products"
-                className="font-serif text-base font-normal text-navy italic underline underline-offset-2"
-              >
-                View all ›
-              </Link>
-            </div>
-            <div className="article-grid">
-              {products.map((product: any) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          </section>
-        )}
-      </div>
+      )}
     </div>
   );
 }
@@ -216,28 +152,35 @@ function ProductCard({ product }: ProductCardProps) {
 
   return (
     <Link key={product.id} href={`/products/${product.handle}`} className="block">
-      <article className="article-card">
+      <article className="article-card group relative">
         <div className="article-card-image">
           {image?.url ? (
             <img
               src={image.url}
               alt={image.altText || product.title}
-              className="w-full h-auto max-h-[400px] object-cover"
+              className="w-full h-full object-cover"
+              loading="lazy"
             />
           ) : (
-            <img
+            <ImageWithFallback
               src={stockImage('bookshelf')}
               alt={product.title}
-              className="w-full h-auto max-h-[400px] object-cover"
+              className="w-full h-full object-cover"
+              fallbackKey="bookshelf"
             />
           )}
         </div>
-        <h4 className="article-card-title mb-3">
-          {product.title}
-        </h4>
-        <p className="font-serif text-sm font-normal text-gray">
-          £{price.toFixed(2)}
-        </p>
+        <div className="p-4 pt-3">
+          <p className="label-caps mb-2 uppercase tracking-widest">
+            Editorial
+          </p>
+          <h4 className="article-card-title mb-2 group-hover:text-navy-light transition-colors duration-300">
+            {product.title}
+          </h4>
+          <p className="font-grotesk text-sm font-medium text-navy">
+            £{price.toFixed(2)}
+          </p>
+        </div>
       </article>
     </Link>
   );
