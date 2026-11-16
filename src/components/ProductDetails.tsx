@@ -2,7 +2,6 @@
 
 import { useCartStore } from '@/lib/store';
 import Link from 'next/link';
-import Image from 'next/image';
 import { stockImage } from '@/lib/stock-images';
 import { Plus, Minus, ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
@@ -80,50 +79,21 @@ export default function ProductDetails({
         </Link>
 
         <div className="featured-article">
-          {/* Images */}
           <div className="featured-article-image">
             {images[0]?.url ? (
-              <Image
+              <img
                 src={images[0].url}
                 alt={images[0].altText || product.title}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
+                className="w-full h-auto max-h-[500px] object-cover"
               />
             ) : (
-              <Image
+              <img
                 src={stockImage('bookshelf')}
                 alt={product.title}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
+                className="w-full h-auto max-h-[500px] object-cover"
               />
             )}
-            {onSale && (
-              <span className="absolute top-3 right-3 bg-navy text-paper text-xs font-serif px-2 py-1 uppercase tracking-wider">
-                Sale
-              </span>
-            )}
-            {!product.availableForSale && (
-              <span className="absolute top-3 right-3 bg-ink text-paper text-xs font-serif px-2 py-1 uppercase tracking-wider">
-                Sold Out
-              </span>
-            )}
           </div>
-          {images.length > 1 && (
-            <div className="grid grid-cols-4 gap-2">
-              {images.slice(0, 4).map((img) => (
-                <button
-                  key={img.url}
-                  className="aspect-square bg-border border border-border rounded overflow-hidden hover:border-ink transition-colors"
-                >
-                  <img src={img.url} alt={img.altText} className="w-full h-full object-cover" />
-                </button>
-              ))}
-            </div>
-          )}
-
-          {/* Details */}
           <div className="featured-article-content">
             <p className="font-serif text-xs font-normal text-navy uppercase tracking-widest mb-2">
               {product.tags[0] || 'Editorial'}
@@ -149,7 +119,6 @@ export default function ProductDetails({
               )}
             </div>
 
-            {/* Variants */}
             {variants.length > 1 && (
               <div className="mb-8">
                 <p className="font-serif text-xs font-normal text-gray-light uppercase tracking-widest mb-3">
@@ -177,7 +146,6 @@ export default function ProductDetails({
               </div>
             )}
 
-            {/* Quantity + Add to Cart */}
             <div className="mb-8">
               <div className="flex items-center gap-4">
                 <button
@@ -231,7 +199,6 @@ export default function ProductDetails({
               </p>
             )}
 
-            {/* Description */}
             <div className="mt-16 border-t border-border pt-8">
               <h2 className="font-serif text-xl font-normal mb-4 text-ink">
                 Details

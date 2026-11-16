@@ -1,6 +1,5 @@
 import { getProducts } from '@/lib/shopify';
 import Link from 'next/link';
-import Image from 'next/image';
 import { stockImage } from '@/lib/stock-images';
 
 export const metadata = {
@@ -68,7 +67,6 @@ export default async function Home() {
 
   return (
     <div className="page-wrap">
-      {/* Announcement bar */}
       <div className="bg-navy text-paper text-center py-2 px-4 text-[11px] font-serif uppercase tracking-wider">
         Pater Noster — new writing, new books, new thinking
       </div>
@@ -77,12 +75,10 @@ export default async function Home() {
         {/* Featured story */}
         <section className="featured-article mb-12 md:mb-20">
           <div className="featured-article-image">
-            <Image
+            <img
               src={featured.image}
               alt={featured.imageAlt}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
+              className="w-full h-auto max-h-[500px] object-cover"
             />
           </div>
           <div className="featured-article-content">
@@ -134,12 +130,10 @@ export default async function Home() {
                   </div>
                   <div className="order-1 md:order-2">
                     <div className="article-card-image">
-                      <Image
+                      <img
                         src={article.image}
                         alt={article.imageAlt}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="w-full h-auto max-h-[400px] object-cover"
                       />
                     </div>
                   </div>
@@ -148,12 +142,10 @@ export default async function Home() {
                 <>
                   <div className="order-1 md:order-1">
                     <div className="article-card-image">
-                      <Image
+                      <img
                         src={article.image}
                         alt={article.imageAlt}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="w-full h-auto max-h-[400px] object-cover"
                       />
                     </div>
                   </div>
@@ -231,18 +223,16 @@ function ProductCard({ product }: ProductCardProps) {
       <article className="article-card">
         <div className="article-card-image">
           {image?.url ? (
-            <Image
+            <img
               src={image.url}
               alt={image.altText || product.title}
-              fill
-              className="object-cover"
+              className="w-full h-auto max-h-[400px] object-cover"
             />
           ) : (
-            <Image
+            <img
               src={stockImage('bookshelf')}
               alt={product.title}
-              fill
-              className="object-cover"
+              className="w-full h-auto max-h-[400px] object-cover"
             />
           )}
         </div>
