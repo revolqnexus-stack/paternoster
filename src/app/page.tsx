@@ -94,9 +94,8 @@ export default async function Home() {
             return (
               <div
                 key={article.title}
-                className={`${
-                  isLeft ? '' : 'md:self-start'
-                }`}
+                className=""
+                style={{ gridColumn: `span ${isLarge ? 7 : 5}` }}
               >
                 <ArticleCard
                   title={article.title}
@@ -105,7 +104,6 @@ export default async function Home() {
                   excerpt={article.excerpt}
                   image={article.image}
                   imageAlt={article.imageAlt}
-                  span={isLarge ? 7 : 5}
                   index={idx}
                 />
               </div>

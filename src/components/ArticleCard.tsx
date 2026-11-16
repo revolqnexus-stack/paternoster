@@ -11,7 +11,6 @@ interface ArticleCardProps {
   image: string;
   imageAlt: string;
   href?: string;
-  span?: number; // grid column span for asymmetric layout
   index?: number; // number index for corner
 }
 
@@ -23,16 +22,10 @@ export default function ArticleCard({
   image,
   imageAlt,
   href = '/',
-  span = 4,
   index,
 }: ArticleCardProps) {
-  const colSpan = span > 0 ? span : 4;
-
   return (
-    <article
-      className="article-card group relative"
-      style={{ gridColumn: `span ${colSpan}` }}
-    >
+    <article className="article-card group relative">
       <Link
         href={href}
         className="block"

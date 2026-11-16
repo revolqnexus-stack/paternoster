@@ -104,7 +104,7 @@ export default function Header() {
             {/* Center: logo */}
             <div className="col-start-2 text-center">
               <Link href="/" className="flex-shrink-0 block" onClick={closeMenu}>
-                <h1 className="font-display text-[clamp(3rem,9vw,9rem)] font-normal text-ink tracking-tight italic leading-none">
+                <h1 className="font-display text-[clamp(1.5rem,4vw,2.5rem)] font-normal text-ink tracking-tight italic leading-none">
                   Pater Noster
                 </h1>
               </Link>

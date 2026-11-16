@@ -1,53 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
-
-/**
- * FitText: single-line wordmark that scales to exactly the container width
- * using ResizeObserver. Never wraps, never overflows.
- */
-function FitText({ children, minFontSize = 1, maxFontSize = 8 }: {
-  children: React.ReactNode;
-  minFontSize?: number;
-  maxFontSize?: number;
-}) {
-  const ref = useRef<HTMLHeadingElement>(null);
-  const [scale, setScale] = useState(1);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        const containerWidth = entry.contentRect.width;
-        const textWidth = el.scrollWidth;
-        const ratio = containerWidth / textWidth;
-        const nextScale = Math.min(Math.max(ratio, minFontSize / maxFontSize), 1);
-        setScale(nextScale);
-      }
-    });
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [minFontSize, maxFontSize]);
-
-  return (
-    <h1
-      ref={ref}
-      className="block"
-      style={{
-        transform: `scale(${scale})`,
-        transformOrigin: 'left center',
-        whiteSpace: 'nowrap',
-        display: 'inline-block',
-      }}
-    >
-      {children}
-    </h1>
-  );
-}
 
 export default function Footer() {
   return (
@@ -124,15 +77,13 @@ export default function Footer() {
 
         <hr className="hairline mb-16 md:mb-24" />
 
-        {/* Giant wordmark spanning full width — FitText scales to container */}
+        {/* Giant wordmark spanning full width */}
         <div className="flex justify-end mb-16 md:mb-24">
-          <FitText minFontSize={1} maxFontSize={8}>
-            <Link href="/" className="block">
-              <span className="font-display font-normal text-ink italic leading-none tracking-[-0.04em]">
-                Pater Noster
-              </span>
-            </Link>
-          </FitText>
+          <Link href="/" className="block">
+            <span className="font-display font-normal text-ink italic leading-none tracking-[-0.04em] text-[clamp(2rem,6vw,5rem)] block">
+              Pater Noster
+            </span>
+          </Link>
         </div>
 
         {/* Bottom bar */}
