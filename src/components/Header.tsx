@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useCartStore } from '@/lib/store';
 import { ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function Header() {
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
@@ -13,21 +14,42 @@ export default function Header() {
   return (
     <>
       {/* Masthead — LRB style */}
-      <div className="masthead">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="masthead"
+      >
         <div className="masthead-container page-container">
-          <Link href="/" className="masthead-logo">
+          <motion.a
+            whileHover={{ x: -5 }}
+            href="/"
+            className="masthead-logo"
+          >
             Pater Noster
-          </Link>
+          </motion.a>
           <nav className="masthead-nav">
-            <Link href="/" className="text-ink hover:text-muted transition-colors">
+            <motion.a
+              whileHover={{ x: 5 }}
+              href="/"
+              className="text-ink hover:text-muted transition-colors"
+            >
               Home
-            </Link>
-            <Link href="/products" className="text-ink hover:text-muted transition-colors">
+            </motion.a>
+            <motion.a
+              whileHover={{ x: 5 }}
+              href="/products"
+              className="text-ink hover:text-muted transition-colors"
+            >
               Shop
-            </Link>
-            <Link href="/about" className="text-ink hover:text-muted transition-colors">
+            </motion.a>
+            <motion.a
+              whileHover={{ x: 5 }}
+              href="/about"
+              className="text-ink hover:text-muted transition-colors"
+            >
               About
-            </Link>
+            </motion.a>
             <button
               onClick={() => setCartDrawerOpen(true)}
               className="text-ink hover:text-muted transition-colors p-0 bg-none border-none font-serif-body text-sm"
@@ -42,16 +64,27 @@ export default function Header() {
             </button>
           </nav>
         </div>
-      </div>
+      </motion.div>
 
       {/* Cart Drawer */}
       {cartDrawerOpen && (
-        <div className="fixed inset-0 z-50">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="fixed inset-0 z-50"
+        >
           <div
             className="absolute inset-0 bg-black/30 backdrop-blur-sm"
             onClick={() => setCartDrawerOpen(false)}
           />
-          <div className="absolute right-0 top-0 bottom-0 w-96 bg-paper border-l border-hairline shadow-2xl p-8">
+          <motion.div
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+            className="absolute right-0 top-0 bottom-0 w-96 bg-paper border-l border-hairline shadow-2xl p-8"
+          >
             <button
               onClick={() => setCartDrawerOpen(false)}
               className="absolute top-4 right-4 p-2 rounded hover:bg-paper/50 transition-colors"
@@ -60,14 +93,24 @@ export default function Header() {
               <span className="block w-5 h-0.5 bg-ink mb-1"></span>
               <span className="block w-5 h-0.5 bg-ink"></span>
             </button>
-            <h2 className="font-serif font-semibold text-lg mb-6 text-ink">
+            <motion.h2
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.4 }}
+              className="font-serif font-semibold text-lg mb-6 text-ink"
+            >
               Shopping Bag
-            </h2>
-            <div className="font-serif-body text-sm text-muted">
+            </motion.h2>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.4 }}
+              className="font-serif-body text-sm text-muted"
+            >
               Your bag is empty.
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
       )}
     </>
   );

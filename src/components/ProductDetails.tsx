@@ -6,6 +6,7 @@ import ImageWithFallback from '@/components/ImageWithFallback';
 import { stockImage } from '@/lib/stock-images';
 import { Plus, Minus } from 'lucide-react';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 interface ProductImage {
   url: string;
@@ -72,24 +73,46 @@ export default function ProductDetails({
   return (
     <div className="page-wrap">
       <div className="page-container">
-        <Link
+        <motion.a
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
           href="/products"
           className="text-muted hover:text-ink transition-colors text-sm font-serif-body italic"
         >
           ← The Shop
-        </Link>
+        </motion.a>
 
-        <h1 className="section-title mb-4">{product.title}</h1>
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="section-title mb-4"
+        >
+          {product.title}
+        </motion.h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.1, duration: 0.6 }}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+        >
           {/* Product image */}
           <div>
-            <div className="article-card-image mb-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+              className="article-card-image mb-4"
+            >
               {images[0]?.url ? (
-                <img
+                <motion.img
                   src={images[0].url}
                   alt={images[0].altText || product.title}
                   className="w-full h-full object-cover"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 />
               ) : (
                 <ImageWithFallback
@@ -99,16 +122,26 @@ export default function ProductDetails({
                   fallbackKey="bookshelf"
                 />
               )}
-            </div>
+            </motion.div>
           </div>
 
           {/* Product info */}
           <div>
-            <p className="label mb-2">
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="label mb-2"
+            >
               {product.tags[0] || 'Editorial'}
-            </p>
+            </motion.p>
 
-            <div className="mb-4">
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              className="mb-4"
+            >
               {onSale && comparePrice ? (
                 <div className="flex items-baseline gap-2">
                   <span className="font-serif text-lg font-normal">
@@ -123,18 +156,32 @@ export default function ProductDetails({
                   £{price.toFixed(2)}
                 </span>
               )}
-            </div>
+            </motion.div>
 
             {variants.length > 1 && (
-              <div className="mb-6">
-                <p className="label mb-2">Choose variant</p>
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+                className="mb-6"
+              >
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.45, duration: 0.4 }}
+                  className="label mb-2"
+                >
+                  Choose variant
+                </motion.p>
                 <div className="flex flex-wrap gap-2">
                   {variants.map((v) => {
                     const isSelected = selectedVariant?.id === v.id;
                     const vPrice = parseFloat(v.priceV2.amount);
                     return (
-                      <button
+                      <motion.button
                         key={v.id}
+                        whileHover={{ scale: 1.02 }}
+                        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                         onClick={() => setSelectedVariant(v)}
                         className={`border border-hairline bg-paper px-3 py-1.5 text-xs font-serif-body text-ink transition-colors ${
                           isSelected
@@ -143,14 +190,19 @@ export default function ProductDetails({
                         }`}
                       >
                         {v.title} — £{vPrice.toFixed(2)}
-                      </button>
+                      </motion.button>
                     );
                   })}
                 </div>
-              </div>
+              </motion.div>
             )}
 
-            <div className="mb-6">
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+              className="mb-6"
+            >
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => setQuantity((q) => Math.max(1, q - 1))}
@@ -175,9 +227,10 @@ export default function ProductDetails({
                   <Plus size={12} strokeWidth={2} />
                 </button>
               </div>
-            </div>
+            </motion.div>
 
-            <button
+            <motion.button
+              whileHover={{ backgroundColor: 'rgba(11,11,11,0.8)' }}
               onClick={handleAddToCart}
               disabled={
                 isAdding ||
@@ -195,23 +248,38 @@ export default function ProductDetails({
               }`}
             >
               {isAdding ? 'Adding…' : 'Add to bag'}
-            </button>
+            </motion.button>
 
             {!product.availableForSale && (
-              <p className="mt-3 text-xs font-serif-body text-muted italic">
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.4 }}
+                className="mt-3 text-xs font-serif-body text-muted italic text-center"
+              >
                 Currently unavailable
-              </p>
+              </motion.p>
             )}
           </div>
-        </div>
+        </motion.div>
 
         <hr className="section-divider my-8" />
 
         {/* Details */}
-        <h2 className="text-lg font-serif font-semibold mb-2 text-ink">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+          className="text-lg font-serif font-semibold mb-2 text-ink"
+        >
           Details
-        </h2>
-        <div className="font-serif-body text-lg leading-relaxed measure text-ink">
+        </motion.h2>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7, duration: 0.6 }}
+          className="font-serif-body text-lg leading-relaxed measure text-ink"
+        >
           {product.descriptionHtml ? (
             <div
               className="prose-html"
@@ -222,7 +290,7 @@ export default function ProductDetails({
           ) : (
             <p>{product.description || 'No description available.'}</p>
           )}
-        </div>
+        </motion.div>
       </div>
     </div>
   );
