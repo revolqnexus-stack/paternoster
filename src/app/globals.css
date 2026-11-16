@@ -99,7 +99,8 @@ body {
   font-size: 17px;
   line-height: 1.6;
   overflow-x: clip;
-  cursor: none;
+  /* cursor: none — removed; system cursor is the fallback,
+     custom cursor is an enhancement layered on top */
 }
 
 @media (hover: none) {

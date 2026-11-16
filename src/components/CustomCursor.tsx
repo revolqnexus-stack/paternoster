@@ -64,10 +64,12 @@ export default function CustomCursor() {
         transform: `translate(${pos.x}px, ${pos.y}px) translate(-50%, -50%)`,
         width: state === 'view' ? 64 : 20,
         height: state === 'view' ? 64 : 20,
-        backgroundColor: state === 'view' ? 'rgba(201, 162, 102, 0.9)' : 'rgba(201, 162, 102, 0.85)',
-        borderColor: state === 'view' ? 'transparent' : 'rgba(201, 162, 102, 0.5)',
-        mixBlendMode: state === 'view' ? 'screen' : 'multiply',
-        border: state === 'view' ? 'none' : '1px solid rgba(201, 162, 102, 0.5)',
+        backgroundColor: state === 'view' ? 'rgba(201, 162, 102, 0.95)' : 'rgba(201, 162, 102, 0.9)',
+        borderColor: state === 'view' ? 'transparent' : 'rgba(201, 162, 102, 0.6)',
+        mixBlendMode: state === 'view' ? 'screen' : 'normal',
+        border: state === 'view' ? 'none' : '2px solid rgba(255, 255, 255, 0.6)',
+        boxShadow: state === 'view' ? '0 0 20px rgba(201, 162, 102, 0.4)' : '0 0 10px rgba(201, 162, 102, 0.3)',
+        willChange: 'transform',
       }}
     >
       {state === 'view' && (
