@@ -74,7 +74,7 @@ export default function ProductDetails({
       <div className="page-container py-8 md:py-16">
         <Link
           href="/products"
-          className="font-grotesk text-xs font-medium text-navy italic underline underline-offset-2 mb-8 md:mb-12 inline-block hover:text-navy-light transition-colors"
+          className="font-ui-sans text-xs font-medium text-blue italic underline underline-offset-2 mb-8 md:mb-12 inline-block hover:text-ink transition-colors"
         >
           ← The Shop
         </Link>
@@ -82,7 +82,7 @@ export default function ProductDetails({
         <div className="grid lg:grid-cols-12 gap-12">
           {/* Product image - left, span 7 */}
           <div className="lg:col-span-7">
-            <div className="relative aspect-[4/5] bg-border overflow-hidden">
+            <div className="relative aspect-[4/5] bg-paper-2 overflow-hidden">
               {images[0]?.url ? (
                 <img
                   src={images[0].url}
@@ -103,25 +103,25 @@ export default function ProductDetails({
           {/* Product info - right, span 5 */}
           <div className="lg:col-span-5 flex flex-col justify-between min-h-[600px]">
             <div>
-              <p className="font-grotesk text-xs font-medium text-navy uppercase tracking-widest mb-2">
+              <p className="font-ui-sans text-xs font-medium text-blue uppercase tracking-widest mb-2">
                 {product.tags[0] || 'Editorial'}
               </p>
-              <h1 className="font-display text-[clamp(2.5rem,6vw,4rem)] font-normal mb-4 text-ink leading-tight italic">
+              <h1 className="font-display font-bold text-[clamp(2.5rem,6vw,4rem)] leading-[1.1] tracking-[-0.02em] text-ink mb-4 italic">
                 {product.title}
               </h1>
 
               <div className="mb-8">
                 {onSale && comparePrice ? (
                   <div className="flex items-baseline gap-3">
-                    <span className="font-display text-[clamp(2rem,5vw,3rem)] font-normal text-ink">
+                    <span className="font-display font-bold text-[clamp(2rem,5vw,3rem)] leading-none text-ink">
                       £{price.toFixed(2)}
                     </span>
-                    <span className="font-grotesk text-lg font-normal text-gray-light line-through">
+                    <span className="font-ui-sans text-lg font-medium text-muted line-through">
                       £{comparePrice.toFixed(2)}
                     </span>
                   </div>
                 ) : (
-                  <span className="font-display text-[clamp(2rem,5vw,3rem)] font-normal text-ink">
+                  <span className="font-display font-bold text-[clamp(2rem,5vw,3rem)] leading-none text-ink">
                     £{price.toFixed(2)}
                   </span>
                 )}
@@ -129,7 +129,7 @@ export default function ProductDetails({
 
               {variants.length > 1 && (
                 <div className="mb-8">
-                  <p className="font-grotesk text-xs font-medium text-gray-light uppercase tracking-widest mb-3">
+                  <p className="font-ui-sans text-xs font-medium text-muted uppercase tracking-widest mb-3">
                     Choose variant
                   </p>
                   <div className="flex flex-wrap gap-3">
@@ -140,10 +140,10 @@ export default function ProductDetails({
                         <button
                           key={v.id}
                           onClick={() => setSelectedVariant(v)}
-                          className={`px-6 py-3 font-grotesk text-xs font-medium uppercase tracking-wider border transition-all duration-300 ${
+                          className={`px-6 py-3 font-ui-sans text-xs font-medium uppercase tracking-wider border transition-all duration-300 ${
                             isSelected
-                              ? 'bg-ink text-paper border-ink'
-                              : 'bg-paper text-ink border-border hover:border-navy hover:bg-navy/5'
+                              ? 'bg-ink text-blue-ink border-ink'
+                              : 'bg-paper text-ink border-hairline hover:border-blue hover:bg-blue/5'
                           }`}
                         >
                           {v.title} — £{vPrice.toFixed(2)}
@@ -159,7 +159,7 @@ export default function ProductDetails({
                   <button
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                     disabled={quantity <= 1 || !product.availableForSale}
-                    className="w-10 h-10 rounded-full border border-border bg-paper flex items-center justify-center text-ink hover:bg-ink hover:text-paper transition-colors disabled:opacity-50 disabled:pointer-events-none"
+                    className="w-10 h-10 rounded-sm border border-hairline bg-paper flex items-center justify-center text-ink hover:bg-ink hover:text-paper transition-colors disabled:opacity-50 disabled:pointer-events-none"
                   >
                     <Minus size={14} strokeWidth={2} />
                   </button>
@@ -169,12 +169,12 @@ export default function ProductDetails({
                     onChange={(e) =>
                       setQuantity(Math.max(1, parseInt(e.target.value) || 1))
                     }
-                    className="w-12 h-10 text-center border border-border rounded text-ink font-grotesk font-medium text-sm focus:outline-none focus:border-navy"
+                    className="w-12 h-10 text-center border border-hairline rounded-sm text-ink font-ui-sans font-medium text-sm focus:outline-none focus:border-blue"
                   />
                   <button
                     onClick={() => setQuantity((q) => q + 1)}
                     disabled={!product.availableForSale}
-                    className="w-10 h-10 rounded-full border border-border bg-paper flex items-center justify-center text-ink hover:bg-ink hover:text-paper transition-colors disabled:opacity-50 disabled:pointer-events-none"
+                    className="w-10 h-10 rounded-sm border border-hairline bg-paper flex items-center justify-center text-ink hover:bg-ink hover:text-paper transition-colors disabled:opacity-50 disabled:pointer-events-none"
                   >
                     <Plus size={14} strokeWidth={2} />
                   </button>
@@ -189,20 +189,20 @@ export default function ProductDetails({
                   !product.availableForSale ||
                   !selectedVariant
                 }
-                className={`w-full py-5 rounded-full font-grotesk text-sm font-medium uppercase tracking-wider transition-all duration-300 ${
+                className={`w-full py-5 rounded-sm font-ui-sans text-sm font-medium uppercase tracking-wider transition-all duration-300 ${
                   isAdding ||
                   cartLoading ||
                   !product.availableForSale ||
                   !selectedVariant
-                    ? 'bg-gray-light text-paper cursor-not-allowed'
-                    : 'bg-ink text-paper hover:bg-navy-light'
+                    ? 'bg-muted text-paper cursor-not-allowed'
+                    : 'bg-blue text-blue-ink hover:bg-ink'
                 }`}
               >
-                {isAdding ? 'Adding…' : 'Add to Cart'}
+                {isAdding ? 'Adding…' : 'Add to bag'}
               </button>
 
               {!product.availableForSale && (
-                <p className="mt-4 text-[0.8rem] font-grotesk text-gray-light italic text-center">
+                <p className="mt-4 text-[0.8rem] font-ui-sans text-muted italic text-center">
                   Currently unavailable
                 </p>
               )}
@@ -212,10 +212,10 @@ export default function ProductDetails({
 
             {/* Details */}
             <div>
-              <h2 className="font-display text-xl font-normal mb-4 text-ink italic">
+              <h2 className="font-display font-bold text-xl leading-[1.1] text-ink mb-4 italic">
                 Details
               </h2>
-              <div className="font-serif text-lg leading-relaxed measure text-ink opacity-90">
+              <div className="font-text-serif text-lg leading-relaxed measure text-ink opacity-90">
                 {product.descriptionHtml ? (
                   <div
                     className="prose-html"

@@ -21,26 +21,26 @@ export default async function ProductsPage() {
       <div className="page-container py-12 md:py-32">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-20">
           <div>
-            <h1 className="font-display text-[clamp(3rem,8vw,5rem)] font-normal mb-2 text-ink leading-tight italic">
+            <h1 className="font-display font-bold text-[clamp(3rem,8vw,5rem)] leading-[1.1] tracking-[-0.02em] text-ink mb-2 italic">
               The Shop
             </h1>
-            <p className="font-grotesk text-sm md:text-base text-gray-light italic tracking-wider">
+            <p className="font-ui-sans text-xs font-medium text-muted uppercase tracking-widest">
               Books, editions, and objects
             </p>
           </div>
-          <p className="font-grotesk text-xs font-medium text-gray-light uppercase tracking-widest">
+          <p className="font-ui-sans text-xs font-medium text-muted uppercase tracking-widest">
             {products.length} items
           </p>
         </div>
 
         {products.length === 0 ? (
           <div className="text-center py-32 measure mx-auto">
-            <p className="font-display text-2xl md:text-3xl text-gray-light italic mb-6">
+            <p className="font-text-serif text-lg text-muted italic mb-6">
               No products found.
             </p>
             <Link
               href="/"
-              className="font-grotesk text-base font-medium text-navy italic underline underline-offset-2 hover:text-navy-light transition-colors"
+              className="font-ui-sans text-base font-medium text-blue underline underline-offset-2 hover:text-ink transition-colors"
             >
               Back to Home →
             </Link>
@@ -85,14 +85,14 @@ function ProductCard({ product }: ProductCardProps) {
             />
           )}
         </div>
-        <div className="p-4 pt-3">
-          <p className="label-caps mb-2 uppercase tracking-widest">
+        <div className="p-4 pt-3 flex flex-col h-full">
+          <p className="label-caps mb-2 uppercase tracking-widest text-blue">
             Editorial
           </p>
-          <h4 className="article-card-title mb-2 group-hover:text-navy-light transition-colors duration-300">
+          <h4 className="article-card-title mb-2 group-hover:text-blue transition-colors duration-300">
             {product.title}
           </h4>
-          <p className="font-grotesk text-sm font-medium text-navy">
+          <p className="font-ui-sans text-sm font-medium text-ink mt-auto">
             £{price.toFixed(2)}
           </p>
         </div>
