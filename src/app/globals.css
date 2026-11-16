@@ -2,7 +2,9 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap");
 
-/* Pater Noster — LRB editorial layout system */
+/* Pater Noster — LRB editorial + Vogue aesthetic */
+/* Cream paper, dark ink, gold accent, serif typography */
+
 :root {
   --pn-paper: #fafaf7;
   --pn-ink: #141414;
@@ -66,23 +68,11 @@ p {
 
 a {
   color: var(--color-navy);
-  text-decoration: underline;
-  text-decoration-color: var(--color-navy);
-  text-underline-offset: 2px;
-  text-decoration-thickness: 1px;
+  text-decoration: none;
   transition: color 0.2s ease;
 }
 
 a:hover {
-  color: var(--color-navy-light);
-}
-
-.article-link {
-  text-decoration: none;
-  color: var(--color-navy);
-}
-
-.article-link:hover {
   color: var(--color-navy-light);
 }
 
@@ -112,7 +102,7 @@ a:hover {
   font-weight: 600;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--color-navy);
+  color: var(--color-gold);
   margin-bottom: 0.5rem;
 }
 
@@ -305,7 +295,7 @@ a:hover {
   .secondary-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .article-grid {
     grid-template-columns: 1fr;
   }
@@ -321,7 +311,7 @@ a:hover {
   .secondary-grid {
     grid-template-columns: 1fr 1fr;
   }
-  
+
   .article-grid {
     grid-template-columns: repeat(3, 1fr);
   }

@@ -67,10 +67,6 @@ export default async function Home() {
 
   return (
     <div className="page-wrap">
-      <div className="bg-navy text-paper text-center py-2 px-4 text-[11px] font-serif uppercase tracking-wider">
-        Pater Noster — new writing, new books, new thinking
-      </div>
-
       <div className="page-container py-12 md:py-24">
         {/* Featured story */}
         <section className="featured-article mb-12 md:mb-20">
@@ -123,7 +119,7 @@ export default async function Home() {
                     </p>
                     <Link
                       href="/"
-                      className="article-link text-base font-normal text-navy italic"
+                      className="text-base font-normal text-navy italic underline underline-offset-2"
                     >
                       Read more ›
                     </Link>
@@ -166,7 +162,7 @@ export default async function Home() {
                     </p>
                     <Link
                       href="/"
-                      className="article-link text-base font-normal text-navy italic"
+                      className="text-base font-normal text-navy italic underline underline-offset-2"
                     >
                       Read more ›
                     </Link>

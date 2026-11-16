@@ -1,6 +1,5 @@
 import { getProducts } from '@/lib/shopify';
 import Link from 'next/link';
-import Image from 'next/image';
 import { stockImage } from '@/lib/stock-images';
 
 export const metadata = {
@@ -47,7 +46,7 @@ export default async function ProductsPage() {
           </div>
         ) : (
           <div className="article-grid">
-            {products.map((product) => (
+            {products.map((product: any) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
@@ -70,18 +69,16 @@ function ProductCard({ product }: ProductCardProps) {
       <article className="article-card">
         <div className="article-card-image">
           {image?.url ? (
-            <Image
+            <img
               src={image.url}
               alt={image.altText || product.title}
-              fill
-              className="object-cover"
+              className="w-full h-auto max-h-[400px] object-cover"
             />
           ) : (
-            <Image
+            <img
               src={stockImage('bookshelf')}
               alt={product.title}
-              fill
-              className="object-cover"
+              className="w-full h-auto max-h-[400px] object-cover"
             />
           )}
         </div>
