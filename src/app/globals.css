@@ -287,6 +287,12 @@ a:hover { color: var(--color-accent); }
   align-items: center;
 }
 
+.masthead-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
 .masthead-nav a {
   font-family: var(--font-serif-body);
   font-size: 0.875rem;

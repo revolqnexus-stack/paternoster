@@ -18,8 +18,16 @@ export default function CustomCursor() {
     reducedMotion.current = mq.matches;
     if (reducedMotion.current) return;
 
+    let ticking = false;
+
     const handleMouseMove = (e: MouseEvent) => {
-      setPos({ x: e.clientX, y: e.clientY });
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setPos({ x: e.clientX, y: e.clientY });
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     const handleMouseEnter = (e: MouseEvent) => {
@@ -36,7 +44,7 @@ export default function CustomCursor() {
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     window.addEventListener('mouseenter', handleMouseEnter, true);
     window.addEventListener('mouseleave', handleMouseLeave, true);
 
@@ -51,7 +59,7 @@ export default function CustomCursor() {
 
   return (
     <div
-      className="fixed z-[99999] pointer-events-none rounded-full transition-all duration-300 ease-out"
+      className="fixed z-[999999] pointer-events-none rounded-full transition-all duration-300 ease-out"
       style={{
         transform: `translate(${pos.x}px, ${pos.y}px) translate(-50%, -50%)`,
         width: state === 'view' ? 64 : 20,

@@ -8,12 +8,13 @@ import { motion } from 'framer-motion';
 
 export default function Header() {
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const { lines } = useCartStore();
   const cartCount = lines.reduce((sum, line) => sum + line.quantity, 0);
 
   return (
     <>
-      {/* Masthead — Vogue editorial style, compact */}
+      {/* Masthead — revolq structure, light Vogue colors */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -21,54 +22,156 @@ export default function Header() {
         className="masthead"
       >
         <div className="masthead-inner">
+          {/* Left: menu trigger */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="text-ink hover:text-accent transition-colors p-0 bg-none border-none font-serif-body text-sm"
+            aria-label="Menu"
+            data-cursor="view"
+          >
+            <span className="block w-6 h-0.5 bg-ink mb-1.5"></span>
+            <span className="block w-6 h-0.5 bg-ink"></span>
+          </button>
+
+          {/* Center: logo */}
           <motion.a
-            whileHover={{ x: -5 }}
+            whileHover={{ scale: 1.02 }}
             href="/"
-            className="masthead-logo"
+            className="masthead-logo flex-shrink-0"
           >
             Pater Noster
           </motion.a>
-          <nav className="masthead-nav">
-            <motion.a
-              whileHover={{ x: 5 }}
-              href="/"
-              className="text-ink hover:text-accent transition-colors"
-              data-cursor="view"
-            >
-              Home
-            </motion.a>
-            <motion.a
-              whileHover={{ x: 5 }}
-              href="/products"
-              className="text-ink hover:text-accent transition-colors"
-              data-cursor="view"
-            >
-              Shop
-            </motion.a>
-            <motion.a
-              whileHover={{ x: 5 }}
-              href="/about"
-              className="text-ink hover:text-accent transition-colors"
-              data-cursor="view"
-            >
-              About
-            </motion.a>
+
+          {/* Right: nav + cart */}
+          <div className="masthead-right flex items-center gap-4">
+            <nav className="hidden md:flex gap-6">
+              <motion.a
+                whileHover={{ x: 3 }}
+                href="/"
+                className="text-ink hover:text-accent transition-colors font-serif-body text-sm"
+                data-cursor="view"
+              >
+                Home
+              </motion.a>
+              <motion.a
+                whileHover={{ x: 3 }}
+                href="/products"
+                className="text-ink hover:text-accent transition-colors font-serif-body text-sm"
+                data-cursor="view"
+              >
+                Shop
+              </motion.a>
+              <motion.a
+                whileHover={{ x: 3 }}
+                href="/about"
+                className="text-ink hover:text-accent transition-colors font-serif-body text-sm"
+                data-cursor="view"
+              >
+                About
+              </motion.a>
+            </nav>
+
             <button
               onClick={() => setCartDrawerOpen(true)}
-              className="text-ink hover:text-accent transition-colors p-0 bg-none border-none font-serif-body text-sm"
+              className="text-ink hover:text-accent transition-colors p-0 bg-none border-none font-serif-body text-sm md:hidden"
+              aria-label="Cart"
+              data-cursor="view"
+            >
+              <ShoppingBag size={16} strokeWidth={1.5} />
+            </button>
+
+            <button
+              onClick={() => setCartDrawerOpen(true)}
+              className="hidden md:flex items-center gap-1.5 text-ink hover:text-accent transition-colors p-0 bg-none border-none font-serif-body text-sm"
               aria-label="Cart"
               data-cursor="view"
             >
               <ShoppingBag size={16} strokeWidth={1.5} />
               {cartCount > 0 && (
-                <span className="ml-1 text-xs font-mono">
+                <span className="text-xs font-mono">
                   ({cartCount})
                 </span>
               )}
             </button>
-          </nav>
+          </div>
         </div>
       </motion.div>
+
+      {/* Full-screen overlay menu — revolq style */}
+      {menuOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="fixed inset-0 z-50 bg-paper"
+          onClick={() => setMenuOpen(false)}
+        >
+          <div className="absolute inset-0 flex items-center justify-center p-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className="text-center"
+            >
+              <motion.a
+                whileHover={{ x: 5 }}
+                href="/"
+                className="block font-serif font-semibold text-ink mb-8"
+                style={{ fontSize: 'clamp(3rem, 10vw, 5rem)', lineHeight: 1.1, letterSpacing: '-0.03em' }}
+                data-cursor="view"
+              >
+                Home
+              </motion.a>
+              <motion.a
+                whileHover={{ x: 5 }}
+                href="/products"
+                className="block font-serif font-semibold text-ink mb-8"
+                style={{ fontSize: 'clamp(3rem, 10vw, 5rem)', lineHeight: 1.1, letterSpacing: '-0.03em' }}
+                data-cursor="view"
+              >
+                Shop
+              </motion.a>
+              <motion.a
+                whileHover={{ x: 5 }}
+                href="/about"
+                className="block font-serif font-semibold text-ink mb-8"
+                style={{ fontSize: 'clamp(3rem, 10vw, 5rem)', lineHeight: 1.1, letterSpacing: '-0.03em' }}
+                data-cursor="view"
+              >
+                About
+              </motion.a>
+              <motion.a
+                whileHover={{ x: 5 }}
+                href="/journal"
+                className="block font-serif font-semibold text-ink mb-8"
+                style={{ fontSize: 'clamp(3rem, 10vw, 5rem)', lineHeight: 1.1, letterSpacing: '-0.03em' }}
+                data-cursor="view"
+              >
+                Journal
+              </motion.a>
+              <motion.a
+                whileHover={{ x: 5 }}
+                href="/contact"
+                className="block font-serif font-semibold text-ink mb-8"
+                style={{ fontSize: 'clamp(3rem, 10vw, 5rem)', lineHeight: 1.1, letterSpacing: '-0.03em' }}
+                data-cursor="view"
+              >
+                Contact
+              </motion.a>
+              <div className="mt-12">
+                <button
+                  onClick={() => setCartDrawerOpen(true)}
+                  className="text-ink hover:text-accent transition-colors inline-block"
+                  data-cursor="view"
+                >
+                  Shopping Bag →
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+      )}
 
       {/* Cart Drawer */}
       {cartDrawerOpen && (

@@ -26,8 +26,9 @@ export default function RootLayout({
             <Header />
             <main>{children}</main>
             <Footer />
-            <CustomCursor />
           </Preloader>
+          {/* Cursor at body level — always on top, never trapped by preloader */}
+          <CustomCursor />
         </SmoothScroll>
       </body>
     </html>
