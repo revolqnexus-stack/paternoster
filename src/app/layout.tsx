@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import SmoothScroll from "@/components/SmoothScroll";
-import Preloader from "@/components/Preloader";
-import CustomCursor from "@/components/CustomCursor";
 
 export const metadata: Metadata = {
   title: "Pater Noster - The London Review of Books Store",
@@ -20,14 +17,9 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         <div className="film-grain" />
-        <SmoothScroll>
-          <Preloader>
-            <Header />
-            <main>{children}</main>
-            <Footer />
-            <CustomCursor />
-          </Preloader>
-        </SmoothScroll>
+        <Header />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
