@@ -86,6 +86,7 @@ void main() {
 }`;
 
 interface AuroraProps {
+  className?: string;
   colorStops?: string[];
   colorSticks?: string[];
   amplitude?: number;
@@ -96,7 +97,8 @@ interface AuroraProps {
 
 export default function Aurora(props: AuroraProps) {
   const {
-    colorSticks = ['#5227FF', '#7cff67', '#5227FF'],
+    className,
+    colorSticks = ['#c9a266', '#efece3', '#c9a266'],
     colorStops = colorSticks,
     amplitude = 1.0,
     blend = 0.5,
@@ -193,5 +195,5 @@ export default function Aurora(props: AuroraProps) {
     };
   }, [amplitude]);
 
-  return <div ref={ctnDom} className="w-full h-full" />;
+  return <div ref={ctnDom} className={`w-full h-full relative overflow-hidden ${className || ''}`} />;
 }

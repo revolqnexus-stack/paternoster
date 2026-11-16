@@ -13,7 +13,7 @@ export default function Header() {
 
   return (
     <>
-      {/* Masthead — LRB style */}
+      {/* Masthead — Vogue editorial style */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -32,27 +32,27 @@ export default function Header() {
             <motion.a
               whileHover={{ x: 5 }}
               href="/"
-              className="text-ink hover:text-muted transition-colors"
+              className="text-ink hover:text-accent transition-colors"
             >
               Home
             </motion.a>
             <motion.a
               whileHover={{ x: 5 }}
               href="/products"
-              className="text-ink hover:text-muted transition-colors"
+              className="text-ink hover:text-accent transition-colors"
             >
               Shop
             </motion.a>
             <motion.a
               whileHover={{ x: 5 }}
               href="/about"
-              className="text-ink hover:text-muted transition-colors"
+              className="text-ink hover:text-accent transition-colors"
             >
               About
             </motion.a>
             <button
               onClick={() => setCartDrawerOpen(true)}
-              className="text-ink hover:text-muted transition-colors p-0 bg-none border-none font-serif-body text-sm"
+              className="text-ink hover:text-accent transition-colors p-0 bg-none border-none font-serif-body text-sm"
               aria-label="Cart"
             >
               <ShoppingBag size={16} strokeWidth={1.5} />
@@ -76,7 +76,7 @@ export default function Header() {
           className="fixed inset-0 z-50"
         >
           <div
-            className="absolute inset-0 bg-black/30 backdrop-blur-sm"
+            className="absolute inset-0 bg-accent/20 backdrop-blur-sm"
             onClick={() => setCartDrawerOpen(false)}
           />
           <motion.div

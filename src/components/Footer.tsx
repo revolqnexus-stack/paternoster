@@ -2,30 +2,13 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import Aurora from './Aurora';
 
 export default function Footer() {
   return (
-    <footer className="bg-ink2 border-line relative overflow-hidden">
-      {/* Aurora background behind footer */}
-      <div className="absolute inset-0 z-0 -z-10">
-        <Aurora colorSticks={['#1A1AFF', '#0D0D99', '#3333ff']} />
-      </div>
-
+    <footer className="bg-paper border-hairline relative overflow-hidden">
       <div className="relative z-10">
-        {/* Ghost overlay */}
-        <div
-          className="absolute inset-0 z-0 opacity-45 pointer-events-none"
-          aria-hidden="true"
-        >
-          <div className="w-full h-full" />
-        </div>
-
-        {/* Ghost wordmark */}
-        <span
-          className="ghost-text absolute top-[-1.5rem] left-1/2 -translate-x-1/2"
-          aria-hidden="true"
-        >
+        {/* Ghost wordmark — light */}
+        <span className="ghost-text absolute top-[-1.5rem] left-1/2 -translate-x-1/2" aria-hidden="true">
           PATER NOSTER
         </span>
 
@@ -156,7 +139,7 @@ export default function Footer() {
             className="footer-bottom relative z-1"
           >
             <span>© {new Date().getFullYear()} PATER NOSTER</span>
-            <span className="text-cobalt2">paternoster.in</span>
+            <span className="text-accent">paternoster.in</span>
           </motion.div>
         </div>
       </div>
