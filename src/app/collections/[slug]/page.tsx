@@ -24,7 +24,7 @@ export default async function CollectionPage({
 
   const filteredProducts = slug === 'all'
     ? products
-    : products.filter((p) =>
+    : products.filter((p: any) =>
         p.tags.some((t: string) => t.toLowerCase().includes(slug.toLowerCase()))
       );
 
@@ -32,8 +32,8 @@ export default async function CollectionPage({
     slug === 'books' ? 'Books' : slug === 'merchandise' ? 'Merchandise' : slug;
 
   return (
-    <div className="min-h-screen bg-paper">
-      <div className="max-w-measure mx-auto px-6 py-12 md:py-24">
+    <div className="page-wrap">
+      <div className="page-container py-12 md:py-24">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-16">
           <div>
             <h1 className="font-serif text-4xl md:text-5xl font-normal mb-2 text-ink leading-tight">
@@ -49,7 +49,7 @@ export default async function CollectionPage({
         </div>
 
         {filteredProducts.length === 0 ? (
-          <div className="text-center py-24">
+          <div className="text-center py-24 measure mx-auto">
             <p className="font-serif text-lg text-gray-light mb-6">
               No items in this collection.
             </p>
@@ -61,7 +61,7 @@ export default async function CollectionPage({
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12">
+          <div className="article-grid">
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

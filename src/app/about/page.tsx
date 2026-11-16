@@ -7,9 +7,9 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-paper">
-      <div className="max-w-measure mx-auto px-6 py-20 md:py-32">
-        <div className="text-center mb-24">
+    <div className="page-wrap">
+      <div className="page-container py-12 md:py-32">
+        <div className="text-center mb-24 measure mx-auto">
           <h1 className="font-serif text-4xl md:text-5xl font-normal mb-4 text-ink leading-tight italic">
             About Pater Noster
           </h1>
@@ -19,7 +19,7 @@ export default function AboutPage() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-16 items-start">
-          <div>
+          <div className="measure">
             <h2 className="font-serif text-2xl md:text-3xl font-normal mb-6 text-ink">
               Pater Noster
             </h2>
@@ -62,59 +62,6 @@ export default function AboutPage() {
           </div>
         </div>
       </div>
-
-      <section className="py-20 border-t border-border">
-        <div className="max-w-measure mx-auto px-6 text-center">
-          <h2 className="font-serif text-2xl font-normal mb-4 text-ink">
-            Subscribe to Pater Noster
-          </h2>
-          <p className="font-serif text-lg font-normal text-gray-light mb-8">
-            New writing, new books, new thinking. Delivered to your inbox.
-          </p>
-          <form className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-            <input
-              type="email"
-              placeholder="Email address"
-              className="flex-1 max-w-md px-4 py-3 bg-paper border border-border rounded text-ink focus:outline-none focus:border-navy"
-            />
-            <button
-              type="submit"
-              className="px-6 py-3 bg-navy text-paper text-xs font-serif uppercase tracking-wider rounded hover:bg-navy-light transition-colors"
-            >
-              Subscribe
-            </button>
-          </form>
-        </div>
-      </section>
-
-      <hr className="section-divider" />
-
-      <footer className="py-12 px-6">
-        <div className="max-w-measure mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-            <p className="font-serif text-sm font-normal text-gray-light">
-              © {new Date().getFullYear()} Pater Noster
-            </p>
-            <div className="flex gap-6">
-              <Link
-                href="/about"
-                className="font-serif text-sm font-normal text-gray-light hover:text-navy transition-colors"
-              >
-                About
-              </Link>
-              <Link
-                href="/contact"
-                className="font-serif text-sm font-normal text-gray-light hover:text-navy transition-colors"
-              >
-                Contact
-              </Link>
-            </div>
-          </div>
-          <p className="font-serif text-xs font-normal text-gray-light">
-            Pater Noster is an independent journal of writing and ideas.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }

@@ -1,14 +1,14 @@
 "use client";
 
 import { getCart } from '@/lib/shopify';
-import { useCartStore, type CartLine } from '@/lib/store';
+import { useCartStore } from '@/lib/store';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { ShoppingBag, Trash2, Plus, Minus } from 'lucide-react';
 
 export default async function CartPage() {
   const { cartId, lines: storeLines, removeFromCart, addToCart } = useCartStore();
-  const [lines, setLines] = useState<CartLine[]>(storeLines);
+  const [lines, setLines] = useState(storeLines);
   const [checkoutUrl, setCheckoutUrl] = useState<string>('#');
   const [isLoading, setIsLoading] = useState(true);
   const [deleting, setDeleting] = useState<Set<string>>(new Set());
@@ -71,10 +71,12 @@ export default async function CartPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-paper flex items-center justify-center py-20 px-6">
-        <div className="text-center">
-          <div className="w-8 h-8 border-4 border-border border-t-ink rounded-full animate-spin mb-4"></div>
-          <p className="font-serif text-lg text-gray-light">Loading your cart…</p>
+      <div className="page-wrap">
+        <div className="page-container py-20 md:py-32">
+          <div className="text-center measure mx-auto">
+            <div className="w-8 h-8 border-4 border-border border-t-ink rounded-full animate-spin mb-4"></div>
+            <p className="font-serif text-lg text-gray-light">Loading your cart…</p>
+          </div>
         </div>
       </div>
     );
@@ -82,29 +84,31 @@ export default async function CartPage() {
 
   if (!cartId || lines.length === 0) {
     return (
-      <div className="min-h-screen bg-paper py-20 px-6">
-        <div className="max-w-measure mx-auto text-center">
-          <ShoppingBag size={48} className="text-border mb-6" />
-          <h1 className="font-serif text-4xl font-normal mb-4 text-ink leading-tight">
-            Your Cart is Empty
-          </h1>
-          <p className="font-serif-alt text-lg text-gray-light mb-8">
-            Looks like you haven't added anything yet. Start browsing the collection.
-          </p>
-          <Link
-            href="/products"
-            className="font-serif text-base font-normal text-navy italic underline underline-offset-2"
-          >
-            Start Shopping ›
-          </Link>
+      <div className="page-wrap">
+        <div className="page-container py-20 md:py-32">
+          <div className="text-center measure mx-auto">
+            <ShoppingBag size={48} className="text-border mb-6" />
+            <h1 className="font-serif text-4xl font-normal mb-4 text-ink leading-tight">
+              Your Cart is Empty
+            </h1>
+            <p className="font-serif-alt text-lg text-gray-light mb-8">
+              Looks like you haven't added anything yet. Start browsing the collection.
+            </p>
+            <Link
+              href="/products"
+              className="font-serif text-base font-normal text-navy italic underline underline-offset-2"
+            >
+              Start Shopping ›
+            </Link>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-paper py-12 px-6">
-      <div className="max-w-container mx-auto">
+    <div className="page-wrap">
+      <div className="page-container py-12 md:py-24">
         <nav className="mb-8">
           <Link
             href="/products"
@@ -118,7 +122,7 @@ export default async function CartPage() {
           Your Cart
         </h1>
 
-        <div className="lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2">
             {lines.map((line) => {
