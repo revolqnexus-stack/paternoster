@@ -1,26 +1,81 @@
 @import "tailwindcss";
 
+@import url("https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap");
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* LRB Editorial Colors */
+  --ivory: #faf8f5;
+  --warm-white: #f5f3f0;
+  --charcoal: #2a2a2a;
+  --soft-black: #1a1a1a;
+  --burgundy: #8b3a3a;
+  --burgundy-light: #a04848;
+  --sage: #9ca89c;
+  --cream: #ebe8e3;
+  --border-subtle: #e5e3df;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  --color-ivory: var(--ivory);
+  --color-warm-white: var(--warm-white);
+  --color-charcoal: var(--charcoal);
+  --color-soft-black: var(--soft-black);
+  --color-burgundy: var(--burgundy);
+  --color-burgundy-light: var(--burgundy-light);
+  --color-sage: var(--sage);
+  --color-cream: var(--cream);
+  --color-border-subtle: var(--border-subtle);
+
+  --font-heading: "Crimson Text", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+
+  --max-width-prose: 65ch;
+  --max-width-container: 1400px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  color: var(--charcoal);
+  background: var(--ivory);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Crimson Text', Georgia, 'Times New Roman', serif;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--soft-black);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Custom scrollbar - refined */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--warm-white);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sage);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--charcoal);
 }

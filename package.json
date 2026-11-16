@@ -9,9 +9,14 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@shopify/hydrogen-react": "^2026.4.4",
+    "@tailwindcss/postcss": "^4.3.5",
+    "framer-motion": "^14.14.0",
+    "lucide-react": "^1.73.0",
     "next": "16.4.6",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "zustand": "^5.1.0"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "4.3.3",
