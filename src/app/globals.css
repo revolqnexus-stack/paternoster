@@ -1,21 +1,39 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Serif+4:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Serif+4:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700&display=swap");
 
-/* Pater Noster — LRB design language + Revol-Q energy */
+/* Pater Noster — LRB palette + Revol-Q energy */
 /* Cream paper, black serif, hairline rules, dark footer, cobalt accent */
 
 :root {
+  /* Core palette — LRB */
   --paper: #f8f6f0;
   --paper-2: #efece3;
   --ink: #000000;
-  --ink2: #050505;
   --muted: #4a4a4a;
   --hairline: #d9d6cc;
-  --line: #e0e0e0;
-  --white: #ffffff;
-  --fog: #8a8a8a;
-  --dim: #5a5a5a;
-  --cobalt2: #1b2be0;
+
+  /* Revol-Q dark mode palette */
+  --black: #000000;
+  --ink2: #0f0f0f;
+  --ink3: #141414;
+  --ink4: #1a1a1a;
+
+  /* Text */
+  --white: #f8f8f8;
+  --fog: rgba(255,255,255,0.75);
+  --dim: rgba(255,255,255,0.45);
+  --xdim: rgba(255,255,255,0.15);
+
+  /* Electric Brutalism accent */
+  --cobalt: #1A1AFF;
+  --ultra: #0D0D99;
+  --cobalt2: #3333ff;
+
+  /* Borders */
+  --line: rgba(255,255,255,0.07);
+  --line2: rgba(255,255,255,0.14);
+
+  /* Max widths */
   --max-width-page: 1200px;
   --max-width-measure: 65ch;
 
@@ -30,17 +48,24 @@
   --color-paper-2: var(--paper-2);
   --color-ink: var(--ink);
   --color-ink2: var(--ink2);
+  --color-ink3: var(--ink3);
+  --color-ink4: var(--ink4);
   --color-muted: var(--muted);
   --color-hairline: var(--hairline);
   --color-line: var(--line);
+  --color-line2: var(--line2);
   --color-white: var(--white);
   --color-fog: var(--fog);
   --color-dim: var(--dim);
+  --color-xdim: var(--xdim);
+  --color-cobalt: var(--cobalt);
+  --color-ultra: var(--ultra);
   --color-cobalt2: var(--cobalt2);
 
   --font-serif: "Playfair Display", Georgia, serif;
   --font-serif-body: "Source Serif 4", Georgia, serif;
   --font-mono: "Space Mono", monospace;
+  --font-utility: "IBM Plex Mono", monospace;
 
   --max-width-page: 1200px;
   --max-width-measure: 65ch;
@@ -56,6 +81,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
@@ -67,6 +93,11 @@ body {
   font-size: 17px;
   line-height: 1.6;
   overflow-x: clip;
+  cursor: none;
+}
+
+@media (hover: none) {
+  body { cursor: auto; }
 }
 
 body.menu-open { overflow: hidden; }
@@ -87,6 +118,7 @@ p { line-height: 1.6; }
 .font-serif { font-family: var(--font-serif); }
 .font-serif-body { font-family: var(--font-serif-body); }
 .font-mono { font-family: var(--font-mono); }
+.font-utility { font-family: var(--font-utility); }
 
 /* Links — black with subtle underline */
 a {
@@ -122,6 +154,16 @@ a:hover { color: var(--color-muted); }
   color: var(--color-muted);
 }
 
+/* Label tag — tracked mono caps (Revol-Q style) */
+.label-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 300;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--color-cobalt2);
+}
+
 /* Hairline rule — main structural device */
 .hairline {
   border: none;
@@ -133,6 +175,11 @@ a:hover { color: var(--color-muted); }
   border: none;
   border-top: 1px solid var(--color-hairline);
   margin: 3rem 0;
+}
+
+.section-rule {
+  border: none;
+  border-top: 1px solid var(--color-hairline);
 }
 
 /* Layout containers */
@@ -353,7 +400,9 @@ a:hover { color: var(--color-muted); }
 
 .bg-paper { background-color: var(--color-paper); }
 .bg-paper-2 { background-color: var(--color-paper-2); }
+.bg-ink { background-color: var(--color-ink); }
 .bg-ink2 { background-color: var(--color-ink2); }
+.bg-white { background-color: var(--color-white); }
 
 .border-hairline { border-color: var(--color-hairline); }
 .border-line { border-color: var(--color-line); }
@@ -516,8 +565,7 @@ footer {
   font-weight: 400;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--color-dim);
-  margin-bottom: 1rem;
+  color: var(--color-cobalt2);
 }
 
 .footer-link {
@@ -582,5 +630,18 @@ footer {
     flex-direction: column;
     gap: 0.5rem;
     align-items: flex-start;
+  }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  [style*="opacity: 0"] {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

@@ -2,10 +2,16 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import Aurora from './Aurora';
 
 export default function Footer() {
   return (
-    <footer className="bg-ink2 border-line">
+    <footer className="bg-ink2 border-line relative overflow-hidden">
+      {/* Aurora background behind footer */}
+      <div className="absolute inset-0 z-0 -z-10">
+        <Aurora colorSticks={['#1A1AFF', '#0D0D99', '#3333ff']} />
+      </div>
+
       <div className="relative z-10">
         {/* Ghost overlay */}
         <div
@@ -39,7 +45,7 @@ export default function Footer() {
             {/* Navigate */}
             <div className="footer-col">
               <span className="footer-label">Navigate</span>
-              <div className="display:flex;flex-direction:column;gap:0.7rem">
+              <div className="flex flex-col gap-2">
                 <motion.a
                   whileHover={{ x: 5 }}
                   href="/"
@@ -74,7 +80,7 @@ export default function Footer() {
             {/* Services */}
             <div className="footer-col">
               <span className="footer-label">Services</span>
-              <div className="display:flex;flex-direction:column;gap:0.7rem">
+              <div className="flex flex-col gap-2">
                 <motion.a
                   whileHover={{ x: 5 }}
                   href="/products"
@@ -111,7 +117,7 @@ export default function Footer() {
             {/* Contact */}
             <div className="footer-col">
               <span className="footer-label">Contact</span>
-              <div className="display:flex;flex-direction:column;gap:0.7rem">
+              <div className="flex flex-col gap-2">
                 <motion.a
                   whileHover={{ x: 5 }}
                   href="tel:+917306085895"
