@@ -229,10 +229,11 @@ a:hover {
 
 .featured-article-image {
   position: relative;
-  aspect-ratio: 4/5;
+  aspect-ratio: 3/4;
   background: var(--color-border);
   border-radius: 0;
   overflow: hidden;
+  max-height: 500px;
 }
 
 .featured-article-image img {
@@ -245,6 +246,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-right: 2rem;
 }
 
 .featured-article-title {
@@ -361,7 +363,7 @@ a:hover {
 
 @media (min-width: 1025px) {
   .featured-article {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1.4fr;
   }
   
   .secondary-grid {
