@@ -12,6 +12,7 @@ interface ArticleCardProps {
   imageAlt: string;
   href?: string;
   span?: number; // grid column span for asymmetric layout
+  index?: number; // number index for corner
 }
 
 export default function ArticleCard({
@@ -23,6 +24,7 @@ export default function ArticleCard({
   imageAlt,
   href = '/',
   span = 4,
+  index,
 }: ArticleCardProps) {
   const colSpan = span > 0 ? span : 4;
 
@@ -36,31 +38,40 @@ export default function ArticleCard({
         className="block"
         onClick={() => {}}
       >
+        {/* Number index in corner */}
+        {index !== undefined && (
+          <span className="absolute top-4 left-4 text-[0.6rem] font-grotesk font-medium text-gray-light uppercase tracking-widest z-10">
+            0{index + 1}
+          </span>
+        )}
         <div className="article-card-image">
           <ImageWithFallback
             src={image}
             alt={imageAlt}
             className="w-full h-full object-cover"
             fallbackKey="bookshelf"
+            data-cursor="view"
           />
         </div>
-        <div className="p-4 pt-3">
+        <div className="p-4 pt-3 flex flex-col h-full">
+          {/* Order: category → title → byline → date → excerpt → read more */}
           <p className="label-caps mb-2 uppercase tracking-widest">
-            By {author}
+            Editorial
           </p>
-          {date && (
-            <p className="font-grotesk text-[0.75rem] font-normal text-gray-light mb-3">
-              {date}
-            </p>
-          )}
           <h3 className="article-card-title mb-2 group-hover:text-navy-light transition-colors duration-300">
             {title}
           </h3>
-          <p className="font-serif text-sm md:text-base leading-relaxed text-ink mb-4 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+          <p className="article-card-byline mb-0.5">
+            By {author}
+          </p>
+          {date && (
+            <p className="article-card-date mb-1">{date}</p>
+          )}
+          <p className="article-card-excerpt mb-4">
             {excerpt}
           </p>
-          <span className="font-grotesk text-xs font-medium text-navy italic underline underline-offset-2 hover:text-navy-light transition-colors">
-            Read more
+          <span className="article-card-readmore mt-auto">
+            Read more →
           </span>
         </div>
       </Link>

@@ -12,7 +12,7 @@ interface ImageWithFallbackProps {
 /**
  * Renders an image with a tonal gradient + grain SVG fallback.
  * If the src fails to load, shows a textured gradient placeholder
- * instead of raw alt text on a beige box.
+ * — NEVER visible alt text.
  */
 export default function ImageWithFallback({
   src,
@@ -42,60 +42,55 @@ export default function ImageWithFallback({
       style={{ aspectRatio: '4/5' }}
     >
       {broken ? (
-        <>
-          <svg
-            className="absolute inset-0 w-full h-full"
-            width="100%"
-            height="100%"
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-          >
-            <defs>
-              <filter id="grain" x="0" y="0" width="100%" height="100%">
-                <feTurbulence
-                  type="fractalNoise"
-                  baseFrequency="0.6"
-                  numOctaves="3"
-                  stitchTiles="stitch"
-                />
-                <feColorMatrix
-                  type="matrix"
-                  values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.4 0"
-                />
-                <feBlend
-                  mode="multiply"
-                  in2="SourceGraphic"
-                  in="SourceGraphic"
-                  result="mix"
-                />
-                <feBlend mode="normal" in="mix" in2="SourceGraphic" />
-              </filter>
-              <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopOpacity="0.55" />
-                <stop offset="100%" stopOpacity="0.35" />
-              </linearGradient>
-            </defs>
-            <rect
-              width="100"
-              height="100"
-              fill={grainColor}
-              filter="url(#grain)"
-            />
-            <rect
-              width="100"
-              height="100"
-              fill="url(#grad)"
-            />
-          </svg>
-          <div className="absolute inset-0 flex items-center justify-center text-[0.65rem] font-serif text-gray-light uppercase tracking-widest italic opacity-50">
-            {alt || 'Untitled'}
-          </div>
-        </>
+        <svg
+          className="absolute inset-0 w-full h-full"
+          width="100%"
+          height="100%"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <filter id="grain" x="0" y="0" width="100%" height="100%">
+              <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.6"
+                numOctaves="3"
+                stitchTiles="stitch"
+              />
+              <feColorMatrix
+                type="matrix"
+                values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.4 0"
+              />
+              <feBlend
+                mode="multiply"
+                in2="SourceGraphic"
+                in="SourceGraphic"
+                result="mix"
+              />
+              <feBlend mode="normal" in="mix" in2="SourceGraphic" />
+            </filter>
+            <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopOpacity="0.55" />
+              <stop offset="100%" stopOpacity="0.35" />
+            </linearGradient>
+          </defs>
+          <rect
+            width="100"
+            height="100"
+            fill={grainColor}
+            filter="url(#grain)"
+          />
+          <rect
+            width="100"
+            height="100"
+            fill="url(#grad)"
+          />
+        </svg>
       ) : (
         <img
           src={src || ''}
           alt={alt}
-          className={`w-full h-auto block ${className}`}
+          className={`w-full h-full block ${className}`}
           onError={() => setBroken(true)}
           loading="lazy"
           decoding="async"

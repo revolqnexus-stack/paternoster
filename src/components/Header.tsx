@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { useCartStore } from '@/lib/store';
 import { Menu, X, ShoppingBag } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import CartDrawer from '@/components/CartDrawer';
 
 const MENU_ITEMS = [
@@ -18,12 +18,37 @@ const MENU_ITEMS = [
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const { lines } = useCartStore();
   const cartCount = lines.reduce((sum, line) => sum + line.quantity, 0);
 
+  // Scroll-driven logo scale and header background
+  const { scrollY } = useScroll({ offset: ['start', 'end 300px'] });
+  const logoScale = useTransform(scrollY, [0, 300], [1, 0.55]);
+  const headerBg = useTransform(
+    scrollY,
+    [0, 300],
+    ['rgba(250,250,247,0)', 'rgba(250,250,247,0.85)']
+  );
+
+  // Hide on scroll down, reveal on scroll up
+  const [isScrollingDown, setIsScrollingDown] = useState(false);
+  const lastScrollY = useRef(0);
+  const [hasScrolledPastThreshold, setHasScrolledPastThreshold] = useState(false);
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
+    let ticking = false;
+    const onScroll = () => {
+      const current = window.scrollY;
+      if (current > 400) setHasScrolledPastThreshold(true);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrollingDown(current > lastScrollY.current && current > 400);
+          lastScrollY.current = current;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -44,14 +69,29 @@ export default function Header() {
   return (
     <>
       <header
-        className={`sticky top-0 z-40 bg-paper/90 backdrop-blur-md border-b border-border py-3 md:py-4 transition-all duration-300 ${
-          scrolled ? 'shadow-sm' : ''
+        className={`fixed top-0 left-0 right-0 z-40 border-b border-border pointer-events-auto transition-all duration-500 ease-out ${
+          isScrollingDown && hasScrolledPastThreshold
+            ? '-translate-y-full'
+            : ''
         }`}
+        style={{
+          background: headerBg as unknown as string,
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+        }}
       >
-        <div className="page-container">
-          <div className="flex items-center justify-between py-1 md:py-2">
-            {/* Left: hamburger */}
-            <div className="flex items-center gap-2">
+        <div className="page-container-header">
+          {/* 3-column grid: menu | logo | cart + subscribe */}
+          <div
+            className="grid grid-cols-3 items-center gap-4 py-3 md:py-4"
+            style={{
+              transform: logoScale as unknown as string,
+              transformOrigin: 'center top',
+              transition: 'transform 0.5s cubic-bezier(0.76, 0, 0.24, 1)',
+            }}
+          >
+            {/* Left: menu button */}
+            <div className="col-start-1">
               <button
                 onClick={toggleMenu}
                 className="p-2 rounded hover:bg-paper/50 transition-colors"
@@ -61,15 +101,17 @@ export default function Header() {
               </button>
             </div>
 
-            {/* Center: Logo */}
-            <Link href="/" className="flex-shrink-0" onClick={closeMenu}>
-              <h1 className="font-serif text-3xl md:text-4xl font-normal text-ink tracking-tight italic">
-                Pater Noster
-              </h1>
-            </Link>
+            {/* Center: logo */}
+            <div className="col-start-2 text-center">
+              <Link href="/" className="flex-shrink-0 block" onClick={closeMenu}>
+                <h1 className="font-display text-[clamp(3rem,9vw,9rem)] font-normal text-ink tracking-tight italic leading-none">
+                  Pater Noster
+                </h1>
+              </Link>
+            </div>
 
-            {/* Right: Cart + Subscribe */}
-            <div className="flex items-center gap-3">
+            {/* Right: cart + Subscribe */}
+            <div className="col-start-3 flex justify-end items-center gap-3">
               <button
                 onClick={() => setCartDrawerOpen(true)}
                 className="relative p-2 rounded hover:bg-paper/50 transition-colors"
@@ -84,7 +126,7 @@ export default function Header() {
               </button>
               <a
                 href="#subscribe"
-                className="px-4 py-2 bg-ink text-paper text-[0.8rem] font-serif font-normal uppercase tracking-wider rounded hover:bg-navy-light transition-colors"
+                className="px-4 py-2 bg-ink text-paper font-grotesk text-[0.8rem] font-medium uppercase tracking-wider rounded hover:bg-navy-light transition-colors"
               >
                 Subscribe
               </a>
@@ -103,10 +145,9 @@ export default function Header() {
             className="fixed inset-0 z-50 bg-paper"
             transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] as const }}
           >
-            {/* Close header */}
-            <div className="page-container py-6 md:py-8 border-b border-border mb-20 md:mb-32">
+            <div className="page-container-header py-6 md:py-8 border-b border-border mb-20 md:mb-32">
               <div className="flex items-center justify-between">
-                <h2 className="font-serif text-xl md:text-2xl font-normal text-ink tracking-tight italic">
+                <h2 className="font-display text-xl md:text-2xl font-normal text-ink tracking-tight italic">
                   Menu
                 </h2>
                 <button
@@ -118,12 +159,11 @@ export default function Header() {
               </div>
             </div>
 
-            {/* Menu items — centered, editorial, staggered */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3 }}
-              className="page-container flex-1 flex flex-col items-center justify-center text-center"
+              className="page-container-header flex-1 flex flex-col items-center justify-center text-center"
             >
               {MENU_ITEMS.map((item, i) => (
                 <motion

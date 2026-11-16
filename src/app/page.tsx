@@ -89,9 +89,15 @@ export default async function Home() {
         <section className="grid-12">
           {rest.map((article, idx) => {
             const isLarge = idx % 3 === 0;
+            const isLeft = idx % 2 === 0;
 
             return (
-              <div key={article.title} className="mb-8 md:mb-12">
+              <div
+                key={article.title}
+                className={`${
+                  isLeft ? '' : 'md:self-start'
+                }`}
+              >
                 <ArticleCard
                   title={article.title}
                   author={article.author}
@@ -100,6 +106,7 @@ export default async function Home() {
                   image={article.image}
                   imageAlt={article.imageAlt}
                   span={isLarge ? 7 : 5}
+                  index={idx}
                 />
               </div>
             );
@@ -136,7 +143,7 @@ export default async function Home() {
               </a>
             </div>
           </ScrollReveal>
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-3 lg:grid-cols-4">
             {products.map((product: any) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -152,17 +159,17 @@ interface ProductCardProps {
 }
 
 function ProductCard({ product }: ProductCardProps) {
-  const image = product.images?.edges?.[0]?.node;
+  const images = product.images?.edges?.map((e: any) => e.node) || [];
   const price = parseFloat(product.priceRange.minVariantPrice.amount);
 
   return (
     <Link key={product.id} href={`/products/${product.handle}`} className="block">
       <article className="article-card group relative">
         <div className="article-card-image">
-          {image?.url ? (
+          {images[0]?.url ? (
             <img
-              src={image.url}
-              alt={image.altText || product.title}
+              src={images[0].url}
+              alt={images[0].altText || product.title}
               className="w-full h-full object-cover"
               loading="lazy"
               data-cursor="view"
@@ -176,14 +183,14 @@ function ProductCard({ product }: ProductCardProps) {
             />
           )}
         </div>
-        <div className="p-4 pt-3">
+        <div className="p-4 pt-3 flex flex-col h-full">
           <p className="label-caps mb-2 uppercase tracking-widest">
             Editorial
           </p>
           <h4 className="article-card-title mb-2 group-hover:text-navy-light transition-colors duration-300">
             {product.title}
           </h4>
-          <p className="font-grotesk text-sm font-medium text-navy">
+          <p className="font-grotesk text-sm font-medium text-navy mt-auto">
             £{price.toFixed(2)}
           </p>
         </div>
