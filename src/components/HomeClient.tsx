@@ -4,6 +4,12 @@ import Link from 'next/link';
 import ImageWithFallback from '@/components/ImageWithFallback';
 import { stockImage } from '@/lib/stock-images';
 import { motion } from 'framer-motion';
+import GlareHover from '@/components/GlareHover';
+import SplitFlapText from '@/components/SplitFlapText';
+import Grainient from '@/components/Grainient';
+import MaskedHeading from '@/components/MaskedHeading';
+import HoloCard from '@/components/HoloCard';
+import DitherVeil from '@/components/DitherVeil';
 
 interface Article {
   title: string;
@@ -113,7 +119,8 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
     <div className="page-wrap">
       {/* ===== HERO — full width bg, two-column editorial ===== */}
       <section className="section-full hero-bg">
-          <div className="container section-padding-lg">
+              <Grainient colors={['#fdfbf5', '#efece3', '#c9a266']} speed={0.5} style={{ opacity: 0.3 }} />
+              <div className="container section-padding-lg">
             <div className="hero-content-wrap">
               <div className="hero-image-col">
                 <div className="hero-image-wrap">
@@ -123,15 +130,17 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
                     transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] as const }}
                     className="hero-image"
                   >
-                    <ImageWithFallback
-                      src={featured.image}
-                      alt={featured.imageAlt}
-                      className="w-full h-full object-cover"
-                      fallbackKey="reading"
-                      aspectRatio="16/9"
-                    />
+                    <GlareHover width="100%" height="100%" variant="streak" blendMode="screen">
+                      <ImageWithFallback
+                        src={featured.image}
+                        alt={featured.imageAlt}
+                        className="w-full h-full object-cover"
+                        fallbackKey="reading"
+                        aspectRatio="16/9"
+                      />
+                    </GlareHover>
+                    <div className="hero-overlay" />
                   </motion.div>
-                  <div className="hero-overlay" />
                 </div>
               </div>
               <div className="hero-text-col">
@@ -142,13 +151,17 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
                   className="hero-content"
                 >
                   <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2, duration: 0.6 }}
-                    className="hero-kicker"
-                  >
-                    Featured
-                  </motion.p>
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.2, duration: 0.6 }}
+                                    className="hero-kicker"
+                                  >
+                                    <SplitFlapText
+                                      words={['Pater Noster', 'Writing', 'Ideas', 'Books']}
+                                      className="font-mono text-[0.7rem] tracking-widest uppercase"
+                                      color="var(--color-accent)"
+                                    />
+                                  </motion.p>
                   <motion.h1
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -398,7 +411,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
             transition={{ duration: 0.6 }}
             className="section-title text-gradient"
           >
-            In this issue
+            <MaskedHeading text="In this issue" gradient={['var(--color-ink)', 'var(--color-accent)']} />
           </motion.h2>
           <motion.div
             variants={containerVariants}
@@ -597,33 +610,17 @@ function ProductCard({ product }: ProductCardProps) {
       className="block"
       data-cursor="view"
     >
-      <motion.article
-        whileHover={{ y: -5 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        className="article-card glass-card card-tilt"
-      >
-        <div className="article-card-image">
-          {images[0]?.url ? (
-            <motion.img
-              src={images[0].url}
-              alt={images[0].altText || product.title}
-              className="w-full h-full object-cover"
-              loading="lazy"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            />
-          ) : (
-            <ImageWithFallback
-              src={stockImage('cover10')}
-              alt={product.title}
-              className="w-full h-full object-cover"
-              fallbackKey="bookshelf"
-            />
-          )}
-        </div>
-        <p className="article-card-category">
-          Editorial
-        </p>
+      <HoloCard
+        image={images[0]?.url || stockImage('cover10')}
+        alt={product.title}
+        preset="gold"
+        intensity={0.6}
+        foilColor="#c9a266"
+        className="w-full h-full"
+        style={{ width: '100%', height: '320px', aspectRatio: '3/4' }}
+      />
+      <div className="flex flex-col flex-1 p-6 gap-3">
+        <p className="article-card-category">Editorial</p>
         <motion.a
           href={`/products/${product.handle}`}
           className="article-card-title"
@@ -635,7 +632,7 @@ function ProductCard({ product }: ProductCardProps) {
         <p className="article-card-price">
           £{price.toFixed(2)}
         </p>
-      </motion.article>
+      </div>
     </motion.a>
   );
 }
