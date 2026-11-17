@@ -562,6 +562,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
       {/* ===== SHOP — full width bg, centered container ===== */}
       {products.length > 0 && (
         <section className="section-full border-t border-hairline">
+          <DitherVeil pattern="noise" pixelSize={4} levels={4} style={{ opacity: 0.3 }} />
           <div className="container section-padding-lg">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
