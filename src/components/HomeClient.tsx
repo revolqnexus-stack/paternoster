@@ -47,7 +47,7 @@ const JOURNAL_PIECES = [
   {
     kicker: 'New essay',
     title: 'On the Uses of Difficulty',
-    author: 'Adam Phillips',
+    author: 'Elena Marlowe',
     date: '12 November 2026',
     image: stockImage('essay'),
     imageAlt: 'Abstract architecture mood',
@@ -56,7 +56,7 @@ const JOURNAL_PIECES = [
   {
     kicker: 'Criticism',
     title: 'Rereading Woolf in a Time of Crisis',
-    author: 'Jacqueline Rose',
+    author: 'Samuel Crane',
     date: '10 November 2026',
     image: stockImage('review'),
     imageAlt: 'Stack of books',
@@ -86,7 +86,7 @@ const JOURNAL_PIECES = [
 const AUDIO_PIECES = [
   {
     title: 'The Art of Slow Reading',
-    subtitle: 'A conversation with James Wood',
+    subtitle: 'A conversation with Samuel Crane',
     duration: '42 min',
     date: '11 November 2026',
     episode: 'EP. 34',
@@ -95,7 +95,7 @@ const AUDIO_PIECES = [
   },
   {
     title: 'Grief and the Literary Imagination',
-    subtitle: 'Jacqueline Rose in conversation',
+    subtitle: 'Mira Thorne in conversation',
     duration: '58 min',
     date: '5 November 2026',
     episode: 'EP. 33',

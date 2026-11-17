@@ -48,7 +48,7 @@ const GRID_VIDEOS: Video[] = [
   {
     id: 3,
     title: 'Panel: The State of Literary Criticism',
-    speaker: 'James Wood, Terry Castle & Adam Phillips',
+    speaker: 'Samuel Crane, Fiona Reid & Elena Marlowe',
     date: '20 October 2026',
     duration: '1:12:08',
     views: '14.2k views',
@@ -66,7 +66,7 @@ const GRID_VIDEOS: Video[] = [
   {
     id: 5,
     title: 'In Conversation: Psychoanalysis and Literature',
-    speaker: 'Adam Phillips & Jacqueline Rose',
+    speaker: 'Samuel Crane & Clara Voss',
     date: '5 October 2026',
     duration: '1:04:47',
     views: '11.3k views',

@@ -20,7 +20,7 @@ const stagger = {
 const FEATURED = {
   kicker: 'Featured Essay',
   title: 'The Silence of Henry James: Repression, Form, and the Unsaid',
-  author: 'James Wood',
+  author: 'Julian Hale',
   date: '17 November 2026',
   excerpt:
     'What James withholds is as charged as what he renders. His late novels circle absence with the deliberateness of a surgeon who refuses to cut — the wound is everywhere implied, never shown. This essay reads that silence as a formal argument about consciousness itself.',
@@ -32,7 +32,7 @@ const FEATURED = {
 const ARTICLES = [
   {
     title: 'Against Consolation: Grief, Psychoanalysis, and the Problem of Recovery',
-    author: 'Adam Phillips',
+    author: 'Elena Marlowe',
     date: '14 November 2026',
     excerpt:
       'Mourning, Freud insisted, is work. But what is the labour of grief supposed to produce? Phillips examines the therapeutic orthodoxy that grief must end.',
@@ -43,7 +43,7 @@ const ARTICLES = [
   },
   {
     title: 'Plath\'s Doubles: The Mirror Poems and the Question of Self',
-    author: 'Jacqueline Rose',
+    author: 'Mira Thorne',
     date: '10 November 2026',
     excerpt:
       'The mirror in Plath is never merely a surface. It is a site of encounter with an other who is also, impossibly, the self — a narcissism that devours its own reflection.',
@@ -54,7 +54,7 @@ const ARTICLES = [
   },
   {
     title: 'Bolaño\'s Ghosts: Violence and Witness in 2666',
-    author: 'Terry Castle',
+    author: 'Fiona Reid',
     date: '7 November 2026',
     excerpt:
       'The murders of Santa Teresa accumulate without resolution — Bolaño refusing the satisfactions of detection while insisting on a terrible fidelity to the fact of death.',
@@ -76,7 +76,7 @@ const ARTICLES = [
   },
   {
     title: 'Sebald\'s Photographs: Memory, Evidence, and the Staged Document',
-    author: 'Michael Wood',
+    author: 'Arthur Bellweather',
     date: '29 October 2026',
     excerpt:
       'The blurry, slightly damaged photographs embedded in Sebald\'s prose are not illustrations. They function as hesitations — images that cannot quite confirm what the text almost remembers.',

@@ -23,7 +23,7 @@ const REVIEWS: Review[] = [
     id: 1,
     bookTitle: 'The Passenger',
     bookAuthor: 'Cormac McCarthy',
-    reviewer: 'James Wood',
+    reviewer: 'Julian Hale',
     date: '14 November 2026',
     excerpt:
       'McCarthy\'s long-awaited return to fiction is a haunted, magnificent wreck of a novel — a meditation on guilt, physics, and the impossibility of forgetting. It falls short of Blood Meridian\'s ferocity, but its ambitions are grander and stranger.',
@@ -49,7 +49,7 @@ const REVIEWS: Review[] = [
     id: 3,
     bookTitle: 'Prophet Song',
     bookAuthor: 'Paul Lynch',
-    reviewer: 'Jacqueline Rose',
+    reviewer: 'Clara Voss',
     date: '1 November 2026',
     excerpt:
       'Lynch\'s Booker-winning novel arrives in a prose so pressurised it verges on apocalyptic scripture. Its subject — the collapse of Irish liberal democracy — has the chill of prophecy about it in this particular political moment.',
@@ -62,7 +62,7 @@ const REVIEWS: Review[] = [
     id: 4,
     bookTitle: 'On Grief and Grieving',
     bookAuthor: 'Elisabeth Kübler-Ross & David Kessler',
-    reviewer: 'Adam Phillips',
+    reviewer: 'Elena Marlowe',
     date: '25 October 2026',
     excerpt:
       'The five stages of grief have become cultural furniture so familiar we forget they were always a heuristic, never a map. This reissue gives us the chance to read the original argument on its own strange, careful terms.',
@@ -75,7 +75,7 @@ const REVIEWS: Review[] = [
     id: 5,
     bookTitle: 'The Complete Poems',
     bookAuthor: 'Anne Carson',
-    reviewer: 'Terry Castle',
+    reviewer: 'Fiona Reid',
     date: '18 October 2026',
     excerpt:
       'Carson remains the most formally restless poet writing in English, and this gathering of her work makes the restlessness visible as a coherent argument. Each book is a fresh formal wager, and she wins almost all of them.',
