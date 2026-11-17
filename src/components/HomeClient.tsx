@@ -4,26 +4,18 @@ import Link from 'next/link';
 import ImageWithFallback from '@/components/ImageWithFallback';
 import { stockImage } from '@/lib/stock-images';
 import { motion } from 'framer-motion';
-import GlareHover from '@/components/GlareHover';
 import SplitFlapText from '@/components/SplitFlapText';
-import Grainient from '@/components/Grainient';
-import MaskedHeading from '@/components/MaskedHeading';
-import HoloCard from '@/components/HoloCard';
-import DitherVeil from '@/components/DitherVeil';
-import FloatingLines from '@/components/FloatingLines';
-import LiquidEther from '@/components/LiquidEther';
-import Particles from '@/components/Particles';
-import Plasma from '@/components/Plasma';
-import Orb from '@/components/Orb';
+import { useCartStore } from '@/lib/store';
 
 interface Article {
   title: string;
   author: string;
   date: string | null;
   excerpt: string;
-  image: string;
-  imageAlt: string;
+  image?: string;
+  imageAlt?: string;
   category: string;
+  relatedProduct?: string;
 }
 
 interface Product {
@@ -34,133 +26,321 @@ interface Product {
   images: { edges: Array<{ node: { url: string; altText: string } }> };
 }
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15, delayChildren: 0.2 },
-  },
-};
-
-const itemVariants = {
-  hidden: { y: 30, opacity: 0 },
-  visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: [0.76, 0, 0.24, 1] as const } },
-};
-
 interface HomeClientProps {
   featured: Article;
   rest: Article[];
   products: Product[];
 }
 
-// 4 "From the Journal" editorial pieces
-const JOURNAL_PIECES = [
-  {
-    kicker: 'New essay',
-    title: 'On the Uses of Difficulty',
-    author: 'Elena Marlowe',
-    date: '12 November 2026',
-    image: stockImage('essay'),
-    imageAlt: 'Abstract architecture mood',
-    category: 'Essay',
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.1 },
   },
-  {
-    kicker: 'Criticism',
-    title: 'Rereading Woolf in a Time of Crisis',
-    author: 'Samuel Crane',
-    date: '10 November 2026',
-    image: stockImage('cover3'),
-    imageAlt: 'Moody literary interior',
-    category: 'Reviews',
-  },
-  {
-    kicker: 'Fiction',
-    title: 'A Sentence That Begins With Loss',
-    author: 'Ali Smith',
-    date: '7 November 2026',
-    image: stockImage('cover4'),
-    imageAlt: 'Moody literary scene',
-    category: 'Fiction',
-  },
-  {
-    kicker: 'Poetry',
-    title: 'Fourteen Ways of Looking at a Footnote',
-    author: 'Anne Carson',
-    date: '4 November 2026',
-    image: stockImage('writer'),
-    imageAlt: 'Author at desk',
-    category: 'Poetry',
-  },
-];
+};
 
-// 2 "Now Playing" audio pieces
-const AUDIO_PIECES = [
-  {
-    title: 'The Art of Slow Reading',
-    subtitle: 'A conversation with Samuel Crane',
-    duration: '42 min',
-    date: '11 November 2026',
-    episode: 'EP. 34',
-    image: stockImage('mood2'),
-    imageAlt: 'Abstract editorial mood',
-  },
-  {
-    title: 'Grief and the Literary Imagination',
-    subtitle: 'Mira Thorne in conversation',
-    duration: '58 min',
-    date: '5 November 2026',
-    episode: 'EP. 33',
-    image: stockImage('cover9'),
-    imageAlt: 'Moody audio essay visual',
-  },
-];
+const itemVariants = {
+  hidden: { y: 12, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { duration: 0.5 } },
+};
+
+/* ── Optional-image card ────────────────────────────────────── */
+
+function CardImage({ src, alt, aspectRatio }: { src?: string; alt?: string; aspectRatio?: string }) {
+  if (!src) return null;
+  return (
+    <div className="relative overflow-hidden rounded-sm mb-4" style={{ aspectRatio }}>
+      <ImageWithFallback
+        src={src}
+        alt={alt || ''}
+        className="w-full h-full object-cover"
+        fallbackKey="fallback"
+      />
+    </div>
+  );
+}
+
+/* ── Shared card base ───────────────────────────────────────── */
+
+function BaseCard({
+  children,
+  type,
+  typeColor = 'var(--color-accent)',
+}: { children: React.ReactNode; type?: string; typeColor?: string }) {
+  return (
+    <article
+      className="card-tilt rounded-sm overflow-hidden"
+      style={{
+        border: '1px solid var(--hairline)',
+        background: 'var(--paper)',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      {type && (
+        <span
+          className="text-[0.65rem] uppercase tracking-widest font-mono mb-2 block"
+          style={{ color: typeColor, letterSpacing: '0.1em' }}
+        >
+          {type}
+        </span>
+      )}
+      {children}
+    </article>
+  );
+}
+
+/* ── Editorial card (essay / review / blog) ─────────────────── */
+
+function EditorialCard({ article, asLink }: { article: Article; asLink?: boolean }) {
+  return (
+    <BaseCard type={article.category} typeColor="var(--color-accent)">
+      <CardImage src={article.image} alt={article.imageAlt} aspectRatio="4/5" />
+      <div className="p-5">
+        <p className="text-xs font-serif mb-1" style={{ color: 'var(--ink)' }}>
+          {article.title}
+        </p>
+        <p className="text-xs font-serif italic mb-2" style={{ color: 'var(--muted)' }}>
+          By {article.author}
+        </p>
+        {article.date && (
+          <p className="text-[0.7rem] font-mono mb-3" style={{ color: 'var(--muted)' }}>
+            {article.date}
+          </p>
+        )}
+        {article.excerpt && (
+          <p className="text-sm font-serif leading-relaxed mb-4" style={{ color: 'var(--ink-soft)' }}>
+            {article.excerpt}
+          </p>
+        )}
+        {article.relatedProduct && (
+          <Link
+            href={`/products/${article.relatedProduct}`}
+            className="text-xs font-mono uppercase tracking-wider flex items-center gap-1"
+            style={{ color: 'var(--color-accent)' }}
+          >
+            Buy the book →
+          </Link>
+        )}
+      </div>
+    </BaseCard>
+  );
+}
+
+/* ── Audio card ─────────────────────────────────────────────── */
+
+interface AudioCardProps {
+  title: string;
+  subtitle: string;
+  duration: string;
+  episode: string;
+  date: string;
+  image?: string;
+  imageAlt?: string;
+}
+
+function AudioCard({ title, subtitle, duration, episode, date, image, imageAlt }: AudioCardProps) {
+  return (
+    <BaseCard type="AUDIO" typeColor="var(--color-accent)">
+      <CardImage src={image} alt={imageAlt} aspectRatio="1/1" />
+      <div className="p-5">
+        <p className="text-[0.7rem] uppercase tracking-widest font-mono mb-1" style={{ color: 'var(--muted)' }}>
+          {episode} · {date}
+        </p>
+        <p className="text-xs font-serif mb-1" style={{ color: 'var(--ink)' }}>
+          {title}
+        </p>
+        <p className="text-xs font-serif italic mb-3" style={{ color: 'var(--muted)' }}>
+          {subtitle}
+        </p>
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-mono tabular-nums" style={{ color: 'var(--muted)' }}>
+            {duration}
+          </span>
+          <button
+            aria-label={`Play ${title}`}
+            className="flex items-center justify-center rounded-full"
+            style={{
+              width: 32,
+              height: 32,
+              background: 'var(--ink)',
+              color: 'var(--paper)',
+              border: 'none',
+              cursor: 'pointer',
+            }}
+          >
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="currentColor">
+              <path d="M1.5 1l7 5-7 5V1z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </BaseCard>
+  );
+}
+
+/* ── Shop product card ──────────────────────────────────────── */
+
+interface ShopCardProps {
+  product: Product;
+}
+
+function ShopCard({ product }: ShopCardProps) {
+  const images = product.images?.edges?.map((e: any) => e.node) || [];
+  const price = parseFloat(product.priceRange.minVariantPrice.amount);
+  const addToCartStore = useCartStore();
+
+  return (
+    <article
+      className="card-tilt rounded-sm overflow-hidden"
+      style={{
+        border: '1px solid var(--hairline)',
+        background: 'var(--paper)',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <CardImage src={images[0]?.url} alt={images[0]?.altText || product.title} aspectRatio="4/5" />
+      <div className="p-4">
+        <p className="text-[0.65rem] uppercase tracking-widest font-mono mb-1" style={{ color: 'var(--muted)' }}>
+          From the shop
+        </p>
+        <p className="text-xs font-serif mb-1" style={{ color: 'var(--ink)' }}>
+          {product.title}
+        </p>
+        <p className="text-xs font-mono mb-3" style={{ color: 'var(--muted)' }}>
+          £{price.toFixed(2)}
+        </p>
+        <button
+          onClick={() => addToCartStore.addToCart('', 1)}
+          disabled={addToCartStore.isLoading}
+          className="w-full text-center text-[0.7rem] uppercase tracking-widest font-mono py-2 mb-2"
+          style={{
+            background: 'var(--ink)',
+            color: 'var(--paper)',
+            border: '1px solid var(--ink)',
+            cursor: addToCartStore.isLoading ? 'not-allowed' : 'pointer',
+            opacity: addToCartStore.isLoading ? 0.5 : 1,
+          }}
+        >
+          Add to cart
+        </button>
+        <Link
+          href={`/products/${product.handle}`}
+          className="text-[0.7rem] font-mono uppercase tracking-wider text-center block"
+          style={{ color: 'var(--color-accent)' }}
+        >
+          View →
+        </Link>
+      </div>
+    </article>
+  );
+}
+
+/* ── Newsletter subscribe ───────────────────────────────────── */
+
+function NewsletterStrip() {
+  return (
+    <section className="section-full border-t border-hairline pt-16 pb-24">
+      <div className="container section-padding-md">
+        <div
+          className="flex flex-col items-center gap-4 text-center"
+          style={{ maxWidth: '42ch', margin: '0 auto' }}
+        >
+          <h2 className="section-title" style={{ textAlign: 'center', marginBottom: 0 }}>
+            Subscribe
+          </h2>
+          <p className="text-sm font-serif leading-relaxed" style={{ color: 'var(--muted)' }}>
+            Occasional letters from Pater Noster. New essays, reviews, and what’s in the shop.
+          </p>
+          <form
+            className="flex flex-col sm:flex-row gap-2 w-full"
+            style={{ maxWidth: '320px' }}
+          >
+            <input
+              type="email"
+              placeholder="you@example.com"
+              className="flex-1 border border-hairline bg-transparent px-4 py-2 text-sm font-serif focus:outline-none focus:border-accent"
+            />
+            <button
+              type="submit"
+              className="px-6 py-2 text-[0.7rem] uppercase tracking-widest font-mono"
+              style={{
+                background: 'var(--ink)',
+                color: 'var(--paper)',
+                border: '1px solid var(--ink)',
+                cursor: 'pointer',
+              }}
+            >
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Home client ────────────────────────────────────────────── */
 
 export default function HomeClient({ featured, rest, products }: HomeClientProps) {
-  // Split rest: first 3 go to "In This Issue", all 7 shown in Writing grid
   const inThisIssue = rest.slice(0, 3);
-  const writingGrid = rest;
+  const latestWriting = rest.slice(3);
+
+  const AUDIO_PIECES = [
+    {
+      title: 'The Art of Slow Reading',
+      subtitle: 'A conversation with Samuel Crane',
+      duration: '42 min',
+      episode: 'EP. 34',
+      date: '11 November 2026',
+      image: stockImage('mood2'),
+      imageAlt: 'Abstract editorial mood',
+    },
+    {
+      title: 'Grief and the Literary Imagination',
+      subtitle: 'Mira Thorne in conversation',
+      duration: '58 min',
+      episode: 'EP. 33',
+      date: '5 November 2026',
+      image: stockImage('cover9'),
+      imageAlt: 'Moody audio essay visual',
+    },
+  ];
+
+  const shopItems = products.slice(0, 4);
 
   return (
     <div className="page-wrap">
-      {/* ===== HERO — full width bg, two-column editorial ===== */}
+      {/* ===== FEATURED PIECE — hero ===== */}
       <section className="section-full hero-bg overflow-hidden">
-        <Grainient colors={['#fdfbf5', '#efece3', '#c9a266']} speed={0.5} style={{ opacity: 0.3 }} />
-        <FloatingLines linesGradient={['#c9a266', '#efece3', '#fdfbf5']} lineCount={6} lineDistance={40} />
-        <LiquidEther colors={['#c9a266', '#efece3']} intensity={0.4} mouseForce={0.5} />
         <div className="container section-padding-lg">
           <div className="hero-content-wrap gap-6 md:gap-12">
             <div className="hero-image-col">
               <div className="hero-image-wrap">
-                <motion.div
-                  initial={{ scale: 1.15 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] as const }}
-                  className="hero-image"
-                >
-                  <GlareHover width="100%" height="100%" variant="streak" blendMode="screen">
-                    <ImageWithFallback
-                      src={featured.image}
-                      alt={featured.imageAlt}
-                      className="w-full h-full object-cover"
-                      fallbackKey="reading"
-                      aspectRatio="16/9"
-                    />
-                  </GlareHover>
-                  <div className="hero-overlay" />
-                </motion.div>
+                <CardImage src={featured.image} alt={featured.imageAlt} aspectRatio="4/5" />
+                {!featured.image && (
+                  <div className="w-full h-full flex items-center justify-center" style={{ aspectRatio: '4/5' }}>
+                    <div className="text-center" style={{ color: 'var(--muted)' }}>
+                      <p className="text-xs uppercase tracking-widest font-mono mb-2">No image</p>
+                      <p className="text-xs font-serif italic">{featured.title}</p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
             <div className="hero-text-col">
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] as const }}
+                transition={{ duration: 0.5 }}
                 className="hero-content"
               >
                 <motion.p
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.6 }}
+                  transition={{ delay: 0.1, duration: 0.4 }}
                   className="hero-kicker"
                 >
                   <SplitFlapText
@@ -170,39 +350,67 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
                   />
                 </motion.p>
                 <motion.h1
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.8 }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
                   className="hero-title"
                 >
                   {featured.title}
                 </motion.h1>
                 <motion.p
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6, duration: 0.6 }}
+                  transition={{ delay: 0.3, duration: 0.4 }}
                   className="hero-byline"
                 >
                   By {featured.author}
                 </motion.p>
+                {featured.date && (
+                  <motion.p
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.35, duration: 0.4 }}
+                    className="text-xs font-mono mb-4"
+                    style={{ color: 'var(--muted)' }}
+                  >
+                    {featured.date}
+                  </motion.p>
+                )}
                 <motion.p
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8, duration: 0.8 }}
+                  transition={{ delay: 0.4, duration: 0.5 }}
                   className="hero-excerpt"
                 >
                   {featured.excerpt}
                 </motion.p>
-                <motion.a
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1, duration: 0.6 }}
-                  href="/"
-                  className="text-ink underline underline-offset-2 hover:text-accent transition-colors font-serif mb-6 md:mb-4 inline-block"
-                  data-cursor="view"
-                >
-                  Read the essay →
-                </motion.a>
+                {featured.relatedProduct ? (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 0.4 }}
+                  >
+                    <Link
+                      href={`/products/${featured.relatedProduct}`}
+                      className="text-xs font-mono uppercase tracking-wider inline-block mb-6"
+                      style={{ color: 'var(--color-accent)' }}
+                      data-cursor="view"
+                    >
+                      Buy the book →
+                    </Link>
+                  </motion.div>
+                ) : (
+                  <motion.a
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 0.4 }}
+                    href="/"
+                    className="text-ink underline underline-offset-2 hover:text-accent transition-colors font-serif inline-block mb-6"
+                    data-cursor="view"
+                  >
+                    Read the essay →
+                  </motion.a>
+                )}
               </motion.div>
             </div>
           </div>
@@ -211,220 +419,17 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
 
       <hr className="hairline mb-8 md:mb-12" />
 
-      {/* ===== MARQUEE TICKER ===== */}
-      <section className="marquee">
-        <div className="marquee-track">
-          <div className="marquee-content">
-            <span className="marquee-item">Pater Noster</span>
-            <span className="marquee-divider"></span>
-            <span className="marquee-item">Independent journal of writing and ideas</span>
-            <span className="marquee-divider"></span>
-            <span className="marquee-item">Essays · Reviews · Criticism</span>
-            <span className="marquee-divider"></span>
-            <span className="marquee-item">Books · Objects · Subscriptions</span>
-            <span className="marquee-divider"></span>
-            <span className="marquee-item">Pater Noster</span>
-            <span className="marquee-divider"></span>
-            <span className="marquee-item">Independent journal of writing and ideas</span>
-            <span className="marquee-divider"></span>
-            <span className="marquee-item">Essays · Reviews · Criticism</span>
-            <span className="marquee-divider"></span>
-            <span className="marquee-item">Books · Objects · Subscriptions</span>
-          </div>
-        </div>
-      </section>
-
-      <hr className="hairline mb-8 md:mb-12" />
-
-      {/* ===== FROM THE JOURNAL — 2-column editorial grid ===== */}
+      {/* ===== CURRENT ISSUE — numbered contents list ===== */}
       <section className="section-full" style={{ background: 'var(--paper)' }}>
-        <Particles particleCount={30} particleSpread={400} speed={0.5} particleColors={['#c9a266', '#1a1a1a', '#efece3']} moveParticlesOnHover={true} />
         <div className="container section-padding-md">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex items-baseline justify-between mb-8"
+            transition={{ duration: 0.5 }}
+            className="flex items-baseline justify-between mb-6"
           >
-            <h2 className="section-title text-gradient" style={{ marginBottom: 0 }}>From the Journal</h2>
-            <Link
-              href="/blog"
-              className="font-serif text-sm cta-link"
-              style={{ color: 'var(--muted)' }}
-            >
-              View all →
-            </Link>
+            <h2 className="section-title">Current issue</h2>
           </motion.div>
-
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
-          >
-            {JOURNAL_PIECES.map((piece, idx) => (
-              <motion.article
-                key={piece.title}
-                variants={itemVariants}
-                transition={{ delay: idx * 0.1 }}
-                className="flex gap-5 items-start"
-                style={{
-                  borderBottom: '1px solid var(--hairline)',
-                  paddingBlock: '24px',
-                }}
-              >
-                <div
-                  className="flex-shrink-0 overflow-hidden rounded-sm"
-                  style={{ width: 104, height: 104 }}
-                >
-                  <ImageWithFallback
-                    src={piece.image}
-                    alt={piece.imageAlt}
-                    className="w-full h-full object-cover"
-                    fallbackKey="library"
-                  />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p
-                    className="text-xs uppercase tracking-widest font-sans mb-1"
-                    style={{ color: 'var(--accent)' }}
-                  >
-                    {piece.kicker}
-                  </p>
-                  <a
-                    href="/blog"
-                    className="block font-serif text-base leading-snug hover:text-accent transition-colors mb-1"
-                    style={{ color: 'var(--ink)' }}
-                    data-cursor="view"
-                  >
-                    {piece.title}
-                  </a>
-                  <p className="text-xs font-sans" style={{ color: 'var(--muted)' }}>
-                    {piece.author} · {piece.date}
-                  </p>
-                </div>
-              </motion.article>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      <hr className="hairline mb-8 md:mb-12" />
-
-      {/* ===== NOW PLAYING — audio essay cards ===== */}
-      <section className="section-full" style={{ background: 'var(--paper-2, var(--paper))' }}>
-        <Plasma color="#c9a266" speed={0.3} scale={1.5} twist={0.2} />
-        <div className="container section-padding-md">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex items-baseline justify-between mb-8"
-          >
-            <h2 className="section-title text-gradient" style={{ marginBottom: 0 }}>Now Playing</h2>
-            <Link
-              href="/audio"
-              className="font-serif text-sm cta-link"
-              style={{ color: 'var(--muted)' }}
-            >
-              All episodes →
-            </Link>
-          </motion.div>
-
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
-          >
-            {AUDIO_PIECES.map((ep, idx) => (
-              <motion.div
-                key={ep.title}
-                variants={itemVariants}
-                transition={{ delay: idx * 0.12 }}
-                className="glass-card flex gap-5 items-center p-6 rounded"
-                style={{
-                  border: '1px solid var(--hairline)',
-                  background: 'var(--paper)',
-                }}
-              >
-                {/* Cover art */}
-                <div
-                  className="flex-shrink-0 overflow-hidden rounded"
-                  style={{ width: 88, height: 88, position: 'relative' }}
-                >
-                  <ImageWithFallback
-                    src={ep.image}
-                    alt={ep.imageAlt}
-                    className="w-full h-full object-cover"
-                    fallbackKey="fallback"
-                  />
-                </div>
-
-                {/* Text */}
-                <div className="flex-1 min-w-0">
-                  <p
-                    className="text-xs uppercase tracking-widest font-sans mb-1 font-medium"
-                    style={{ color: 'var(--muted)' }}
-                  >
-                    {ep.episode} · {ep.date}
-                  </p>
-                  <p
-                    className="font-serif text-base leading-snug mb-1"
-                    style={{ color: 'var(--ink)' }}
-                  >
-                    {ep.title}
-                  </p>
-                  <p className="text-xs font-sans" style={{ color: 'var(--muted)' }}>
-                    {ep.subtitle}
-                  </p>
-                </div>
-
-                {/* Play button + duration */}
-                <div className="flex-shrink-0 flex flex-col items-center gap-2">
-                  <button
-                    aria-label={`Play ${ep.title}`}
-                    className="flex items-center justify-center rounded-full transition-opacity hover:opacity-70"
-                    style={{
-                      width: 48,
-                      height: 48,
-                      background: 'var(--ink)',
-                      color: 'var(--paper)',
-                      border: 'none',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {/* Play triangle */}
-                    <svg width="16" height="18" viewBox="0 0 16 18" fill="currentColor">
-                      <path d="M2 1.5l13 7.5-13 7.5V1.5z" />
-                    </svg>
-                  </button>
-                  <span
-                    className="text-xs font-sans tabular-nums"
-                    style={{ color: 'var(--muted)' }}
-                  >
-                    {ep.duration}
-                  </span>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      <hr className="hairline mb-8 md:mb-12" />
-
-      {/* ===== IN THIS ISSUE — full width bg, three-column index ===== */}
-      <section className="section-full bg-paper-2">
-        <div className="container section-padding-md">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="section-title"
-          >
-            <MaskedHeading text="In this issue" align="left" weight={500} />
-          </motion.h2>
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -435,7 +440,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
               <motion.div
                 key={article.title}
                 variants={itemVariants}
-                transition={{ delay: idx * 0.08 }}
+                transition={{ delay: idx * 0.05 }}
                 className="issue-list"
               >
                 <div className="issue-number">
@@ -443,17 +448,17 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
                 </div>
                 <div className="issue-info">
                   <motion.p
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: -12 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 + idx * 0.05, duration: 0.5 }}
+                    transition={{ delay: 0.1 + idx * 0.03, duration: 0.4 }}
                     className="issue-author"
                   >
                     {article.author}
                   </motion.p>
                   <motion.a
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: -12 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.15 + idx * 0.05, duration: 0.5 }}
+                    transition={{ delay: 0.15 + idx * 0.03, duration: 0.4 }}
                     href="/"
                     className="issue-title"
                     data-cursor="view"
@@ -472,181 +477,104 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
 
       <hr className="hairline mb-8 md:mb-12" />
 
-      {/* ===== EDITORIAL ESSAY GRID — full width bg, centered container ===== */}
-      <section className="section-full">
-        <Orb colors={['#c9a266', '#efece3']} hue={45} glow={0.8} />
-        <div className="container section-padding-lg">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+      {/* ===== LATEST WRITING — editorial cards ===== */}
+      <section className="section-full" style={{ background: 'var(--paper-2, var(--paper))' }}>
+        <div className="container section-padding-md">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="section-title text-gradient"
+            transition={{ duration: 0.5 }}
+            className="flex items-baseline justify-between mb-6"
           >
-            Writing
-          </motion.h2>
+            <h2 className="section-title">Latest writing</h2>
+          </motion.div>
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="grid-12"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
-            {writingGrid.map((article, idx) => {
-              const isLarge = idx % 2 === 0;
-              return (
-                <motion.div
-                  key={article.title}
-                  variants={itemVariants}
-                  style={{ gridColumn: `span ${isLarge ? 7 : 5}` }}
-                  transition={{ delay: idx * 0.1 }}
-                >
-                  <article className="article-card glass-card card-tilt">
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.1 + idx * 0.05, duration: 0.6 }}
-                      className="article-card-image"
-                    >
-                      <ImageWithFallback
-                        src={article.image}
-                        alt={article.imageAlt}
-                        className="w-full h-full object-cover"
-                        fallbackKey="bookshelf"
-                      />
-                    </motion.div>
-                    <motion.p
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.2 + idx * 0.05, duration: 0.5 }}
-                      className="article-card-category"
-                    >
-                      {article.category || 'Editorial'}
-                    </motion.p>
-                    <motion.a
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 + idx * 0.05, duration: 0.5 }}
-                      href="/"
-                      className="article-card-title"
-                      data-cursor="view"
-                    >
-                      {article.title}
-                    </motion.a>
-                    <motion.p
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.4 + idx * 0.05, duration: 0.5 }}
-                      className="article-card-author"
-                    >
-                      {article.author}
-                    </motion.p>
-                    {article.excerpt && (
-                      <motion.p
-                        initial={{ opacity: 0, y: 15 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.45 + idx * 0.05, duration: 0.5 }}
-                        className="text-sm font-sans leading-relaxed mt-2"
-                        style={{ color: 'var(--muted)' }}
-                      >
-                        {article.excerpt.length > 140
-                          ? article.excerpt.slice(0, 140) + '…'
-                          : article.excerpt}
-                      </motion.p>
-                    )}
-                    {article.date && (
-                      <motion.p
-                        initial={{ opacity: 0, y: 15 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.5 + idx * 0.05, duration: 0.5 }}
-                        className="article-card-date"
-                      >
-                        {article.date}
-                      </motion.p>
-                    )}
-                  </article>
-                </motion.div>
-              );
-            })}
+            {latestWriting.map((article, idx) => (
+              <motion.div
+                key={article.title}
+                variants={itemVariants}
+                transition={{ delay: idx * 0.06 }}
+              >
+                <EditorialCard article={article} asLink />
+              </motion.div>
+            ))}
           </motion.div>
         </div>
       </section>
 
       <hr className="hairline mb-8 md:mb-12" />
 
-      {/* ===== SHOP — full width bg, centered container ===== */}
-      {products.length > 0 && (
-        <section className="section-full border-t border-hairline">
-          <DitherVeil pattern="noise" pixelSize={4} levels={4} style={{ opacity: 0.3 }} />
-          <div className="container section-padding-lg">
+      {/* ===== AUDIO · VIDEO ===== */}
+      <section className="section-full" style={{ background: 'var(--paper)' }}>
+        <div className="container section-padding-md">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex items-baseline justify-between mb-6"
+          >
+            <h2 className="section-title">Audio · Video</h2>
+          </motion.div>
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          >
+            {AUDIO_PIECES.map((ep, idx) => (
+              <motion.div
+                key={ep.title}
+                variants={itemVariants}
+                transition={{ delay: idx * 0.06 }}
+              >
+                <AudioCard {...ep} />
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      <hr className="hairline mb-8 md:mb-12" />
+
+      {/* ===== FROM THE SHOP — quiet strip, 3-4 items max ===== */}
+      {shopItems.length > 0 && (
+        <section className="section-full border-t border-hairline pt-16 pb-24">
+          <div className="container section-padding-md">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.5 }}
+              className="flex items-baseline justify-between mb-6"
             >
-              <h2 className="section-title text-gradient">From the shop</h2>
+              <h2 className="section-title">From the shop</h2>
             </motion.div>
             <motion.div
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
             >
-              {products.map((product: any, idx: number) => (
+              {shopItems.map((product, idx) => (
                 <motion.div
                   key={product.id}
                   variants={itemVariants}
-                  transition={{ delay: idx * 0.08 }}
+                  transition={{ delay: idx * 0.06 }}
                 >
-                  <ProductCard product={product} />
+                  <ShopCard product={product} />
                 </motion.div>
               ))}
             </motion.div>
           </div>
         </section>
       )}
+
+      {/* ===== NEWSLETTER ===== */}
+      <NewsletterStrip />
     </div>
-  );
-}
-
-interface ProductCardProps {
-  product: any;
-}
-
-function ProductCard({ product }: ProductCardProps) {
-  const images = product.images?.edges?.map((e: any) => e.node) || [];
-  const price = parseFloat(product.priceRange.minVariantPrice.amount);
-
-  return (
-    <motion.a
-      key={product.id}
-      href={`/products/${product.handle}`}
-      whileHover={{ y: -5 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-      className="block"
-      data-cursor="view"
-    >
-      <HoloCard
-        image={images[0]?.url || stockImage('cover10')}
-        alt={product.title}
-        preset="gold"
-        intensity={0.6}
-        foilColor="#c9a266"
-        className="w-full h-full"
-        style={{ width: '100%', height: '320px', aspectRatio: '3/4' }}
-      />
-      <div className="flex flex-col flex-1 p-6 gap-3">
-        <p className="article-card-category">Editorial</p>
-        <motion.a
-          href={`/products/${product.handle}`}
-          className="article-card-title"
-          whileHover={{ color: 'rgba(26,26,26,0.7)' }}
-          data-cursor="view"
-        >
-          {product.title}
-        </motion.a>
-        <p className="article-card-price">
-          £{price.toFixed(2)}
-        </p>
-      </div>
-    </motion.a>
   );
 }

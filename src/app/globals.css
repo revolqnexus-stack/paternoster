@@ -1014,15 +1014,6 @@ footer {
   margin-top: clamp(32px, 6vw, 48px);
 }
 
-.marquee-item {
-  font-family: var(--font-serif);
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: var(--color-paper-on-black);
-  opacity: 0.85;
-}
-
 .marquee-divider {
   width: 1px;
   height: 1.2rem;
