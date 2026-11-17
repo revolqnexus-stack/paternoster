@@ -12,6 +12,7 @@ interface Article {
   excerpt: string;
   image: string;
   imageAlt: string;
+  category: string;
 }
 
 interface Product {
@@ -41,7 +42,73 @@ interface HomeClientProps {
   products: Product[];
 }
 
+// 4 "From the Journal" editorial pieces
+const JOURNAL_PIECES = [
+  {
+    kicker: 'New essay',
+    title: 'On the Uses of Difficulty',
+    author: 'Adam Phillips',
+    date: '12 November 2026',
+    image: stockImage('essay'),
+    imageAlt: 'Abstract architecture mood',
+    category: 'Essay',
+  },
+  {
+    kicker: 'Criticism',
+    title: 'Rereading Woolf in a Time of Crisis',
+    author: 'Jacqueline Rose',
+    date: '10 November 2026',
+    image: stockImage('review'),
+    imageAlt: 'Stack of books',
+    category: 'Reviews',
+  },
+  {
+    kicker: 'Fiction',
+    title: 'A Sentence That Begins With Loss',
+    author: 'Ali Smith',
+    date: '7 November 2026',
+    image: stockImage('cover3'),
+    imageAlt: 'Moody literary scene',
+    category: 'Fiction',
+  },
+  {
+    kicker: 'Poetry',
+    title: 'Fourteen Ways of Looking at a Footnote',
+    author: 'Anne Carson',
+    date: '4 November 2026',
+    image: stockImage('cover5'),
+    imageAlt: 'Soft literary light',
+    category: 'Poetry',
+  },
+];
+
+// 2 "Now Playing" audio pieces
+const AUDIO_PIECES = [
+  {
+    title: 'The Art of Slow Reading',
+    subtitle: 'A conversation with James Wood',
+    duration: '42 min',
+    date: '11 November 2026',
+    episode: 'EP. 34',
+    image: stockImage('audio'),
+    imageAlt: 'Headphones on a desk',
+  },
+  {
+    title: 'Grief and the Literary Imagination',
+    subtitle: 'Jacqueline Rose in conversation',
+    duration: '58 min',
+    date: '5 November 2026',
+    episode: 'EP. 33',
+    image: stockImage('cover6'),
+    imageAlt: 'Moody audio essay visual',
+  },
+];
+
 export default function HomeClient({ featured, rest, products }: HomeClientProps) {
+  // Split rest: first 3 go to "In This Issue", all 7 shown in Writing grid
+  const inThisIssue = rest.slice(0, 3);
+  const writingGrid = rest;
+
   return (
     <div className="page-wrap">
       {/* ===== HERO — full width bg, two-column editorial ===== */}
@@ -123,6 +190,179 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
 
       <hr className="hairline mb-8 md:mb-12" />
 
+      {/* ===== FROM THE JOURNAL — 2-column editorial grid ===== */}
+      <section className="section-full" style={{ background: 'var(--paper)' }}>
+        <div className="container section-padding-md">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex items-baseline justify-between mb-8"
+          >
+            <h2 className="section-title" style={{ marginBottom: 0 }}>From the Journal</h2>
+            <Link
+              href="/blog"
+              className="font-serif text-sm underline underline-offset-2 hover:text-accent transition-colors"
+              style={{ color: 'var(--muted)' }}
+            >
+              View all →
+            </Link>
+          </motion.div>
+
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid grid-cols-1 md:grid-cols-2 gap-8"
+          >
+            {JOURNAL_PIECES.map((piece, idx) => (
+              <motion.article
+                key={piece.title}
+                variants={itemVariants}
+                transition={{ delay: idx * 0.1 }}
+                className="flex gap-5 items-start"
+                style={{ borderBottom: '1px solid var(--hairline)', paddingBottom: '1.75rem' }}
+              >
+                <div
+                  className="flex-shrink-0 overflow-hidden rounded-sm"
+                  style={{ width: 96, height: 96 }}
+                >
+                  <ImageWithFallback
+                    src={piece.image}
+                    alt={piece.imageAlt}
+                    className="w-full h-full object-cover"
+                    fallbackKey="library"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p
+                    className="text-xs uppercase tracking-widest font-sans mb-1"
+                    style={{ color: 'var(--accent)' }}
+                  >
+                    {piece.kicker}
+                  </p>
+                  <a
+                    href="/blog"
+                    className="block font-serif text-base leading-snug hover:text-accent transition-colors mb-1"
+                    style={{ color: 'var(--ink)' }}
+                    data-cursor="view"
+                  >
+                    {piece.title}
+                  </a>
+                  <p className="text-xs font-sans" style={{ color: 'var(--muted)' }}>
+                    {piece.author} · {piece.date}
+                  </p>
+                </div>
+              </motion.article>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      <hr className="hairline mb-8 md:mb-12" />
+
+      {/* ===== NOW PLAYING — audio essay cards ===== */}
+      <section className="section-full" style={{ background: 'var(--paper-2, var(--paper))' }}>
+        <div className="container section-padding-md">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex items-baseline justify-between mb-8"
+          >
+            <h2 className="section-title" style={{ marginBottom: 0 }}>Now Playing</h2>
+            <Link
+              href="/audio"
+              className="font-serif text-sm underline underline-offset-2 hover:text-accent transition-colors"
+              style={{ color: 'var(--muted)' }}
+            >
+              All episodes →
+            </Link>
+          </motion.div>
+
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          >
+            {AUDIO_PIECES.map((ep, idx) => (
+              <motion.div
+                key={ep.title}
+                variants={itemVariants}
+                transition={{ delay: idx * 0.12 }}
+                className="glass-card flex gap-5 items-center p-5 rounded"
+                style={{
+                  border: '1px solid var(--hairline)',
+                  background: 'var(--paper)',
+                }}
+              >
+                {/* Cover art */}
+                <div
+                  className="flex-shrink-0 overflow-hidden rounded"
+                  style={{ width: 80, height: 80, position: 'relative' }}
+                >
+                  <ImageWithFallback
+                    src={ep.image}
+                    alt={ep.imageAlt}
+                    className="w-full h-full object-cover"
+                    fallbackKey="fallback"
+                  />
+                </div>
+
+                {/* Text */}
+                <div className="flex-1 min-w-0">
+                  <p
+                    className="text-xs uppercase tracking-widest font-sans mb-1"
+                    style={{ color: 'var(--muted)' }}
+                  >
+                    {ep.episode} · {ep.date}
+                  </p>
+                  <p
+                    className="font-serif text-base leading-snug mb-1"
+                    style={{ color: 'var(--ink)' }}
+                  >
+                    {ep.title}
+                  </p>
+                  <p className="text-xs font-sans" style={{ color: 'var(--muted)' }}>
+                    {ep.subtitle}
+                  </p>
+                </div>
+
+                {/* Play button + duration */}
+                <div className="flex-shrink-0 flex flex-col items-center gap-1">
+                  <button
+                    aria-label={`Play ${ep.title}`}
+                    className="flex items-center justify-center rounded-full transition-opacity hover:opacity-70"
+                    style={{
+                      width: 42,
+                      height: 42,
+                      background: 'var(--ink)',
+                      color: 'var(--paper)',
+                      border: 'none',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {/* Play triangle */}
+                    <svg width="14" height="16" viewBox="0 0 14 16" fill="currentColor">
+                      <path d="M2 1.5l11 6.5-11 6.5V1.5z" />
+                    </svg>
+                  </button>
+                  <span
+                    className="text-xs font-sans tabular-nums"
+                    style={{ color: 'var(--muted)' }}
+                  >
+                    {ep.duration}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      <hr className="hairline mb-8 md:mb-12" />
+
       {/* ===== IN THIS ISSUE — full width bg, three-column index ===== */}
       <section className="section-full bg-paper-2">
         <div className="container section-padding-md">
@@ -140,7 +380,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
             animate="visible"
             className="issue-list-wrap"
           >
-            {rest.map((article, idx) => (
+            {inThisIssue.map((article, idx) => (
               <motion.div
                 key={article.title}
                 variants={itemVariants}
@@ -198,7 +438,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
             animate="visible"
             className="grid-12"
           >
-            {rest.map((article, idx) => {
+            {writingGrid.map((article, idx) => {
               const isLarge = idx % 2 === 0;
               return (
                 <motion.div
@@ -227,7 +467,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
                       transition={{ delay: 0.2 + idx * 0.05, duration: 0.5 }}
                       className="article-card-category"
                     >
-                      Editorial
+                      {article.category || 'Editorial'}
                     </motion.p>
                     <motion.a
                       initial={{ opacity: 0, y: 15 }}
@@ -247,6 +487,19 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
                     >
                       {article.author}
                     </motion.p>
+                    {article.excerpt && (
+                      <motion.p
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.45 + idx * 0.05, duration: 0.5 }}
+                        className="text-sm font-sans leading-relaxed mt-2"
+                        style={{ color: 'var(--muted)' }}
+                      >
+                        {article.excerpt.length > 140
+                          ? article.excerpt.slice(0, 140) + '…'
+                          : article.excerpt}
+                      </motion.p>
+                    )}
                     {article.date && (
                       <motion.p
                         initial={{ opacity: 0, y: 15 }}

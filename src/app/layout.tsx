@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className="antialiased">
         <SmoothScroll>
           <Preloader>
-            <Aurora className="fixed inset-0 -z-10 pointer-events-none" />
+            <Aurora className="fixed inset-0 -z-10 pointer-events-none" amplitude={0.3} blend={0.2} />
             <Header />
             <main>{children}</main>
             <Footer />

@@ -393,7 +393,7 @@ main {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
   font-weight: 400;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--color-muted);
   display: block;
@@ -499,7 +499,7 @@ main {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 400;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--color-muted);
   text-align: right;
@@ -565,7 +565,7 @@ main {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
   font-weight: 400;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--color-muted);
 }
@@ -811,7 +811,7 @@ footer {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   font-weight: 400;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--color-accent);
   margin-bottom: 1rem;

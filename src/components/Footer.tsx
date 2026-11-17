@@ -9,7 +9,7 @@ export default function Footer() {
     <footer className="bg-ink-black border-line">
       {/* Aurora champagne glow behind footer */}
       <div className="absolute inset-0 z-0 -z-10 pointer-events-none">
-        <Aurora colorSticks={['#c9a266', '#efece3', '#c9a266']} amplitude={0.6} blend={0.4} />
+        <Aurora colorSticks={['#c9a266', '#efece3', '#c9a266']} amplitude={0.3} blend={0.2} />
       </div>
 
       <div className="footer-bg">
