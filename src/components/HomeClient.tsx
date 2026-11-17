@@ -10,6 +10,11 @@ import Grainient from '@/components/Grainient';
 import MaskedHeading from '@/components/MaskedHeading';
 import HoloCard from '@/components/HoloCard';
 import DitherVeil from '@/components/DitherVeil';
+import FloatingLines from '@/components/FloatingLines';
+import LiquidEther from '@/components/LiquidEther';
+import Particles from '@/components/Particles';
+import Plasma from '@/components/Plasma';
+import Orb from '@/components/Orb';
 
 interface Article {
   title: string;
@@ -119,8 +124,10 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
     <div className="page-wrap">
       {/* ===== HERO — full width bg, two-column editorial ===== */}
       <section className="section-full hero-bg">
-              <Grainient colors={['#fdfbf5', '#efece3', '#c9a266']} speed={0.5} style={{ opacity: 0.3 }} />
-              <div className="container section-padding-lg">
+        <Grainient colors={['#fdfbf5', '#efece3', '#c9a266']} speed={0.5} style={{ opacity: 0.3 }} />
+        <FloatingLines linesGradient={['#c9a266', '#efece3', '#fdfbf5']} lineCount={6} lineDistance={40} />
+        <LiquidEther colors={['#c9a266', '#efece3']} intensity={0.4} mouseForce={0.5} />
+        <div className="container section-padding-lg">
             <div className="hero-content-wrap">
               <div className="hero-image-col">
                 <div className="hero-image-wrap">
@@ -231,6 +238,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
 
       {/* ===== FROM THE JOURNAL — 2-column editorial grid ===== */}
       <section className="section-full" style={{ background: 'var(--paper)' }}>
+        <Particles particleCount={30} particleSpread={400} speed={0.5} particleColors={['#c9a266', '#1a1a1a', '#efece3']} moveParticlesOnHover={true} />
         <div className="container section-padding-md">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -302,6 +310,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
 
       {/* ===== NOW PLAYING — audio essay cards ===== */}
       <section className="section-full" style={{ background: 'var(--paper-2, var(--paper))' }}>
+        <Plasma color="#c9a266" speed={0.3} scale={1.5} twist={0.2} />
         <div className="container section-padding-md">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -462,6 +471,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
 
       {/* ===== EDITORIAL ESSAY GRID — full width bg, centered container ===== */}
       <section className="section-full">
+        <Orb colors={['#c9a266', '#efece3']} hue={45} glow={0.8} />
         <div className="container section-padding-lg">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
