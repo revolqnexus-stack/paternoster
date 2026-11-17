@@ -128,6 +128,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
                       alt={featured.imageAlt}
                       className="w-full h-full object-cover"
                       fallbackKey="reading"
+                      aspectRatio="16/9"
                     />
                   </motion.div>
                   <div className="hero-overlay" />
@@ -202,7 +203,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
             <h2 className="section-title" style={{ marginBottom: 0 }}>From the Journal</h2>
             <Link
               href="/blog"
-              className="font-serif text-sm underline underline-offset-2 hover:text-accent transition-colors"
+              className="font-serif text-sm cta-link"
               style={{ color: 'var(--muted)' }}
             >
               View all →
@@ -273,7 +274,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
             <h2 className="section-title" style={{ marginBottom: 0 }}>Now Playing</h2>
             <Link
               href="/audio"
-              className="font-serif text-sm underline underline-offset-2 hover:text-accent transition-colors"
+              className="font-serif text-sm cta-link"
               style={{ color: 'var(--muted)' }}
             >
               All episodes →

@@ -21,13 +21,13 @@ const TEAM = [
     name: 'Thomas Lin',
     role: 'Reviews & Criticism',
     initials: 'TL',
-    bio: "Thomas commissions and edits the journal's reviews section, drawing on two decades of experience as a literary critic and former Books Editor at the TLS.",
+    bio: 'Thomas commissions and edits the reviews section, drawing on two decades of experience as a literary critic and former Books Editor at the TLS.',
   },
   {
     name: 'Priya Nair',
     role: 'Design & Visual',
     initials: 'PN',
-    bio: "Priya oversees the visual identity of the journal, bringing a typographer's rigour and a painter's eye to every page and digital surface.",
+    bio: 'Priya oversees the visual identity of the journal, bringing a typographer\'s rigour and a painter\'s eye to every page and digital surface.',
   },
 ];
 
@@ -111,17 +111,8 @@ export default function AboutClient() {
               We do not publish summaries. We publish thinking.
             </p>
             <p>
-              Pater Noster is published in association with the{' '}
-              <Link
-                href="https://www.lrb.co.uk/"
-                className="underline underline-offset-2 hover:opacity-70 transition-opacity"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                London Review of Books
-              </Link>
-              , drawing on its archive of over four decades of critical writing while maintaining a distinct editorial
-              identity and a commitment to publishing new voices alongside established critics.
+              We are an independent voice, sustained by readers and by the belief that criticism still matters —
+              not as consumer advice, but as a way of thinking in public, together.
             </p>
           </div>
         </motion.section>
@@ -198,11 +189,10 @@ export default function AboutClient() {
         >
           <p className="label mb-3" style={{ color: 'var(--muted)' }}>Newsletter</p>
           <h2 className="font-serif text-3xl md:text-4xl font-semibold mb-4" style={{ color: 'var(--ink)' }}>
-            Join 24,000 readers
+            Read Before You Write
           </h2>
           <p className="font-serif-body text-base leading-relaxed mb-8" style={{ color: 'var(--muted)' }}>
-            Receive new essays, reviews, and reading recommendations directly in your inbox — once a fortnight,
-            without advertising.
+            Essays, reviews, and reading recommendations — once a fortnight, without advertising.
           </p>
           <form
             onSubmit={(e) => e.preventDefault()}
@@ -232,21 +222,12 @@ export default function AboutClient() {
           </p>
         </motion.section>
 
-        {/* ── Visit the Magazine ── */}
+        {/* ── Colophon ── */}
         <div className="mb-16 text-center">
           <hr style={{ borderColor: 'var(--hairline)' }} className="mb-10" />
           <p className="font-serif-body text-sm mb-2" style={{ color: 'var(--muted)' }}>
-            Discover the latest issue, subscribe, and explore the archive at{' '}
-            <Link
-              href="https://www.lrb.co.uk/"
-              className="underline underline-offset-2 hover:opacity-70 transition-opacity"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: 'var(--ink)' }}
-            >
-              lrb.co.uk
-            </Link>
-            .
+            Pater Noster is an independent journal of writing and ideas. Essays, reviews, and criticism —
+            and the books and objects that accompany them.
           </p>
         </div>
       </div>

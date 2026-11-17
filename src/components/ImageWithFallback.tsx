@@ -7,6 +7,7 @@ interface ImageWithFallbackProps {
   alt: string;
   className?: string;
   fallbackKey?: 'reading' | 'library' | 'bookshelf' | 'typewriter' | 'coffee' | 'desk' | 'pen' | 'notebook' | 'fallback';
+  aspectRatio?: string;
 }
 
 /**
@@ -19,6 +20,7 @@ export default function ImageWithFallback({
   alt,
   className = '',
   fallbackKey = 'fallback',
+  aspectRatio = '4/5',
 }: ImageWithFallbackProps) {
   const [broken, setBroken] = useState(false);
 
@@ -39,7 +41,7 @@ export default function ImageWithFallback({
   return (
     <div
       className={`relative overflow-hidden ${className}`}
-      style={{ aspectRatio: '4/5' }}
+      style={{ aspectRatio }}
     >
       {broken ? (
         <svg
