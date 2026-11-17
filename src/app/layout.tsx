@@ -6,6 +6,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import Preloader from "@/components/Preloader";
 import CustomCursor from "@/components/CustomCursor";
 import Aurora from "@/components/Aurora";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Pater Noster - The London Review of Books Store",
@@ -29,6 +30,7 @@ export default function RootLayout({
           </Preloader>
           {/* Cursor at body level — always on top, never trapped by preloader */}
           <CustomCursor />
+          <Toaster position="bottom-right" />
         </SmoothScroll>
       </body>
     </html>

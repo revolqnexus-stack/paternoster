@@ -8,6 +8,8 @@ import SplitFlapText from '@/components/SplitFlapText';
 import Grainient from '@/components/Grainient';
 import FloatingLines from '@/components/FloatingLines';
 import LiquidEther from '@/components/LiquidEther';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
 import GlareHover from '@/components/GlareHover';
 import MaskedHeading from '@/components/MaskedHeading';
 import HoloCard from '@/components/HoloCard';
@@ -273,6 +275,12 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
   ];
 
   const shopItems = products.slice(0, 4);
+
+  const { register, handleSubmit, formState: { errors } } = useForm<{ email: string }>();
+
+  const onSubmit = (data: { email: string }) => {
+    toast.success(`Subscribed ${data.email}`);
+  };
 
   return (
     <div className="page-wrap">
@@ -548,14 +556,21 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
               Occasional letters from Pater Noster. New essays, reviews, and what’s in the shop.
             </p>
             <form
+              onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col sm:flex-row gap-2 w-full"
               style={{ maxWidth: '320px' }}
             >
               <input
+                {...register('email', { required: 'Email is required', pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Invalid email' } })}
                 type="email"
                 placeholder="you@example.com"
                 className="flex-1 border border-hairline bg-transparent px-4 py-2 text-sm font-serif focus:outline-none focus:border-accent"
               />
+              {errors.email && (
+                <span className="text-xs text-red-500 font-mono" style={{ alignSelf: 'flex-start' }}>
+                  {errors.email.message}
+                </span>
+              )}
               <button
                 type="submit"
                 className="px-6 py-2 text-[0.7rem] uppercase tracking-widest font-mono"

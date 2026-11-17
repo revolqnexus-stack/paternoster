@@ -2,6 +2,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { createCart, addToCart as apiAddToCart, removeFromCart as apiRemoveFromCart } from './shopify';
+import { toast } from 'react-hot-toast';
 
 interface CartLine {
   id: string;
@@ -83,6 +84,7 @@ export const useCartStore = create<CartState>()(
             total: cart.estimatedCost.totalAmount.amount,
             isOpen: true,
           });
+          toast.success('Added to cart');
         } catch (error) {
           console.error('Error adding to cart:', error);
         } finally {
