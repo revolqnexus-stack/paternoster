@@ -84,7 +84,7 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: clip;
+  overflow-x: hidden;
 }
 
 body {
@@ -95,7 +95,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-size: var(--step-body);
   line-height: 1.6;
-  overflow-x: clip;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  /* cursor: none — removed; system cursor is the fallback,
+     custom cursor is an enhancement layered on top */
 }
 
 @media (hover: none) {
