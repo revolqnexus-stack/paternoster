@@ -1,3 +1,6 @@
+'use client';
+
+import { useQuery } from '@tanstack/react-query';
 import { getProducts } from '@/lib/shopify';
 import HomeClient from '@/components/HomeClient';
 import { stockImage } from '@/lib/stock-images';
@@ -98,13 +101,11 @@ const ARTICLES: Article[] = [
   },
 ];
 
-export default async function Home() {
-  let products: any[] = [];
-  try {
-    products = await getProducts(6);
-  } catch {
-    products = [];
-  }
+export default function Home() {
+  const { data: products = [], isLoading } = useQuery({
+    queryKey: ['products'],
+    queryFn: () => getProducts(6),
+  });
 
   const [featured, ...rest] = ARTICLES;
 

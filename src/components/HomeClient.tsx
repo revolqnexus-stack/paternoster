@@ -10,6 +10,10 @@ import FloatingLines from '@/components/FloatingLines';
 import LiquidEther from '@/components/LiquidEther';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 import GlareHover from '@/components/GlareHover';
 import MaskedHeading from '@/components/MaskedHeading';
 import HoloCard from '@/components/HoloCard';
@@ -193,16 +197,17 @@ function AudioCard({ title, subtitle, duration, episode, date, image, imageAlt }
 
 interface ShopCardProps {
   product: Product;
+  className?: string;
 }
 
-function ShopCard({ product }: ShopCardProps) {
+function ShopCard({ product, className }: ShopCardProps) {
   const images = product.images?.edges?.map((e: any) => e.node) || [];
   const price = parseFloat(product.priceRange.minVariantPrice.amount);
   const addToCartStore = useCartStore();
 
   return (
     <article
-      className="card-tilt rounded-sm overflow-hidden"
+      className={`card-tilt rounded-sm overflow-hidden ${className || ''}`}
       style={{
         border: '1px solid var(--hairline)',
         background: 'var(--paper)',
@@ -509,7 +514,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
 
       <hr className="hairline mb-8 md:mb-12" />
 
-      {/* ===== FROM THE SHOP — quiet strip, 3-4 items max ===== */}
+      {/* ===== FROM THE SHOP — quiet carousel strip ===== */}
       {shopItems.length > 0 && (
         <section className="section-full border-t border-hairline pt-16 pb-24">
           <DitherVeil pattern="noise" pixelSize={4} levels={4} style={{ opacity: 0.3 }} />
@@ -522,22 +527,32 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
             >
               <h2 className="section-title">From the shop</h2>
             </motion.div>
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            <Swiper
+              slidesPerView={1}
+              spaceBetween={24}
+              centeredSlides
+              loop
+              pagination={{ clickable: true }}
+              navigation={{ enabled: true }}
+              breakpoints={{
+                640: { slidesPerView: 2, centeredSlides: false },
+                1024: { slidesPerView: 3, centeredSlides: false },
+              }}
+              className="my-swiper"
             >
               {shopItems.map((product, idx) => (
-                <motion.div
-                  key={product.id}
-                  variants={itemVariants}
-                  transition={{ delay: idx * 0.06 }}
-                >
-                  <ShopCard product={product} />
-                </motion.div>
+                <SwiperSlide key={product.id}>
+                  <motion.div
+                    key={product.id}
+                    variants={itemVariants}
+                    transition={{ delay: idx * 0.06 }}
+                    className="flex flex-col items-center"
+                  >
+                    <ShopCard product={product} className="w-full max-w-xs" />
+                  </motion.div>
+                </SwiperSlide>
               ))}
-            </motion.div>
+            </Swiper>
           </div>
         </section>
       )}

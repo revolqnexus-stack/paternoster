@@ -7,6 +7,7 @@ import Preloader from "@/components/Preloader";
 import CustomCursor from "@/components/CustomCursor";
 import Aurora from "@/components/Aurora";
 import { Toaster } from "react-hot-toast";
+import QueryProvider from "@/components/QueryProvider";
 
 export const metadata: Metadata = {
   title: "Pater Noster - The London Review of Books Store",
@@ -22,15 +23,17 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         <SmoothScroll>
-          <Preloader>
-            <Aurora className="fixed inset-0 -z-10 pointer-events-none" amplitude={0.3} blend={0.2} />
-            <Header />
-            <main>{children}</main>
-            <Footer />
-          </Preloader>
-          {/* Cursor at body level — always on top, never trapped by preloader */}
-          <CustomCursor />
-          <Toaster position="bottom-right" />
+          <QueryProvider>
+            <Preloader>
+              <Aurora className="fixed inset-0 -z-10 pointer-events-none" amplitude={0.3} blend={0.2} />
+              <Header />
+              <main>{children}</main>
+              <Footer />
+            </Preloader>
+            {/* Cursor at body level — always on top, never trapped by preloader */}
+            <CustomCursor />
+            <Toaster position="bottom-right" />
+          </QueryProvider>
         </SmoothScroll>
       </body>
     </html>

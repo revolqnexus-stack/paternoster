@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import { createPortal } from 'react-dom';
+import Hamburger from 'hamburger-react';
 
 // Desktop left-nav — focused, editorial
 const desktopLinks = [
@@ -26,14 +27,8 @@ const mobileLinks = [
   { href: '/contact',  label: 'Contact', num: '07' },
 ];
 
-function HamburgerIcon({ open }: { open: boolean }) {
-  return (
-    <span className="pn-ham" aria-hidden="true">
-      <span className={`pn-ham__line pn-ham__line--t${open ? ' pn-ham__line--open' : ''}`} />
-      <span className={`pn-ham__line pn-ham__line--m${open ? ' pn-ham__line--open' : ''}`} />
-      <span className={`pn-ham__line pn-ham__line--b${open ? ' pn-ham__line--open' : ''}`} />
-    </span>
-  );
+function HamburgerIcon() {
+  return <Hamburger />;
 }
 
 export default function Header() {
@@ -244,7 +239,7 @@ export default function Header() {
               className="mh-ham-btn"
               data-cursor="view"
             >
-              <HamburgerIcon open={menuOpen} />
+              <HamburgerIcon />
             </button>
 
             {/* Desktop: left nav links */}
