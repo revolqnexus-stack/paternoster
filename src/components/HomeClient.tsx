@@ -69,8 +69,8 @@ const JOURNAL_PIECES = [
     title: 'Rereading Woolf in a Time of Crisis',
     author: 'Samuel Crane',
     date: '10 November 2026',
-    image: stockImage('review'),
-    imageAlt: 'Stack of books',
+    image: stockImage('cover3'),
+    imageAlt: 'Moody literary interior',
     category: 'Reviews',
   },
   {
@@ -78,7 +78,7 @@ const JOURNAL_PIECES = [
     title: 'A Sentence That Begins With Loss',
     author: 'Ali Smith',
     date: '7 November 2026',
-    image: stockImage('cover7'),
+    image: stockImage('cover4'),
     imageAlt: 'Moody literary scene',
     category: 'Fiction',
   },
@@ -87,8 +87,8 @@ const JOURNAL_PIECES = [
     title: 'Fourteen Ways of Looking at a Footnote',
     author: 'Anne Carson',
     date: '4 November 2026',
-    image: stockImage('cover8'),
-    imageAlt: 'Soft literary light',
+    image: stockImage('writer'),
+    imageAlt: 'Author at desk',
     category: 'Poetry',
   },
 ];
@@ -101,8 +101,8 @@ const AUDIO_PIECES = [
     duration: '42 min',
     date: '11 November 2026',
     episode: 'EP. 34',
-    image: stockImage('audio'),
-    imageAlt: 'Headphones on a desk',
+    image: stockImage('mood2'),
+    imageAlt: 'Abstract editorial mood',
   },
   {
     title: 'Grief and the Literary Imagination',
@@ -123,91 +123,91 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
   return (
     <div className="page-wrap">
       {/* ===== HERO — full width bg, two-column editorial ===== */}
-      <section className="section-full hero-bg">
+      <section className="section-full hero-bg overflow-hidden">
         <Grainient colors={['#fdfbf5', '#efece3', '#c9a266']} speed={0.5} style={{ opacity: 0.3 }} />
         <FloatingLines linesGradient={['#c9a266', '#efece3', '#fdfbf5']} lineCount={6} lineDistance={40} />
         <LiquidEther colors={['#c9a266', '#efece3']} intensity={0.4} mouseForce={0.5} />
         <div className="container section-padding-lg">
-            <div className="hero-content-wrap">
-              <div className="hero-image-col">
-                <div className="hero-image-wrap">
-                  <motion.div
-                    initial={{ scale: 1.15 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] as const }}
-                    className="hero-image"
-                  >
-                    <GlareHover width="100%" height="100%" variant="streak" blendMode="screen">
-                      <ImageWithFallback
-                        src={featured.image}
-                        alt={featured.imageAlt}
-                        className="w-full h-full object-cover"
-                        fallbackKey="reading"
-                        aspectRatio="16/9"
-                      />
-                    </GlareHover>
-                    <div className="hero-overlay" />
-                  </motion.div>
-                </div>
-              </div>
-              <div className="hero-text-col">
+          <div className="hero-content-wrap gap-6 md:gap-12">
+            <div className="hero-image-col">
+              <div className="hero-image-wrap">
                 <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] as const }}
-                  className="hero-content"
+                  initial={{ scale: 1.15 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] as const }}
+                  className="hero-image"
                 >
-                  <motion.p
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.2, duration: 0.6 }}
-                                    className="hero-kicker"
-                                  >
-                                    <SplitFlapText
-                                      words={['Pater Noster', 'Writing', 'Ideas', 'Books']}
-                                      className="font-mono text-[0.7rem] tracking-widest uppercase"
-                                      color="var(--color-accent)"
-                                    />
-                                  </motion.p>
-                  <motion.h1
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4, duration: 0.8 }}
-                    className="hero-title"
-                  >
-                    {featured.title}
-                  </motion.h1>
-                  <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6, duration: 0.6 }}
-                    className="hero-byline"
-                  >
-                    By {featured.author}
-                  </motion.p>
-                  <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8, duration: 0.8 }}
-                    className="hero-excerpt"
-                  >
-                    {featured.excerpt}
-                  </motion.p>
-                  <motion.a
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1, duration: 0.6 }}
-                    href="/"
-                    className="text-ink underline underline-offset-2 hover:text-accent transition-colors font-serif"
-                    data-cursor="view"
-                  >
-                    Read the essay →
-                  </motion.a>
+                  <GlareHover width="100%" height="100%" variant="streak" blendMode="screen">
+                    <ImageWithFallback
+                      src={featured.image}
+                      alt={featured.imageAlt}
+                      className="w-full h-full object-cover"
+                      fallbackKey="reading"
+                      aspectRatio="16/9"
+                    />
+                  </GlareHover>
+                  <div className="hero-overlay" />
                 </motion.div>
               </div>
             </div>
+            <div className="hero-text-col">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] as const }}
+                className="hero-content"
+              >
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.6 }}
+                  className="hero-kicker"
+                >
+                  <SplitFlapText
+                    words={['Pater Noster', 'Writing', 'Ideas', 'Books']}
+                    className="split-flap-text font-mono tracking-widest uppercase"
+                    color="var(--color-accent)"
+                  />
+                </motion.p>
+                <motion.h1
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.8 }}
+                  className="hero-title"
+                >
+                  {featured.title}
+                </motion.h1>
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6, duration: 0.6 }}
+                  className="hero-byline"
+                >
+                  By {featured.author}
+                </motion.p>
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8, duration: 0.8 }}
+                  className="hero-excerpt"
+                >
+                  {featured.excerpt}
+                </motion.p>
+                <motion.a
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1, duration: 0.6 }}
+                  href="/"
+                  className="text-ink underline underline-offset-2 hover:text-accent transition-colors font-serif mb-6 md:mb-4 inline-block"
+                  data-cursor="view"
+                >
+                  Read the essay →
+                </motion.a>
+              </motion.div>
+            </div>
           </div>
-        </section>
+        </div>
+      </section>
 
       <hr className="hairline mb-8 md:mb-12" />
 
@@ -260,7 +260,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="grid grid-cols-1 md:grid-cols-2 gap-8"
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
           >
             {JOURNAL_PIECES.map((piece, idx) => (
               <motion.article
@@ -268,11 +268,14 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
                 variants={itemVariants}
                 transition={{ delay: idx * 0.1 }}
                 className="flex gap-5 items-start"
-                style={{ borderBottom: '1px solid var(--hairline)', paddingBottom: '1.75rem' }}
+                style={{
+                  borderBottom: '1px solid var(--hairline)',
+                  paddingBlock: '24px',
+                }}
               >
                 <div
                   className="flex-shrink-0 overflow-hidden rounded-sm"
-                  style={{ width: 96, height: 96 }}
+                  style={{ width: 104, height: 104 }}
                 >
                   <ImageWithFallback
                     src={piece.image}
@@ -339,7 +342,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
                 key={ep.title}
                 variants={itemVariants}
                 transition={{ delay: idx * 0.12 }}
-                className="glass-card flex gap-5 items-center p-5 rounded"
+                className="glass-card flex gap-5 items-center p-6 rounded"
                 style={{
                   border: '1px solid var(--hairline)',
                   background: 'var(--paper)',
@@ -348,7 +351,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
                 {/* Cover art */}
                 <div
                   className="flex-shrink-0 overflow-hidden rounded"
-                  style={{ width: 80, height: 80, position: 'relative' }}
+                  style={{ width: 88, height: 88, position: 'relative' }}
                 >
                   <ImageWithFallback
                     src={ep.image}
@@ -361,7 +364,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
                 {/* Text */}
                 <div className="flex-1 min-w-0">
                   <p
-                    className="text-xs uppercase tracking-widest font-sans mb-1"
+                    className="text-xs uppercase tracking-widest font-sans mb-1 font-medium"
                     style={{ color: 'var(--muted)' }}
                   >
                     {ep.episode} · {ep.date}
@@ -378,13 +381,13 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
                 </div>
 
                 {/* Play button + duration */}
-                <div className="flex-shrink-0 flex flex-col items-center gap-1">
+                <div className="flex-shrink-0 flex flex-col items-center gap-2">
                   <button
                     aria-label={`Play ${ep.title}`}
                     className="flex items-center justify-center rounded-full transition-opacity hover:opacity-70"
                     style={{
-                      width: 42,
-                      height: 42,
+                      width: 48,
+                      height: 48,
                       background: 'var(--ink)',
                       color: 'var(--paper)',
                       border: 'none',
@@ -392,8 +395,8 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
                     }}
                   >
                     {/* Play triangle */}
-                    <svg width="14" height="16" viewBox="0 0 14 16" fill="currentColor">
-                      <path d="M2 1.5l11 6.5-11 6.5V1.5z" />
+                    <svg width="16" height="18" viewBox="0 0 16 18" fill="currentColor">
+                      <path d="M2 1.5l13 7.5-13 7.5V1.5z" />
                     </svg>
                   </button>
                   <span
@@ -418,9 +421,9 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="section-title text-gradient"
+            className="section-title"
           >
-            <MaskedHeading text="In this issue" gradient={['var(--color-ink)', 'var(--color-accent)']} />
+            <MaskedHeading text="In this issue" align="left" weight={500} />
           </motion.h2>
           <motion.div
             variants={containerVariants}

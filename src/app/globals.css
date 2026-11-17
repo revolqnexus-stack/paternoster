@@ -30,7 +30,7 @@
   /* Layout — centered containers */
   --container-wide: 1440px;
   --gutter: clamp(24px, 5vw, 80px);
-  --gutter-mobile: 24px;
+  --gutter-mobile: 20px;
   --max-width-measure: 65ch;
 
   /* Type scale — editorial hierarchy */
@@ -41,6 +41,9 @@
   --step-body: 17px;
   --step-label: clamp(0.6875rem, 1vw, 0.75rem);
   --step-masthead: clamp(1.5rem, 3vw, 2rem);
+
+  /* Mobile overflow safety */
+  --mobile-gutter: 20px;
 }
 
 @theme {
@@ -226,8 +229,8 @@ a:hover {
 
 /* Vertical section spacing scale */
 .section-padding {
-  padding-top: clamp(64px, 9vw, 140px);
-  padding-bottom: clamp(64px, 9vw, 140px);
+  padding-top: clamp(56px, 12vw, 96px);
+  padding-bottom: clamp(56px, 12vw, 96px);
 }
 
 .section-padding-lg {
@@ -236,8 +239,8 @@ a:hover {
 }
 
 .section-padding-md {
-  padding-top: clamp(40px, 6vw, 100px);
-  padding-bottom: clamp(40px, 6vw, 100px);
+  padding-top: clamp(40px, 6vw, 96px);
+  padding-bottom: clamp(40px, 6vw, 96px);
 }
 
 @media (max-width: 768px) {
@@ -396,12 +399,13 @@ a:hover {
 .hero-title {
   font-family: var(--font-serif);
   font-weight: 500;
-  font-size: clamp(3rem, 9vw, 5rem);
+  font-size: clamp(36px, 10vw, 56px);
   line-height: 1.05;
   letter-spacing: -0.03em;
   color: var(--color-ink);
   margin-bottom: 1rem;
-  max-width: 18ch;
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
 
 .hero-byline {
@@ -417,7 +421,7 @@ a:hover {
   font-size: var(--step-body);
   line-height: 1.7;
   color: var(--color-ink);
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   max-width: 42ch;
 }
 
@@ -968,14 +972,15 @@ footer {
 .marquee {
   overflow: hidden;
   position: relative;
-  background: var(--color-ink-black);
-  color: var(--color-paper-on-black);
-  padding: 1rem 0;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  padding: clamp(16px, 4vw, 20px) 0;
+  margin-bottom: clamp(48px, 8vw, 64px);
 }
 
 .marquee-track {
   display: inline-flex;
-  animation: marquee 25s linear infinite;
+  animation: marquee 24s linear infinite;
   white-space: nowrap;
 }
 
@@ -985,8 +990,28 @@ footer {
 
 .marquee-content {
   display: flex;
-  gap: 4rem;
-  padding-right: 4rem;
+  gap: clamp(32px, 8vw, 64px);
+  padding-right: clamp(32px, 8vw, 64px);
+}
+
+.marquee-item {
+  font-family: var(--font-mono);
+  font-size: clamp(20px, 6vw, 32px);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--color-paper);
+}
+
+/* Section headings — consistent editorial style */
+.section-title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(28px, 8vw, 40px);
+  line-height: 1.1;
+  color: var(--color-ink);
+  text-align: left;
+  margin-bottom: clamp(24px, 4vw, 32px);
+  margin-top: clamp(32px, 6vw, 48px);
 }
 
 .marquee-item {
@@ -1020,6 +1045,88 @@ footer {
   transform: translateY(-4px) rotateX(2deg);
 }
 
+/* Writing essay grid — 12-column layout */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(24px, 4vw, 48px);
+}
+
+@media (max-width: 768px) {
+  .grid-12 {
+    grid-template-columns: 1fr;
+    gap: clamp(20px, 4vw, 32px);
+  }
+}
+
+.article-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.article-card-image {
+  position: relative;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .article-card-image {
+    aspect-ratio: 3/2;
+  }
+}
+
+.article-card-image img,
+.article-card-image .w-full.h-full.object-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.article-card-category {
+  font-family: var(--font-mono);
+  font-size: var(--step-label);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 0.5rem;
+}
+
+.article-card-title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  line-height: 1.15;
+  color: var(--color-ink);
+  margin-bottom: 0.25rem;
+  text-decoration: none;
+}
+
+.article-card-title:hover {
+  color: var(--color-accent);
+}
+
+.article-card-author {
+  font-family: var(--font-serif-body);
+  font-size: 0.875rem;
+  font-style: italic;
+  color: var(--color-muted);
+  margin-bottom: 0.5rem;
+}
+
+.article-card-date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  margin-bottom: 0.5rem;
+}
+
 /* Decorative section divider */
 .section-divider-decor {
   display: flex;
@@ -1043,6 +1150,18 @@ footer {
   color: var(--color-accent);
 }
 
+/* SplitFlapText tile size scaling — prevents overflow on mobile */
+.split-flap-text .tile {
+  font-size: clamp(14px, 5vw, 32px) !important;
+  width: auto !important;
+}
+
+@media (max-width: 480px) {
+  .split-flap-text .tile {
+    font-size: 16px !important;
+  }
+}
+
 /* Mobile hero adjustments */
 @media (max-width: 1024px) {
   .hero-content {
@@ -1063,16 +1182,47 @@ footer {
   }
   .hero-image-col {
     order: 2;
+    height: 50svh;
   }
   .hero-text-col {
     order: 1;
     padding: 2rem var(--gutter-mobile) 0 var(--gutter-mobile);
   }
   .hero-title {
-    font-size: clamp(2rem, 9vw, 3rem);
+    font-size: clamp(36px, 10vw, 3rem);
   }
   .hero-excerpt {
     max-width: none;
+  }
+}
+
+/* Hero image aspect ratio - fills full container width */
+.hero-image-col {
+  position: relative;
+  height: 70svh;
+  width: 100%;
+}
+
+.hero-image-wrap {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Mobile: hero image takes full container width */
+@media (max-width: 768px) {
+  .hero-image-wrap {
+    height: 50svh;
+    width: 100%;
   }
 }
 
@@ -1087,14 +1237,5 @@ footer {
   .section-padding-lg {
     padding-top: clamp(48px, 8vw, 100px);
     padding-bottom: clamp(48px, 8vw, 100px);
-  }
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-  [style*="opacity: 0"] {
-    opacity: 1 !important;
-    transform: none !important;
   }
 }
