@@ -48,7 +48,7 @@ export default function AboutClient() {
         style={{ height: '480px' }}
       >
         <img
-          src={stockImage('library')}
+          src={stockImage('library2')}
           alt="Library interior"
           className="absolute inset-0 w-full h-full object-cover"
         />

@@ -48,7 +48,7 @@ const ARTICLES: Article[] = [
     date: '5 November 2026',
     excerpt:
       'In March 1973, before taking his new play around the village halls of the Highlands, John McGrath accepted a last-minute invitation from the Edinburgh Festival.',
-    image: stockImage('typewriter'),
+    image: stockImage('typewriter2'),
     imageAlt: 'A typewriter on a wooden desk',
     category: 'Essay',
   },
@@ -58,7 +58,7 @@ const ARTICLES: Article[] = [
     date: '3 November 2026',
     excerpt:
       'To read Sebald is to enter a world in which mourning never quite resolves. The narrator moves through landscapes dense with absence, collecting traces — photographs, letters, the rubble of memory.',
-    image: stockImage('window'),
+    image: stockImage('window2'),
     imageAlt: 'A figure at a window in grey light',
     category: 'Essay',
   },
@@ -68,7 +68,7 @@ const ARTICLES: Article[] = [
     date: '28 October 2026',
     excerpt:
       'The great difficulty with historical fiction is not imagination — it is restraint. The novelist who populates the past too confidently ends up writing a kind of costume drama of the mind.',
-    image: stockImage('paper'),
+    image: stockImage('paper3'),
     imageAlt: 'Old manuscripts and paper',
     category: 'Criticism',
   },
@@ -78,7 +78,7 @@ const ARTICLES: Article[] = [
     date: '21 October 2026',
     excerpt:
       'Walking east on Clerkenwell Road at six in the morning, the city still holding its breath, I wondered whether Dickens had walked this exact stretch — and what, if anything, he would have made of the new glass towers.',
-    image: stockImage('city'),
+    image: stockImage('city2'),
     imageAlt: 'London street at dawn',
     category: 'Fiction',
   },
@@ -88,7 +88,7 @@ const ARTICLES: Article[] = [
     date: '14 October 2026',
     excerpt:
       'All serious prose aspires, at some level, to the condition of poetry — not in ornament, but in exactness. The sentence that lands perfectly does so because every syllable is in the right place.',
-    image: stockImage('portrait'),
+    image: stockImage('portrait2'),
     imageAlt: 'Author at a writing desk',
     category: 'Poetry',
   },

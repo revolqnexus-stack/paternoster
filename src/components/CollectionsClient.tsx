@@ -107,7 +107,7 @@ function ProductCard({ product }: ProductCardProps) {
             />
           ) : (
             <ImageWithFallback
-              src={stockImage('bookshelf')}
+              src={stockImage('cover9')}
               alt={product.title}
               className="w-full h-full object-cover"
               fallbackKey="bookshelf"

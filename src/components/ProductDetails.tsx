@@ -116,7 +116,7 @@ export default function ProductDetails({
                 />
               ) : (
                 <ImageWithFallback
-                  src={stockImage('bookshelf')}
+                  src={stockImage('cover10')}
                   alt={product.title}
                   className="w-full h-full object-cover"
                   fallbackKey="bookshelf"

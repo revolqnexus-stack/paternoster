@@ -67,7 +67,7 @@ const JOURNAL_PIECES = [
     title: 'A Sentence That Begins With Loss',
     author: 'Ali Smith',
     date: '7 November 2026',
-    image: stockImage('cover3'),
+    image: stockImage('cover7'),
     imageAlt: 'Moody literary scene',
     category: 'Fiction',
   },
@@ -76,7 +76,7 @@ const JOURNAL_PIECES = [
     title: 'Fourteen Ways of Looking at a Footnote',
     author: 'Anne Carson',
     date: '4 November 2026',
-    image: stockImage('cover5'),
+    image: stockImage('cover8'),
     imageAlt: 'Soft literary light',
     category: 'Poetry',
   },
@@ -99,7 +99,7 @@ const AUDIO_PIECES = [
     duration: '58 min',
     date: '5 November 2026',
     episode: 'EP. 33',
-    image: stockImage('cover6'),
+    image: stockImage('cover9'),
     imageAlt: 'Moody audio essay visual',
   },
 ];
@@ -588,7 +588,7 @@ function ProductCard({ product }: ProductCardProps) {
             />
           ) : (
             <ImageWithFallback
-              src={stockImage('bookshelf')}
+              src={stockImage('cover10')}
               alt={product.title}
               className="w-full h-full object-cover"
               fallbackKey="bookshelf"

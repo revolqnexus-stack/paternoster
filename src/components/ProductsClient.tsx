@@ -185,7 +185,7 @@ function RealProductCard({ product }: { product: any }) {
             />
           ) : (
             <ImageWithFallback
-              src={stockImage('bookshelf')}
+              src={stockImage('cover7')}
               alt={product.title}
               className="w-full h-full object-cover"
               fallbackKey="bookshelf"

@@ -23,7 +23,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             />
           ) : (
             <Image
-              src={stockImage('bookshelf')}
+              src={stockImage('cover8')}
               alt={product.title}
               fill
               className="object-cover"
