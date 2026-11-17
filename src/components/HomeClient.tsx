@@ -5,6 +5,13 @@ import ImageWithFallback from '@/components/ImageWithFallback';
 import { stockImage } from '@/lib/stock-images';
 import { motion } from 'framer-motion';
 import SplitFlapText from '@/components/SplitFlapText';
+import Grainient from '@/components/Grainient';
+import FloatingLines from '@/components/FloatingLines';
+import LiquidEther from '@/components/LiquidEther';
+import GlareHover from '@/components/GlareHover';
+import MaskedHeading from '@/components/MaskedHeading';
+import HoloCard from '@/components/HoloCard';
+import DitherVeil from '@/components/DitherVeil';
 import { useCartStore } from '@/lib/store';
 
 interface Article {
@@ -12,8 +19,8 @@ interface Article {
   author: string;
   date: string | null;
   excerpt: string;
-  image?: string;
-  imageAlt?: string;
+  image: string;
+  imageAlt: string;
   category: string;
   relatedProduct?: string;
 }
@@ -61,13 +68,9 @@ function CardImage({ src, alt, aspectRatio }: { src?: string; alt?: string; aspe
   );
 }
 
-/* ── Shared card base ───────────────────────────────────────── */
+/* ── Editorial card (essay / review / blog) ─────────────────── */
 
-function BaseCard({
-  children,
-  type,
-  typeColor = 'var(--color-accent)',
-}: { children: React.ReactNode; type?: string; typeColor?: string }) {
+function EditorialCard({ article, asLink }: { article: Article; asLink?: boolean }) {
   return (
     <article
       className="card-tilt rounded-sm overflow-hidden"
@@ -78,26 +81,14 @@ function BaseCard({
         flexDirection: 'column',
       }}
     >
-      {type && (
-        <span
-          className="text-[0.65rem] uppercase tracking-widest font-mono mb-2 block"
-          style={{ color: typeColor, letterSpacing: '0.1em' }}
-        >
-          {type}
-        </span>
-      )}
-      {children}
-    </article>
-  );
-}
-
-/* ── Editorial card (essay / review / blog) ─────────────────── */
-
-function EditorialCard({ article, asLink }: { article: Article; asLink?: boolean }) {
-  return (
-    <BaseCard type={article.category} typeColor="var(--color-accent)">
       <CardImage src={article.image} alt={article.imageAlt} aspectRatio="4/5" />
       <div className="p-5">
+        <span
+          className="text-[0.65rem] uppercase tracking-widest font-mono mb-2 block"
+          style={{ color: 'var(--color-accent)', letterSpacing: '0.1em' }}
+        >
+          {article.category}
+        </span>
         <p className="text-xs font-serif mb-1" style={{ color: 'var(--ink)' }}>
           {article.title}
         </p>
@@ -114,7 +105,7 @@ function EditorialCard({ article, asLink }: { article: Article; asLink?: boolean
             {article.excerpt}
           </p>
         )}
-        {article.relatedProduct && (
+        {article.relatedProduct ? (
           <Link
             href={`/products/${article.relatedProduct}`}
             className="text-xs font-mono uppercase tracking-wider flex items-center gap-1"
@@ -122,9 +113,17 @@ function EditorialCard({ article, asLink }: { article: Article; asLink?: boolean
           >
             Buy the book →
           </Link>
+        ) : (
+          <Link
+            href="/"
+            className="text-xs font-mono uppercase tracking-wider flex items-center gap-1"
+            style={{ color: 'var(--color-accent)' }}
+          >
+            Read →
+          </Link>
         )}
       </div>
-    </BaseCard>
+    </article>
   );
 }
 
@@ -136,13 +135,21 @@ interface AudioCardProps {
   duration: string;
   episode: string;
   date: string;
-  image?: string;
-  imageAlt?: string;
+  image: string;
+  imageAlt: string;
 }
 
 function AudioCard({ title, subtitle, duration, episode, date, image, imageAlt }: AudioCardProps) {
   return (
-    <BaseCard type="AUDIO" typeColor="var(--color-accent)">
+    <article
+      className="card-tilt rounded-sm overflow-hidden"
+      style={{
+        border: '1px solid var(--hairline)',
+        background: 'var(--paper)',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       <CardImage src={image} alt={imageAlt} aspectRatio="1/1" />
       <div className="p-5">
         <p className="text-[0.7rem] uppercase tracking-widest font-mono mb-1" style={{ color: 'var(--muted)' }}>
@@ -176,7 +183,7 @@ function AudioCard({ title, subtitle, duration, episode, date, image, imageAlt }
           </button>
         </div>
       </div>
-    </BaseCard>
+    </article>
   );
 }
 
@@ -238,50 +245,6 @@ function ShopCard({ product }: ShopCardProps) {
   );
 }
 
-/* ── Newsletter subscribe ───────────────────────────────────── */
-
-function NewsletterStrip() {
-  return (
-    <section className="section-full border-t border-hairline pt-16 pb-24">
-      <div className="container section-padding-md">
-        <div
-          className="flex flex-col items-center gap-4 text-center"
-          style={{ maxWidth: '42ch', margin: '0 auto' }}
-        >
-          <h2 className="section-title" style={{ textAlign: 'center', marginBottom: 0 }}>
-            Subscribe
-          </h2>
-          <p className="text-sm font-serif leading-relaxed" style={{ color: 'var(--muted)' }}>
-            Occasional letters from Pater Noster. New essays, reviews, and what’s in the shop.
-          </p>
-          <form
-            className="flex flex-col sm:flex-row gap-2 w-full"
-            style={{ maxWidth: '320px' }}
-          >
-            <input
-              type="email"
-              placeholder="you@example.com"
-              className="flex-1 border border-hairline bg-transparent px-4 py-2 text-sm font-serif focus:outline-none focus:border-accent"
-            />
-            <button
-              type="submit"
-              className="px-6 py-2 text-[0.7rem] uppercase tracking-widest font-mono"
-              style={{
-                background: 'var(--ink)',
-                color: 'var(--paper)',
-                border: '1px solid var(--ink)',
-                cursor: 'pointer',
-              }}
-            >
-              Subscribe
-            </button>
-          </form>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ── Home client ────────────────────────────────────────────── */
 
 export default function HomeClient({ featured, rest, products }: HomeClientProps) {
@@ -315,19 +278,16 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
     <div className="page-wrap">
       {/* ===== FEATURED PIECE — hero ===== */}
       <section className="section-full hero-bg overflow-hidden">
+        <Grainient colors={['#fdfbf5', '#efece3', '#c9a266']} speed={0.5} style={{ opacity: 0.3 }} />
+        <FloatingLines linesGradient={['#c9a266', '#efece3', '#fdfbf5']} lineCount={6} lineDistance={40} />
+        <LiquidEther colors={['#c9a266', '#efece3']} intensity={0.4} mouseForce={0.5} />
         <div className="container section-padding-lg">
           <div className="hero-content-wrap gap-6 md:gap-12">
             <div className="hero-image-col">
               <div className="hero-image-wrap">
-                <CardImage src={featured.image} alt={featured.imageAlt} aspectRatio="4/5" />
-                {!featured.image && (
-                  <div className="w-full h-full flex items-center justify-center" style={{ aspectRatio: '4/5' }}>
-                    <div className="text-center" style={{ color: 'var(--muted)' }}>
-                      <p className="text-xs uppercase tracking-widest font-mono mb-2">No image</p>
-                      <p className="text-xs font-serif italic">{featured.title}</p>
-                    </div>
-                  </div>
-                )}
+                <GlareHover width="100%" height="100%" variant="streak" blendMode="screen">
+                  <CardImage src={featured.image} alt={featured.imageAlt} aspectRatio="4/5" />
+                </GlareHover>
               </div>
             </div>
             <div className="hero-text-col">
@@ -477,7 +437,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
 
       <hr className="hairline mb-8 md:mb-12" />
 
-      {/* ===== LATEST WRITING — editorial cards ===== */}
+      {/* ===== LATEST WRITING — editorial cards with images ===== */}
       <section className="section-full" style={{ background: 'var(--paper-2, var(--paper))' }}>
         <div className="container section-padding-md">
           <motion.div
@@ -544,6 +504,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
       {/* ===== FROM THE SHOP — quiet strip, 3-4 items max ===== */}
       {shopItems.length > 0 && (
         <section className="section-full border-t border-hairline pt-16 pb-24">
+          <DitherVeil pattern="noise" pixelSize={4} levels={4} style={{ opacity: 0.3 }} />
           <div className="container section-padding-md">
             <motion.div
               initial={{ opacity: 0, y: 12 }}
@@ -574,7 +535,43 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
       )}
 
       {/* ===== NEWSLETTER ===== */}
-      <NewsletterStrip />
+      <section className="section-full border-t border-hairline pt-16 pb-24">
+        <div className="container section-padding-md">
+          <div
+            className="flex flex-col items-center gap-4 text-center"
+            style={{ maxWidth: '42ch', margin: '0 auto' }}
+          >
+            <h2 className="section-title" style={{ textAlign: 'center', marginBottom: 0 }}>
+              Subscribe
+            </h2>
+            <p className="text-sm font-serif leading-relaxed" style={{ color: 'var(--muted)' }}>
+              Occasional letters from Pater Noster. New essays, reviews, and what’s in the shop.
+            </p>
+            <form
+              className="flex flex-col sm:flex-row gap-2 w-full"
+              style={{ maxWidth: '320px' }}
+            >
+              <input
+                type="email"
+                placeholder="you@example.com"
+                className="flex-1 border border-hairline bg-transparent px-4 py-2 text-sm font-serif focus:outline-none focus:border-accent"
+              />
+              <button
+                type="submit"
+                className="px-6 py-2 text-[0.7rem] uppercase tracking-widest font-mono"
+                style={{
+                  background: 'var(--ink)',
+                  color: 'var(--paper)',
+                  border: '1px solid var(--ink)',
+                  cursor: 'pointer',
+                }}
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
