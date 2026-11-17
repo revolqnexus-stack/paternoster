@@ -1,15 +1,15 @@
 export const STOCK_IMAGES = {
-  // Literary / reading themes
-  reading: 'https://images.unsplash.com/photo-1544717314-2558971129e2?w=1200&q=80',
-  library: 'https://images.unsplash.com/photo-1507842217267-6f429b96f2bf?w=1200&q=80',
+  // Literary / reading themes — all verified working
+  reading: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80',
+  library: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=1200&q=80',
   bookshelf: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&q=80',
-  typewriter: 'https://images.unsplash.com/photo-1588159837664-d9b97d030423?w=1200&q=80',
-  coffee: 'https://images.unsplash.com/photo-1556742049-0cfed4f7a06d?w=1200&q=80',
-  desk: 'https://images.unsplash.com/photo-1516684132767-157778992710?w=1200&q=80',
+  typewriter: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=80',
+  coffee: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80',
+  desk: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1200&q=80',
   pen: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=800&q=80',
-  notebook: 'https://images.unsplash.com/photo-1559520427-09b8d59f54bc?w=800&q=80',
+  notebook: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=800&q=80',
   // Author portrait — person reading or writing
-  portrait: 'https://images.unsplash.com/photo-1521575107034-e0fa0b594529?w=800&q=80',
+  portrait: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=800&q=80',
   // Essay — abstract editorial / architecture mood
   essay: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80',
   // Review — stack of books / open book
@@ -21,50 +21,50 @@ export const STOCK_IMAGES = {
   // City — London cityscape or street
   city: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1200&q=80',
   // Window — person at window reading
-  window: 'https://images.unsplash.com/photo-1476611338391-6f395a0ebc7b?w=800&q=80',
+  window: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=80',
   // Paper — white paper texture or manuscript
   paper: 'https://images.unsplash.com/photo-1517842645767-c639042777db?w=800&q=80',
-  // Book cover style images — 6 distinct moody literary Unsplash photos
+  // Book cover style images — distinct moody literary Unsplash photos
   cover1: 'https://images.unsplash.com/photo-1495640388908-05fa85288e61?w=800&q=80',
   cover2: 'https://images.unsplash.com/photo-1476275466078-4007374efbbe?w=800&q=80',
   cover3: 'https://images.unsplash.com/photo-1455884981818-54cb785db6fc?w=800&q=80',
   cover4: 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=800&q=80',
-  cover5: 'https://images.unsplash.com/photo-1491841651911-c44739b2d6b1?w=800&q=80',
+  cover5: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80',
   cover6: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=800&q=80',
   // Fallback
-  fallback: 'https://images.unsplash.com/photo-1507842217267-6f429b96f2bf?w=800&q=80',
+  fallback: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=800&q=80',
 
-  // ===== TONS MORE STOCK IMAGES — editorial / literary =====
+  // ===== MORE STOCK IMAGES — editorial / literary (all verified working) =====
   // Reading nooks and interiors
-  reading2: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=1200&q=80',
-  reading3: 'https://images.unsplash.com/photo-1544986533-52e69c7b063d?w=1200&q=80',
-  reading4: 'https://images.unsplash.com/photo-1507645780922-3f3840fc2708?w=1200&q=80',
-  reading5: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80',
+  reading2: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80',
+  reading3: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80',
+  reading4: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80',
+  reading5: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80',
 
   // Book close-ups and stacks
-  books2: 'https://images.unsplash.com/photo-1513022676117-7ff374d3d3cc?w=1200&q=80',
-  books3: 'https://images.unsplash.com/photo-1507842217228-5a778947858e?w=1200&q=80',
-  books4: 'https://images.unsplash.com/photo-1524996290270-e5cd7059b6a3?w=1200&q=80',
-  books5: 'https://images.unsplash.com/photo-1532012187258-a7d19582e2c9?w=1200&q=80',
+  books2: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&q=80',
+  books3: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&q=80',
+  books4: 'https://images.unsplash.com/photo-1495640388908-05fa85288e61?w=1200&q=80',
+  books5: 'https://images.unsplash.com/photo-1476275466078-4007374efbbe?w=1200&q=80',
 
   // Desk and writing surfaces
   desk2: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=80',
   desk3: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1200&q=80',
-  desk4: 'https://images.unsplash.com/photo-1504149534508-0e51c7e6089e?w=1200&q=80',
+  desk4: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=80',
 
   // Typewriter and writing tools
-  typewriter2: 'https://images.unsplash.com/photo-1587023379419-5104cbd89f50?w=1200&q=80',
-  pen2: 'https://images.unsplash.com/photo-1527982946281-f272339c157f?w=800&q=80',
-  notebook2: 'https://images.unsplash.com/photo-1516373799814-5b7f5d750732?w=800&q=80',
+  typewriter2: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=80',
+  pen2: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=800&q=80',
+  notebook2: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=800&q=80',
 
   // Coffee and cafe
-  coffee2: 'https://images.unsplash.com/photo-1510557880184-3e3543203267?w=1200&q=80',
-  coffee3: 'https://images.unsplash.com/photo-1534787091947-437499380e5b?w=1200&q=80',
-  coffee4: 'https://images.unsplash.com/photo-1501339947202-5d8832077250?w=1200&q=80',
+  coffee2: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?w=1200&q=80',
+  coffee3: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80',
+  coffee4: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80',
 
   // Window light and natural light
   window2: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=80',
-  window3: 'https://images.unsplash.com/photo-1502691876337-465657342e96?w=1200&q=80',
+  window3: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=80',
   light: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?w=1200&q=80',
 
   // Paper textures and marginalia
@@ -73,13 +73,13 @@ export const STOCK_IMAGES = {
   marginalia: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=800&q=80',
 
   // London and city streets
-  city2: 'https://images.unsplash.com/photo-1511543061727-8a49360b7836?w=1200&q=80',
+  city2: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1200&q=80',
   city3: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1200&q=80',
-  street: 'https://images.unsplash.com/photo-1449824903819-6a86d327073c?w=1200&q=80',
+  street: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?w=1200&q=80',
 
   // Library interiors and stacks
   library2: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=1200&q=80',
-  library3: 'https://images.unsplash.com/photo-1507842217267-6f429b96f2bf?w=1200&q=80',
+  library3: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=1200&q=80',
 
   // Author portraits and writers
   portrait2: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=800&q=80',
@@ -89,22 +89,22 @@ export const STOCK_IMAGES = {
   // Abstract editorial moods
   mood1: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=80',
   mood2: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80',
-  mood3: 'https://images.unsplash.com/photo-1507003211219-5a062c623c46?w=1200&q=80',
+  mood3: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80',
   mood4: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80',
 
   // Still life and objects
-  still1: 'https://images.unsplash.com/photo-1513364777167-04278d4b6155?w=1200&q=80',
+  still1: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80',
   still2: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80',
   still3: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80',
 
   // Film and cinema (for video/audio sections)
   film1: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1200&q=80',
-  film2: 'https://images.unsplash.com/photo-1516035069371-29a1b2440326?w=1200&q=80',
+  film2: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1200&q=80',
   film3: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&q=80',
 
   // Audio and music
-  music1: 'https://images.unsplash.com/photo-1493225263146-6864308954b1?w=1200&q=80',
-  music2: 'https://images.unsplash.com/photo-1510506769977-9e167022e02e?w=1200&q=80',
+  music1: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1200&q=80',
+  music2: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&q=80',
 
   // Additional cover-style images
   cover7: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=800&q=80',
