@@ -191,6 +191,31 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
 
       <hr className="hairline mb-8 md:mb-12" />
 
+      {/* ===== MARQUEE TICKER ===== */}
+      <section className="marquee">
+        <div className="marquee-track">
+          <div className="marquee-content">
+            <span className="marquee-item">Pater Noster</span>
+            <span className="marquee-divider"></span>
+            <span className="marquee-item">Independent journal of writing and ideas</span>
+            <span className="marquee-divider"></span>
+            <span className="marquee-item">Essays · Reviews · Criticism</span>
+            <span className="marquee-divider"></span>
+            <span className="marquee-item">Books · Objects · Subscriptions</span>
+            <span className="marquee-divider"></span>
+            <span className="marquee-item">Pater Noster</span>
+            <span className="marquee-divider"></span>
+            <span className="marquee-item">Independent journal of writing and ideas</span>
+            <span className="marquee-divider"></span>
+            <span className="marquee-item">Essays · Reviews · Criticism</span>
+            <span className="marquee-divider"></span>
+            <span className="marquee-item">Books · Objects · Subscriptions</span>
+          </div>
+        </div>
+      </section>
+
+      <hr className="hairline mb-8 md:mb-12" />
+
       {/* ===== FROM THE JOURNAL — 2-column editorial grid ===== */}
       <section className="section-full" style={{ background: 'var(--paper)' }}>
         <div className="container section-padding-md">
@@ -200,7 +225,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
             transition={{ duration: 0.6 }}
             className="flex items-baseline justify-between mb-8"
           >
-            <h2 className="section-title" style={{ marginBottom: 0 }}>From the Journal</h2>
+            <h2 className="section-title text-gradient" style={{ marginBottom: 0 }}>From the Journal</h2>
             <Link
               href="/blog"
               className="font-serif text-sm cta-link"
@@ -271,7 +296,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
             transition={{ duration: 0.6 }}
             className="flex items-baseline justify-between mb-8"
           >
-            <h2 className="section-title" style={{ marginBottom: 0 }}>Now Playing</h2>
+            <h2 className="section-title text-gradient" style={{ marginBottom: 0 }}>Now Playing</h2>
             <Link
               href="/audio"
               className="font-serif text-sm cta-link"
@@ -371,7 +396,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="section-title"
+            className="section-title text-gradient"
           >
             In this issue
           </motion.h2>
@@ -429,7 +454,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="section-title"
+            className="section-title text-gradient"
           >
             Writing
           </motion.h2>
@@ -448,7 +473,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
                   style={{ gridColumn: `span ${isLarge ? 7 : 5}` }}
                   transition={{ delay: idx * 0.1 }}
                 >
-                  <article className="article-card glass-card">
+                  <article className="article-card glass-card card-tilt">
                     <motion.div
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
@@ -530,7 +555,7 @@ export default function HomeClient({ featured, rest, products }: HomeClientProps
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="section-title">From the shop</h2>
+              <h2 className="section-title text-gradient">From the shop</h2>
             </motion.div>
             <motion.div
               variants={containerVariants}
@@ -575,7 +600,7 @@ function ProductCard({ product }: ProductCardProps) {
       <motion.article
         whileHover={{ y: -5 }}
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        className="article-card glass-card"
+        className="article-card glass-card card-tilt"
       >
         <div className="article-card-image">
           {images[0]?.url ? (
